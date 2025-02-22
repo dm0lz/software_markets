@@ -88,18 +88,18 @@ test:
 production:
   primary: &primary_production
     <<: *default
-    database: software_market_production
-    username: software_market
-    password: <%= ENV["SOFTWARE_MARKET_DATABASE_PASSWORD"] %>
+    database: software_markets_production
+    username: software_markets
+    password: <%= ENV["POSTGRES_PASSWORD"] %>
   cache:
     <<: *primary_production
-    database: software_market_production_cache
+    database: software_markets_production_cache
     migrations_paths: db/cache_migrate
   queue:
     <<: *primary_production
-    database: software_market_production_queue
+    database: software_markets_production_queue
     migrations_paths: db/queue_migrate
   cable:
     <<: *primary_production
-    database: software_market_production_cable
+    database: software_markets_production_cable
     migrations_paths: db/cable_migrate
