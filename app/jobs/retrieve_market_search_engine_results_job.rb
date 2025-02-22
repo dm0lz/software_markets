@@ -3,10 +3,17 @@ class RetrieveMarketSearchEngineResultsJob < ApplicationJob
 
   def perform(market)
     query = "#{market.name} Software"
-    results = FetchSerpService.new(5).call(query)
+    results = FetchSerpService.new.call(query)
     results = results["search_results"]
     results.each do |result|
-      SearchEngineResult.create!(query: query, site_name: result["site_name"], title: result["title"], url: result["url"], description: result["description"])
+      SearchEngineResult.create!(
+        query: query,
+        site_name: result["site_name"],
+        title: result["title"],
+        url: result["url"],
+        description: result["description"],
+        position: result["position"]
+      )
     end
   end
 end

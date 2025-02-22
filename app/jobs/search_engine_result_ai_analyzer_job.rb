@@ -6,7 +6,8 @@ class SearchEngineResultAiAnalyzerJob < ApplicationJob
     response = OpenaiService.new.call(user_prompt(search_engine_result) + analysis_input)
     puts response
     json = response.match(/{.*}/m)
-    search_engine_result.update!(is_company: JSON.parse(json.to_s)["is_company_website"])
+    is_company = JSON.parse(json.to_s)["is_company_website"] rescue nil
+    search_engine_result.update!(is_company: is_company)
   end
 
   private
@@ -19,7 +20,9 @@ class SearchEngineResultAiAnalyzerJob < ApplicationJob
       Is it a software directory ?
       Is it a software review website ?
       Is it a software comparison website ?
+      Is it a Blog ?
       if title looks like Best Mobile Event Apps Software 2025, then it is a software directory
+      if title looks like The 15 Best Mobile Event Apps (and How to Choose One) then it is a software review website
       Your response must be a json object with the following structure:
       {
         is_company_website: "Your answer here (must be true or false)",

@@ -1,13 +1,13 @@
 # Name of your application. Used to uniquely configure containers.
-service: software_market
+service: software_markets
 
 # Name of the container image.
-image: your-user/software_market
+image: olivier86/software_markets
 
 # Deploy to these servers.
 servers:
   web:
-    - 192.168.0.1
+    - 139.59.143.198
   # job:
   #   hosts:
   #     - 192.168.0.1
@@ -25,7 +25,7 @@ proxy:
 registry:
   # Specify the registry server, if you're not using Docker Hub
   # server: registry.digitalocean.com / ghcr.io / ...
-  username: your-user
+  username: olivier86
 
   # Always use an access token rather than real password when possible.
   password:
@@ -47,7 +47,7 @@ env:
     # WEB_CONCURRENCY: 2
 
     # Match this to any external database server to configure Active Record correctly
-    # Use software_market-db for a db accessory server on same machine via local kamal docker network.
+    # Use software_markets-db for a db accessory server on same machine via local kamal docker network.
     # DB_HOST: 192.168.0.2
 
     # Log everything from Rails
@@ -61,12 +61,10 @@ aliases:
   logs: app logs -f
   dbc: app exec --interactive --reuse "bin/rails dbconsole"
 
-
 # Use a persistent storage volume for sqlite database files and local Active Storage files.
 # Recommended to change this to a mounted volume path that is backed up off server.
 volumes:
-  - "software_market_storage:/rails/storage"
-
+  - "software_markets_storage:/rails/storage"
 
 # Bridge fingerprinted assets, like JS and CSS, between versions to avoid
 # hitting 404 on in-flight requests. Combines all files from new and old
@@ -86,7 +84,6 @@ builder:
   # secrets:
   #   - GITHUB_TOKEN
   #   - RAILS_MASTER_KEY
-
 # Use a different ssh user than root
 # ssh:
 #   user: app
@@ -114,3 +111,16 @@ builder:
 #     port: 6379
 #     directories:
 #       - data:/data
+
+# postgres:
+#   image: postgres:17
+#   host: 192.168.0.1
+#   port: 5432:5432
+#   env:
+#     clear:
+#       POSTGRES_USER: postgres
+#       POSTGRES_DB: my_app_production
+#     secret:
+#       - POSTGRES_PASSWORD
+#   directories:
+#     - data:/var/lib/postgresql/data
