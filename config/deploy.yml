@@ -7,10 +7,10 @@ image: olivier86/software_markets
 # Deploy to these servers.
 servers:
   web:
-    - 139.59.143.198
+    - 161.35.199.125
   job:
     hosts:
-      - 139.59.143.198
+      - 161.35.199.125
     cmd: bin/jobs
 
 # Enable SSL auto certification via Let's Encrypt and allow for multiple apps on a single web server.
@@ -131,7 +131,7 @@ builder:
 accessories:
   db:
     image: postgres:17
-    host: 139.59.143.198
+    host: 161.35.199.125
     port: "127.0.0.1:5432:5432"
     env:
       clear:
