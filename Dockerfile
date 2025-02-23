@@ -64,9 +64,9 @@ RUN SECRET_KEY_BASE_DUMMY=1 ./bin/rails assets:precompile
 
 # RUN rm -rf node_modules
 
-
 # Final stage for app image
 FROM base
+RUN npx playwright install-deps
 
 # Copy built artifacts: gems, application
 COPY --from=build "${BUNDLE_PATH}" "${BUNDLE_PATH}"
