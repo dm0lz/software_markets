@@ -74,7 +74,7 @@ COPY --from=build /usr/local/node /usr/local/node
 ENV PATH="/usr/local/node/bin:$PATH"
 ENV PATH="node_modules/.bin:$PATH"
 
-RUN playwright install-deps
+RUN npx playwright install-deps
 
 # Run and own only the runtime files as a non-root user for security
 RUN groupadd --system --gid 1000 rails && \
