@@ -150,6 +150,6 @@ accessories:
     port: "127.0.0.1:11434:11434"
     directories:
       - data:/root/.ollama
-    # env:
-    #   clear:
-    #     OLLAMA_HOST: "0.0.0.0"
+    env:
+      clear:
+        OLLAMA_HOST: "0.0.0.0"
