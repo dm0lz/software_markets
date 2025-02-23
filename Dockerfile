@@ -62,7 +62,6 @@ RUN bundle exec bootsnap precompile app/ lib/
 RUN SECRET_KEY_BASE_DUMMY=1 ./bin/rails assets:precompile
 
 
-RUN npx playwright install-deps
 # RUN rm -rf node_modules
 
 # Final stage for app image
@@ -77,6 +76,7 @@ COPY --from=build /usr/local/node /usr/local/node
 ENV PATH="/usr/local/node/bin:$PATH"
 ENV PATH="node_modules/.bin:$PATH"
 
+RUN npx playwright install-deps
 # RUN mkdir -p /home/rails/.cache && \
 #     cp -r /root/.cache/ms-playwright /home/rails/.cache/ && \
 #     chown -R 1000:1000 /home/rails/.cache
