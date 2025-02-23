@@ -4,6 +4,7 @@ class ScrapCapterraMarketsJob < ApplicationJob
   def perform(url)
     output, error, status = BrowsePageService.new(url, "{}").call(js_code)
     if status.success?
+      logger.info output
       markets = JSON.parse(output)
       provider = Provider.find_or_create_by!(name: "Capterra", domain: "capterra.fr")
       markets["capterra_markets"].map do |capterra_market|
