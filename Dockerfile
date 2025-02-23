@@ -76,10 +76,10 @@ ENV PATH="/usr/local/node/bin:$PATH"
 ENV PATH="node_modules/.bin:$PATH"
 
 RUN npx playwright install --with-deps
-COPY --from=build /root/.cache/ms-playwright /root/.cache/ms-playwright
-RUN mkdir -p /home/rails/.cache && \
-    cp -r /root/.cache/ms-playwright /home/rails/.cache/ && \
-    chown -R 1000:1000 /home/rails/.cache
+# COPY --from=build /root/.cache/ms-playwright /root/.cache/ms-playwright
+# RUN mkdir -p /home/rails/.cache && \
+#     cp -r /root/.cache/ms-playwright /home/rails/.cache/ && \
+#     chown -R 1000:1000 /home/rails/.cache
 
 # Run and own only the runtime files as a non-root user for security
 RUN groupadd --system --gid 1000 rails && \
