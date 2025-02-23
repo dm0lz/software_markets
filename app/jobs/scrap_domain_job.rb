@@ -2,7 +2,7 @@ class ScrapDomainJob < ApplicationJob
   queue_as :default
 
   def perform(domain)
-    output, error, status = BrowsePageService.new("http://#{domain.name}", "{}").call(js_code)
+    output, error, status = BrowsePageService.new("http://#{domain.name.sub("https://", "")}", "{}").call(js_code)
     if status.success?
       results = JSON.parse(output)
       domain.web_pages.create!(url: results["url"], content: results["content"])
@@ -17,7 +17,7 @@ class ScrapDomainJob < ApplicationJob
     <<-JS
       return {
         url:  document.location.href,
-        content: document.body.textContent
+        content: document.body.innerText
       }
     JS
   end
