@@ -1,0 +1,4 @@
+#!/bin/bash
+echo "Pulling Llama model..."
+kamal exec --reuse -a ollama "ollama pull llama3.2"
+echo "Llama model pulled"
