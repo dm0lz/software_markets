@@ -61,7 +61,6 @@ RUN bundle exec bootsnap precompile app/ lib/
 # Precompiling assets for production without requiring secret RAILS_MASTER_KEY
 RUN SECRET_KEY_BASE_DUMMY=1 ./bin/rails assets:precompile
 
-
 # RUN rm -rf node_modules
 
 # Final stage for app image
@@ -71,15 +70,11 @@ FROM base
 COPY --from=build "${BUNDLE_PATH}" "${BUNDLE_PATH}"
 COPY --from=build /rails /rails
 COPY --from=build /usr/local/node /usr/local/node
-# COPY --from=build /root/.cache/ms-playwright /root/.cache/ms-playwright
 
 ENV PATH="/usr/local/node/bin:$PATH"
 ENV PATH="node_modules/.bin:$PATH"
 
 RUN npx playwright install-deps
-# RUN mkdir -p /home/rails/.cache && \
-#     cp -r /root/.cache/ms-playwright /home/rails/.cache/ && \
-#     chown -R 1000:1000 /home/rails/.cache
 
 # Run and own only the runtime files as a non-root user for security
 RUN groupadd --system --gid 1000 rails && \
