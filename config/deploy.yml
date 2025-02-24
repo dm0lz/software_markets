@@ -134,7 +134,7 @@ accessories:
     host: 138.199.170.126
     port: "127.0.0.1:11434:11434"
     files:
-      - Modelfile:/root/.ollama/Modelfile
+      - Modelfile:/ollama-config/Modelfile
     directories:
       - data:/root/.ollama
     env:
