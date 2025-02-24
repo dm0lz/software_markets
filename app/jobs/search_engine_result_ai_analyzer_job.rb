@@ -4,7 +4,7 @@ class SearchEngineResultAiAnalyzerJob < ApplicationJob
   def perform(search_engine_result)
     analysis_input = "site_name: #{search_engine_result.site_name}, title: #{search_engine_result.title}, url: #{search_engine_result.url}, description: #{search_engine_result.description}"
     response = OpenaiService.new.call(user_prompt(search_engine_result, analysis_input))
-    puts response
+    logger.info response
     json = response.match(/{.*}/m)
     is_company = JSON.parse(json.to_s)["is_company_website"] rescue nil
     search_engine_result.update!(is_company: is_company)

@@ -4,6 +4,7 @@ class OpenaiService
     response = client.chat(
       parameters: {
         model: "custom-llama3.2:latest",
+        response_format: { type: "json_object" },
         messages: [
           { role: "system", content: system_prompt },
           { role: "user", content: user_prompt }
