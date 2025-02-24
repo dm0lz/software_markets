@@ -3,7 +3,7 @@ class SearchEngineResultAiAnalyzerJob < ApplicationJob
 
   def perform(search_engine_result)
     analysis_input = "site_name: #{search_engine_result.site_name}, title: #{search_engine_result.title}, url: #{search_engine_result.url}, description: #{search_engine_result.description}"
-    response = OpenaiService.new.call(user_prompt(search_engine_result, analysis_input))
+    response = OpenaiService.new.call(user_prompt(search_engine_result, analysis_input), response_schema)
     logger.info response
     json = response.match(/{.*}/m)
     is_company = JSON.parse(json.to_s)["is_company_website"] rescue nil
@@ -25,5 +25,24 @@ class SearchEngineResultAiAnalyzerJob < ApplicationJob
         is_company_website: "Your answer here (must be true or false)",
       }
     TXT
+  end
+
+  def response_schema
+    {
+      "strict": true,
+      "name": "is_company_website",
+      "description": "Checks if a website is a company website",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "is_company_webiste": {
+            "type": "boolean",
+            "description": "Is it a company website ?"
+          }
+        },
+        "additionalProperties": false,
+        "required": [ "is_company_webiste" ]
+      }
+    }
   end
 end

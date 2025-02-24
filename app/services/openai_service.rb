@@ -1,10 +1,14 @@
 class OpenaiService
-  def call(user_prompt)
+  def call(user_prompt, json_schema)
     client = OpenAI::Client.new(request_timeout: 300)
     response = client.chat(
       parameters: {
         model: "custom-llama3.2:latest",
-        response_format: { type: "json_object" },
+        # response_format: { type: "json_object" },
+        response_format: {
+          type: "json_schema",
+          json_schema: json_schema
+        },
         messages: [
           { role: "system", content: system_prompt },
           { role: "user", content: user_prompt }
