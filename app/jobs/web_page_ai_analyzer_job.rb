@@ -2,8 +2,7 @@ class WebPageAiAnalyzerJob < ApplicationJob
   queue_as :default
 
   def perform(web_page)
-    page_content = web_page.content[0, web_page.content.length / 4]
-    response = OpenaiService.new.call(user_prompt + page_content)
+    response = OpenaiService.new.call(user_prompt + page_content.content)
     logger.info response
     web_page.update!(extracted_content: response)
   end
