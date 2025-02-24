@@ -3,7 +3,7 @@ class DomainAiAnalyzerJob < ApplicationJob
 
   def perform(domain)
     pages_content = domain.web_pages.pluck(:content).join(" ")
-    response = OpenaiService.new.call(user_prompt + pages_content)
+    response = OpenaiService.new.call(user_prompt + pages_content, response_schema)
     logger.info response
     json_content = JSON.parse(response.match(/{.*}/m).to_s) rescue nil
     domain.update!(extracted_content: json_content) if json_content
@@ -12,8 +12,7 @@ class DomainAiAnalyzerJob < ApplicationJob
   private
   def user_prompt
     <<-PROMPT
-      Key task : Analyze the content of the web pages and extract the company information.
-      Expected Output : Extracted company information in a structured format (JSON).
+      Key task : Analyze the content of the page and extract the company information.
       Provide a summary of the company's activity.
       Include the following information:
 
@@ -89,65 +88,128 @@ class DomainAiAnalyzerJob < ApplicationJob
       -	Lawsuits or Legal Challenges
 
       If you don't have access to specific data, you can mention that it's not available.
-      If you need to provide any next steps or action items, you can do so in the response.
-      If you need to provide any follow-up questions or tasks, you can do so in the response.
-      If you need more information, you can ask for it in the response.
-      !!! Your response must be a json object with the following structure:
-      {
-        summary: "Your summary here",
-        company_focus: "The company's main focus",
-        key_points: ["Key point 1", "Key point 2", "Key point 3"],
-        market: "The company's market here",
-        key_features: ["Feature 1", "Feature 2", "Feature 3"],
-        uniq_sell_points: ["USP 1", "USP 2", "USP 3"],
-        company_name: "Company Name",
-        website_url: "Website URL",
-        year_founded: "Year Founded",
-        company_size: "Company Size",
-        headquarters_location: "Headquarters Location",
-        legal_structure: "Legal Structure",
-        contact_information: "Contact Information",
-        company_description: "Company Description",
-        industry: "Industry & Sub-Industry",
-        market_segmentation: "Market Segmentation",
-        geographical_market: "Geographical Market",
-        key_competitors: "Key Competitors",
-        core_products: "Core Products or Services",
-        unique_selling_proposition: "Unique Selling Proposition",
-        product_pricing: "Product Pricing & Pricing Model",
-        product_features: "Product Features & Differentiators",
-        customer_pain_points: "Customer Pain Points Addressed",
-        revenue_estimates: "Revenue Estimates",
-        funding_rounds: "Funding Rounds & Investors",
-        profitability_growth_trends: "Profitability & Growth Trends",
-        pricing_strategy: "Pricing Strategy",
-        customer_acquisition_cost: "Customer Acquisition Cost",
-        lifetime_value: "Lifetime Value of Customers",
-        target_audience: "Target Audience & Customer Profile",
-        customer_reviews: "Customer Reviews & Ratings",
-        brand_reputation: "Brand Reputation & Social Proof",
-        customer_support: "Customer Support & Satisfaction",
-        customer_retention: "Customer Retention & Churn Rate",
-        primary_sales_channels: "Primary Sales Channels",
-        marketing_channels: "Marketing Channels Used",
-        social_media_presence: "Social Media Presence & Engagement",
-        content_strategy: "Content Strategy",
-        partnerships: "Partnerships & Affiliations",
-        tech_stack: "Tech Stack Used",
-        ai_automation: "Use of AI & Automation",
-        security_compliance: "Security & Compliance Measures",
-        apis_integrations: "APIs & Integrations",
-        strengths_opportunities: "Strengths & Opportunities",
-        weaknesses_threats: "Weaknesses & Threats",
-        barriers_to_entry: "Barriers to Entry for Competitors",
-        patents: "Patents, Proprietary Tech, or IP Protection",
-        job_openings: "Job Openings & Hiring Patterns",
-        company_culture: "Company Culture & Employee Satisfaction",
-        remote_work_policy: "Remote vs. On-Site Work Policy",
-        regulations: "Regulations Affecting the Business",
-        compliance: "GDPR, CCPA, HIPAA Compliance",
-        lawsuits: "Lawsuits or Legal Challenges"
-      }
     PROMPT
+  end
+
+  def response_schema
+    {
+      "strict": true,
+      "name": "is_company_website",
+      "description": "Checks if a website is a company website",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "summary": { "type": "string", "description": "Your summary" },
+          "company_focus": { "type": "string", "description": "The company's main focus" },
+          "key_points": { "type": "array", "items": { "type": "string" }, "description": "Key points about the company" },
+          "market": { "type": "string", "description": "The company's market" },
+          "key_features": { "type": "array", "items": { "type": "string" }, "description": "Key features of the company's product/service" },
+          "uniq_sell_points": { "type": "array", "items": { "type": "string" }, "description": "Unique selling points" },
+          "company_name": { "type": "string", "description": "Company name" },
+          "website_url": { "type": "string", "description": "Company website URL" },
+          "year_founded": { "type": "string", "description": "Year the company was founded" },
+          "company_size": { "type": "string", "description": "Size of the company" },
+          "headquarters_location": { "type": "string", "description": "Location of headquarters" },
+          "legal_structure": { "type": "string", "description": "Legal structure of the company" },
+          "contact_information": { "type": "string", "description": "Contact information" },
+          "company_description": { "type": "string", "description": "Detailed description of the company" },
+          "industry": { "type": "string", "description": "Industry & sub-industry" },
+          "market_segmentation": { "type": "string", "description": "Market segmentation" },
+          "geographical_market": { "type": "string", "description": "Geographical market served" },
+          "key_competitors": { "type": "string", "description": "Key competitors" },
+          "core_products": { "type": "string", "description": "Core products or services" },
+          "unique_selling_proposition": { "type": "string", "description": "Unique selling proposition" },
+          "product_pricing": { "type": "string", "description": "Product pricing & pricing model" },
+          "product_features": { "type": "string", "description": "Product features & differentiators" },
+          "customer_pain_points": { "type": "string", "description": "Customer pain points addressed" },
+          "revenue_estimates": { "type": "string", "description": "Revenue estimates" },
+          "funding_rounds": { "type": "string", "description": "Funding rounds & investors" },
+          "profitability_growth_trends": { "type": "string", "description": "Profitability & growth trends" },
+          "pricing_strategy": { "type": "string", "description": "Pricing strategy" },
+          "customer_acquisition_cost": { "type": "string", "description": "Customer acquisition cost" },
+          "lifetime_value": { "type": "string", "description": "Lifetime value of customers" },
+          "target_audience": { "type": "string", "description": "Target audience & customer profile" },
+          "customer_reviews": { "type": "string", "description": "Customer reviews & ratings" },
+          "brand_reputation": { "type": "string", "description": "Brand reputation & social proof" },
+          "customer_support": { "type": "string", "description": "Customer support & satisfaction" },
+          "customer_retention": { "type": "string", "description": "Customer retention & churn rate" },
+          "primary_sales_channels": { "type": "string", "description": "Primary sales channels" },
+          "marketing_channels": { "type": "string", "description": "Marketing channels used" },
+          "social_media_presence": { "type": "string", "description": "Social media presence & engagement" },
+          "content_strategy": { "type": "string", "description": "Content strategy" },
+          "partnerships": { "type": "string", "description": "Partnerships & affiliations" },
+          "tech_stack": { "type": "string", "description": "Tech stack used" },
+          "ai_automation": { "type": "string", "description": "Use of AI & automation" },
+          "security_compliance": { "type": "string", "description": "Security & compliance measures" },
+          "apis_integrations": { "type": "string", "description": "APIs & integrations" },
+          "strengths_opportunities": { "type": "string", "description": "Strengths & opportunities" },
+          "weaknesses_threats": { "type": "string", "description": "Weaknesses & threats" },
+          "barriers_to_entry": { "type": "string", "description": "Barriers to entry for competitors" },
+          "patents": { "type": "string", "description": "Patents, proprietary tech, or IP protection" },
+          "job_openings": { "type": "string", "description": "Job openings & hiring patterns" },
+          "company_culture": { "type": "string", "description": "Company culture & employee satisfaction" },
+          "remote_work_policy": { "type": "string", "description": "Remote vs. on-site work policy" },
+          "regulations": { "type": "string", "description": "Regulations affecting the business" },
+          "compliance": { "type": "string", "description": "GDPR, CCPA, HIPAA compliance" },
+          "lawsuits": { "type": "string", "description": "Lawsuits or legal challenges" }
+        },
+        "additionalProperties": false,
+        "required": [
+          "summary",
+          "company_focus",
+          "key_points",
+          "market",
+          "key_features",
+          "uniq_sell_points",
+          "company_name",
+          "website_url",
+          "year_founded",
+          "company_size",
+          "headquarters_location",
+          "legal_structure",
+          "contact_information",
+          "company_description",
+          "industry",
+          "market_segmentation",
+          "geographical_market",
+          "key_competitors",
+          "core_products",
+          "unique_selling_proposition",
+          "product_pricing",
+          "product_features",
+          "customer_pain_points",
+          "revenue_estimates",
+          "funding_rounds",
+          "profitability_growth_trends",
+          "pricing_strategy",
+          "customer_acquisition_cost",
+          "lifetime_value",
+          "target_audience",
+          "customer_reviews",
+          "brand_reputation",
+          "customer_support",
+          "customer_retention",
+          "primary_sales_channels",
+          "marketing_channels",
+          "social_media_presence",
+          "content_strategy",
+          "partnerships",
+          "tech_stack",
+          "ai_automation",
+          "security_compliance",
+          "apis_integrations",
+          "strengths_opportunities",
+          "weaknesses_threats",
+          "barriers_to_entry",
+          "patents",
+          "job_openings",
+          "company_culture",
+          "remote_work_policy",
+          "regulations",
+          "compliance",
+          "lawsuits"
+        ]
+      }
+    }
   end
 end
