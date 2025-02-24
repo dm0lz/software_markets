@@ -3,7 +3,7 @@ class OpenaiService
     client = OpenAI::Client.new(request_timeout: 300)
     response = client.chat(
       parameters: {
-        model: "llama3.2:latest",
+        model: "custom-llama3.2:latest",
         messages: [
           { role: "system", content: system_prompt },
           { role: "user", content: user_prompt }
