@@ -3,7 +3,7 @@ class OpenaiService
     client = OpenAI::Client.new(request_timeout: 300)
     response = client.chat(
       parameters: {
-        model: "llama3.2:latest",
+        model: "custom-deepseek-r1:latest",
         # response_format: { type: "json_object" },
         response_format: {
           type: "json_schema",
