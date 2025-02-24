@@ -2,7 +2,7 @@ class DomainAiAnalyzerJob < ApplicationJob
   queue_as :default
 
   def perform(domain)
-    pages_content = domain.web_pages.pluck(:content).join(" ")
+    pages_content = domain.web_pages.pluck(:content).join(" ").truncate(15000)
     response = OpenaiService.new.call(user_prompt + pages_content)
     logger.info response
     json_content = JSON.parse(response.match(/{.*}/m).to_s) rescue nil
