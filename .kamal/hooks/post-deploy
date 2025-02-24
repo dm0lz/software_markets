@@ -1,4 +1,4 @@
 #!/bin/bash
 echo "Pulling Llama model..."
 kamal accessory exec --reuse ollama ollama pull llama3.2
-kamal accessory exec --reuse ollama ollama create custom-llama3.2 -f /root/ollama/Modelfile/Modelfile
+kamal accessory exec --reuse ollama ollama create custom-llama3.2 -f /root/.ollama/Modelfile/Modelfile
