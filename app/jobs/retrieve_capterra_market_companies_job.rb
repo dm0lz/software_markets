@@ -1,4 +1,4 @@
-class ScrapCapterraMarketJob < ApplicationJob
+class RetrieveCapterraMarketCompaniesJob < ApplicationJob
   CAPTERRA_BASE_URL = "https://www.capterra.fr".freeze
   queue_as :default
 
