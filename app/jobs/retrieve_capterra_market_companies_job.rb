@@ -30,11 +30,12 @@ class RetrieveCapterraMarketCompaniesJob < ApplicationJob
     market_provider.update!(description: market_description, competitors_count: competitors_count) unless market_provider.description
   end
 
-  def create_companies(market_provider, market)
-    market["capterra_market"]["software_applications"].each do |software|
+  def create_companies(market_provider, capterra_market)
+    capterra_market["capterra_market"]["software_applications"].each do |software|
       begin
         market = market_provider.market
-        company = market.companies.find_or_create_by!(name: software["name"])
+        company = Company.find_or_create_by!(name: software["name"])
+        market.companies << company unless market.companies.include?(company)
         domain = create_domain(company, software["redirect_url"])
         create_software_application(domain, software)
       rescue StandardError => e
@@ -59,7 +60,7 @@ class RetrieveCapterraMarketCompaniesJob < ApplicationJob
     fetched_domain = if redirect_url == "#"
       example_domain
     else
-      output, error, status = BrowsePageService.new("#{CAPTERRA_BASE_URL}#{redirect_url}", playwright_options).call(get_domain)
+      output, _error, status = BrowsePageService.new("#{CAPTERRA_BASE_URL}#{redirect_url}", playwright_options).call(get_domain)
       status.success? ? JSON.parse(output) : example_domain
     end
     company.domains.find_or_create_by!(name: fetched_domain["domain"])
@@ -95,7 +96,7 @@ class RetrieveCapterraMarketCompaniesJob < ApplicationJob
 
   def playwright_options
     <<-JS
-      { headless: true, waitUntil: "networkidle", slowMo: 4000 }
+      { headless: true, waitUntil: "networkidle", slowMo: 5000 }
     JS
   end
 end

@@ -1,5 +1,5 @@
 class Company < ApplicationRecord
-  validates :name, presence: true
+  validates :name, presence: true, uniqueness: true
   has_many :domains, dependent: :destroy
   has_many :company_markets, dependent: :destroy
   has_many :markets, through: :company_markets
