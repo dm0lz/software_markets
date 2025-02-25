@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_02_23_232800) do
+ActiveRecord::Schema[8.0].define(version: 2025_02_25_094815) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -30,10 +30,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_23_232800) do
 
   create_table "companies", force: :cascade do |t|
     t.string "name", null: false
-    t.bigint "market_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["market_id"], name: "index_companies_on_market_id"
   end
 
   create_table "company_markets", force: :cascade do |t|
@@ -130,7 +128,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_23_232800) do
     t.index ["domain_id"], name: "index_web_pages_on_domain_id"
   end
 
-  add_foreign_key "companies", "markets"
   add_foreign_key "company_markets", "companies"
   add_foreign_key "company_markets", "markets"
   add_foreign_key "domains", "companies"

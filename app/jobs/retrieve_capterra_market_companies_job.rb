@@ -33,7 +33,8 @@ class RetrieveCapterraMarketCompaniesJob < ApplicationJob
   def create_companies(market_provider, market)
     market["capterra_market"]["software_applications"].each do |software|
       begin
-        company = Company.find_or_create_by!(market_id: market_provider.market_id, name: software["name"])
+        market = market_provider.market
+        company = market.companies.find_or_create_by!(name: software["name"])
         domain = create_domain(company, software["redirect_url"])
         create_software_application(domain, software)
       rescue StandardError => e
