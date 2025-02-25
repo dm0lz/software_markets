@@ -1,8 +1,8 @@
 class Company < ApplicationRecord
   validates :name, presence: true
   has_many :domains, dependent: :destroy
-  has_many :company_markets
-  has_many :markets, through: :company_markets, dependent: :destroy
+  has_many :company_markets, dependent: :destroy
+  has_many :markets, through: :company_markets
   has_many :software_applications, through: :domains
 
   class << self
