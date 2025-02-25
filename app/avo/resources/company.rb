@@ -8,7 +8,6 @@ class Avo::Resources::Company < Avo::BaseResource
   def fields
     field :id, as: :id
     field :name, as: :text
-    field :market_id, as: :number
     field :domains, as: :has_many
     field :company_markets, as: :has_many
     field :markets, as: :has_many, through: :company_markets

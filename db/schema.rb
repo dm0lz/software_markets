@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_02_25_094815) do
+ActiveRecord::Schema[8.0].define(version: 2025_02_25_132222) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -36,6 +36,26 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_25_094815) do
     t.datetime "updated_at", null: false
     t.jsonb "extracted_content", default: {}, null: false
     t.index ["company_id"], name: "index_domains_on_company_id"
+  end
+
+  create_table "keyword_markets", force: :cascade do |t|
+    t.bigint "keyword_id", null: false
+    t.bigint "market_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["keyword_id"], name: "index_keyword_markets_on_keyword_id"
+    t.index ["market_id"], name: "index_keyword_markets_on_market_id"
+  end
+
+  create_table "keyword_web_pages", force: :cascade do |t|
+    t.bigint "keyword_id", null: false
+    t.bigint "web_page_id", null: false
+    t.bigint "domain_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["domain_id"], name: "index_keyword_web_pages_on_domain_id"
+    t.index ["keyword_id"], name: "index_keyword_web_pages_on_keyword_id"
+    t.index ["web_page_id"], name: "index_keyword_web_pages_on_web_page_id"
   end
 
   create_table "keywords", force: :cascade do |t|
@@ -109,6 +129,11 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_25_094815) do
   add_foreign_key "company_markets", "companies"
   add_foreign_key "company_markets", "markets"
   add_foreign_key "domains", "companies"
+  add_foreign_key "keyword_markets", "keywords"
+  add_foreign_key "keyword_markets", "markets"
+  add_foreign_key "keyword_web_pages", "domains"
+  add_foreign_key "keyword_web_pages", "keywords"
+  add_foreign_key "keyword_web_pages", "web_pages"
   add_foreign_key "market_providers", "markets"
   add_foreign_key "market_providers", "providers"
   add_foreign_key "software_applications", "domains"

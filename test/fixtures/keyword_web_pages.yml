@@ -1,0 +1,11 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  keyword: one
+  web_page: one
+  domain: one
+
+two:
+  keyword: two
+  web_page: two
+  domain: two

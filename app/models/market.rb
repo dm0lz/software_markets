@@ -4,6 +4,8 @@ class Market < ApplicationRecord
   has_many :providers, through: :market_providers
   has_many :company_markets, dependent: :destroy
   has_many :companies, through: :company_markets
+  has_many :keword_markets, dependent: :destroy
+  has_many :keyword, through: :keword_markets
 
   class << self
     def ransackable_attributes(auth_object = nil)
