@@ -1,6 +1,6 @@
 class OpenaiService
   def call(user_prompt, response_schema)
-    client = OpenAI::Client.new(request_timeout: 300)
+    client = OpenAI::Client.new(request_timeout: 600)
     response = client.chat(
       parameters: {
         model: "custom-deepseek-r1:latest",
