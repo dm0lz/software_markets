@@ -4,15 +4,13 @@ class Avo::Resources::Domain < Avo::BaseResource
   # self.search = {
   #   query: -> { query.ransack(id_eq: params[:q], m: "or").result(distinct: false) }
   # }
-  
+
   def fields
     field :id, as: :id
-    field :name, as: :text
+    field :name, as: :text, sortable: true
     field :company_id, as: :number
     field :company, as: :belongs_to
     field :software_applications, as: :has_many
     field :web_pages, as: :has_many
   end
 end
-
-
