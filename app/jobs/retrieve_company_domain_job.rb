@@ -28,15 +28,18 @@ class RetrieveCompanyDomainJob < ApplicationJob
         document.documentElement.scroll({ top: document.documentElement.scrollHeight });
       });
       const getRecurringDomain = () => {
-        return Object.entries(
-          [...document.querySelectorAll("h2 > a")]
-            .filter(item => !item.getAttribute("href").includes("ad_domain="))
-            .map(item => item.getAttribute("href"))
-            .reduce((acc, url) => {
+        const domainMap = [...document.querySelectorAll("h2 > a")]
+          .filter(item => !item.getAttribute("href").includes("ad_domain="))
+          .map(item => item.getAttribute("href"))
+          .reduce((acc, url) => {
+            if (!url.startsWith("/")) {
               (acc[new URL(url).hostname] ||= []).push(url);
-              return acc;
-            }, {})
-        ).reduce((max, entry) => entry[1].length > max[1].length ? entry : max)[0];
+            }
+            return acc;
+          }, {});
+        const entries = Object.entries(domainMap);
+        if (entries.length === 0) return null;
+        return entries.reduce((max, entry) => entry[1].length > max[1].length ? entry : max, entries[0])[0];
       };
       const matchingCompanyName = () => {
         return [...document.querySelectorAll("ol > li > article")]
