@@ -1,5 +1,4 @@
 class Domain < ApplicationRecord
-  validates :name, presence: true
   belongs_to :company
   has_many :software_applications, dependent: :destroy
   has_many :web_pages, dependent: :destroy
