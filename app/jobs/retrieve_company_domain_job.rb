@@ -3,7 +3,7 @@ class RetrieveCompanyDomainJob < ApplicationJob
 
   def perform(company)
     company_name = company.name.downcase.gsub("'", "")
-    url = "https://duckduckgo.com/?t=h_&q=#{company_name}+Official+Website+site%3A.com&ia=web"
+    url = "https://duckduckgo.com/?t=h_&q=#{company_name}+Official+Website&ia=web"
     output, error, status = BrowsePageService.new(url, "{}").call(js_code(company_name))
     if status.success?
       results = JSON.parse(output)
