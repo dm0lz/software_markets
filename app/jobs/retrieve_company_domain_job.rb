@@ -40,7 +40,7 @@ class RetrieveCompanyDomainJob < ApplicationJob
       };
       const matchingCompanyName = () => {
         return [...document.querySelectorAll("ol > li > article")]
-          .filter(item => !item.querySelector("article > div:nth-child(2) > div > div > a").getAttribute("href").includes("play.google.com"))
+          .filter(item => !item.querySelector("article > div:nth-child(2) > div > div > a")?.getAttribute("href").includes("play.google.com"))
           ?.find(item => item.querySelector("article > div:nth-child(2) > div > div > p")?.textContent.toLowerCase() === "#{company_name}")
           ?.querySelector("article > div:nth-child(3) > h2 > a")
           ?.getAttribute("href");
