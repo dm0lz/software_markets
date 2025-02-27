@@ -3,6 +3,6 @@
 </div>
 <div>
   <% @companies.each do |company| %>
-    <div><%= company.name %></div>
+    <div><%= link_to company.name, public_company_path(id: company.name.parameterize) %></div>
   <% end %>
 </div>

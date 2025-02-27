@@ -5,7 +5,7 @@ module Public
     end
 
     def show
-      @market = Market.find(params[:id])
+      @market = Market.find_by(name: params[:id].gsub("-", " "))
       @companies = @market.companies
     end
   end

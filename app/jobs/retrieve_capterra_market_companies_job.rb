@@ -34,7 +34,7 @@ class RetrieveCapterraMarketCompaniesJob < ApplicationJob
     capterra_market["capterra_market"]["software_applications"].each do |software|
       begin
         market = market_provider.market
-        company = Company.find_or_create_by!(name: software["name"])
+        company = Company.find_or_create_by!(name: software["name"].downcase)
         market.companies << company unless market.companies.include?(company)
         domain = create_domain(company, software["redirect_url"])
         create_software_application(domain, software)

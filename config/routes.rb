@@ -19,6 +19,8 @@ Rails.application.routes.draw do
   namespace :public, path: "/" do
     get "home", to: "home#index"
     resources :markets, only: [ :index, :show ]
+    resources :companies, only: [ :index, :show ]
+    resources :domains, only: [ :index, :show ]
     root "markets#index"
   end
 

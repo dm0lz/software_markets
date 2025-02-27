@@ -1,0 +1,6 @@
+
+<ul>
+  <% @domains.each do |domain| %>
+    <li><%= link_to domain.name, public_domain_path(domain) %></li>
+  <% end %>
+</ul>

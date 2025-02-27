@@ -1,6 +1,7 @@
 
 <ul>
+  <%#=binding.pry%>
   <% @markets.each do |market| %>
-    <li><%= link_to "#{market.name} (#{market.companies.count})", public_market_path(market) %></li>
+    <li><%= link_to "#{market.name} (#{market.companies.count})", public_market_path(id: market.name.parameterize) %></li>
   <% end %>
 </ul>

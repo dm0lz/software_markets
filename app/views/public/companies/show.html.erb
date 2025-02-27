@@ -1,0 +1,8 @@
+<div>
+  <%= @company.name %>
+</div>
+<div>
+  <% @domains.each do |domain| %>
+    <div><%= link_to domain.name, public_domain_path(id: domain.name) if domain.name %></div>
+  <% end %>
+</div>
