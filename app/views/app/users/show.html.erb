@@ -1,0 +1,6 @@
+<div class="text-right">
+  <%= button_to 'Sign Out', session_path, method: :delete, form: {data: {turbo_confirm: 'Are you sure?'}} %>
+</div>
+<div>
+  <%= @user.email_address %>
+</div>

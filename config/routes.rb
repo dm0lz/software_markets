@@ -18,12 +18,13 @@ Rails.application.routes.draw do
 
   namespace :public, path: "/" do
     get "home", to: "home#index"
-    root "home#index"
+    resources :markets, only: [ :index, :show ]
+    root "markets#index"
   end
 
   namespace :app, path: "/app" do
-    resources :markets, only: [ :index ]
-    root "markets#index"
+    resources :users, only: [ :show ]
+    root "users#show"
   end
 
   # Defines the root path route ("/")

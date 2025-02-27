@@ -1,0 +1,6 @@
+
+<ul>
+  <% @markets.each do |market| %>
+    <li><%= link_to "#{market.name} (#{market.companies.count})", public_market_path(market) %></li>
+  <% end %>
+</ul>
