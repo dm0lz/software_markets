@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_02_26_101834) do
+ActiveRecord::Schema[8.0].define(version: 2025_02_27_145818) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -102,6 +102,15 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_26_101834) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "sessions", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.string "ip_address"
+    t.string "user_agent"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_sessions_on_user_id"
+  end
+
   create_table "software_applications", force: :cascade do |t|
     t.string "name", null: false
     t.bigint "domain_id", null: false
@@ -114,6 +123,15 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_26_101834) do
     t.float "rating"
     t.integer "rating_count"
     t.index ["domain_id"], name: "index_software_applications_on_domain_id"
+  end
+
+  create_table "users", force: :cascade do |t|
+    t.string "email_address", null: false
+    t.string "password_digest", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "role", default: "user", null: false
+    t.index ["email_address"], name: "index_users_on_email_address", unique: true
   end
 
   create_table "web_pages", force: :cascade do |t|
@@ -136,6 +154,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_26_101834) do
   add_foreign_key "keyword_web_pages", "web_pages"
   add_foreign_key "market_providers", "markets"
   add_foreign_key "market_providers", "providers"
+  add_foreign_key "sessions", "users"
   add_foreign_key "software_applications", "domains"
   add_foreign_key "web_pages", "domains"
 end
