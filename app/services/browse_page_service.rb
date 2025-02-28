@@ -6,7 +6,7 @@ class BrowsePageService < BaseService
   end
 
   def call(script)
-    output, error, status = Open3.capture3(%Q(node -e '#{js_code.strip}'))
+    output, error, status = Open3.capture3(%Q(node -e '#{js_code(script).strip}'))
     if status.success?
       JSON.parse(output)
     else
@@ -15,7 +15,7 @@ class BrowsePageService < BaseService
   end
 
   private
-  def js_code
+  def js_code(script)
     <<-JS
       const { firefox } = require("playwright");
       (async () => {
