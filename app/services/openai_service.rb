@@ -25,7 +25,6 @@ class OpenaiService < BaseService
       You must always respond in valid JSON format.
       Do not include any additional text, explanations, or markdown formatting.
       You analyze the content provided and extract the required information.
-      You only respond with structured JSON format.
     PROMPT
   end
 end

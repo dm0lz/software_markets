@@ -13,15 +13,10 @@ class RetrieveCapterraMarketCompaniesJob < ApplicationJob
 
   private
   def process_page(market_provider, url)
-    output, error, status = BrowsePageService.new(url, "{}").call(parse_market)
-    if status.success?
-      market = JSON.parse(output)
-      update_market_data(market_provider, market)
-      create_companies(market_provider, market)
-      @page_number = market["capterra_market"]["pages_number"] unless @page_number
-    else
-      logger.error "Error: #{error.strip}"
-    end
+    return unless market = BrowsePageService.new(url, "{}").call(parse_market)
+    update_market_data(market_provider, market)
+    create_companies(market_provider, market)
+    @page_number = market["capterra_market"]["pages_number"] unless @page_number
   end
 
   def update_market_data(market_provider, market)
@@ -60,8 +55,7 @@ class RetrieveCapterraMarketCompaniesJob < ApplicationJob
     fetched_domain = if redirect_url == "#"
       example_domain
     else
-      output, _error, status = BrowsePageService.new("#{CAPTERRA_BASE_URL}#{redirect_url}", playwright_options).call(get_domain)
-      status.success? ? JSON.parse(output) : example_domain
+      BrowsePageService.new("#{CAPTERRA_BASE_URL}#{redirect_url}", playwright_options).call(get_domain) || example_domain
     end
     company.domains.find_or_create_by!(name: fetched_domain["domain"])
   end

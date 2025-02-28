@@ -4,12 +4,7 @@ class FetchSerpsService < BaseService
     @options = options
   end
   def call(queries)
-    output, error, status = BrowsePagesService.new(urls(queries), @options).call(js_code)
-    if status.success?
-      JSON.parse(output)
-    else
-      logger.error "Error: #{error}"
-    end
+    BrowsePagesService.new(urls(queries), @options).call(js_code)
   end
 
   def urls(queries)

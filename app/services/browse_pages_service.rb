@@ -30,7 +30,11 @@ class BrowsePagesService < BaseService
       })();
     JS
     puts js_code
-
-    Open3.capture3(%Q(node -e '#{js_code.strip}'))
+    output, error, status = Open3.capture3(%Q(node -e '#{js_code.strip}'))
+    if status.success?
+      JSON.parse(output)
+    else
+      logger.error "Error: #{error}"
+    end
   end
 end

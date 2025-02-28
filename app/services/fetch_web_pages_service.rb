@@ -1,12 +1,7 @@
 class FetchWebPagesService < BaseService
   def call(urls)
     cleaned_urls = clean_urls(urls)
-    output, error, status = BrowsePagesService.new(cleaned_urls, "{}").call(js_code)
-    if status.success?
-      JSON.parse(output)
-    else
-      puts "Error: #{error.strip}"
-    end
+    BrowsePagesService.new(cleaned_urls, "{}").call(js_code)
   end
 
   private

@@ -2,20 +2,15 @@ class ScrapDomainJob < ApplicationJob
   queue_as :default
 
   def perform(domain)
-    output, error, status = BrowsePageService.new("http://#{domain.name}", "{}").call(js_code)
-    if status.success?
-      results = JSON.parse(output)
-      landing_page = domain.web_pages.find_or_initialize_by(url: results["url"])
-      landing_page.update(content: results["content"])
-      web_pages = FetchWebPagesService.new.call(results["links"])
-      web_pages.each do |page|
-        web_page = domain.web_pages.find_or_create_by!(url: page["url"])
-        web_page.update!(content: page["content"])
-      end
-      logger.info "Successfully scraped domain #{domain.name}"
-    else
-      logger.error "Error: #{error.strip}"
+    results = BrowsePageService.new("http://#{domain.name}", "{}").call(js_code)
+    landing_page = domain.web_pages.find_or_initialize_by(url: results["url"])
+    landing_page.update(content: results["content"])
+    web_pages = FetchWebPagesService.new.call(results["links"])
+    web_pages.each do |page|
+      web_page = domain.web_pages.find_or_create_by!(url: page["url"])
+      web_page.update!(content: page["content"])
     end
+    logger.info "Successfully scraped domain #{domain.name}"
   end
 
   private

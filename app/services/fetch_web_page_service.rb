@@ -1,12 +1,7 @@
 class FetchWebPageService < BaseService
   def call(url)
     return unless valid_url?(url)
-    output, error, status = BrowsePageService.new(url, "{}").call(js_code)
-    if status.success?
-      JSON.parse(output)
-    else
-      logger.error "Error: #{error.strip}"
-    end
+    BrowsePageService.new(url, "{}").call(js_code)
   end
 
   private

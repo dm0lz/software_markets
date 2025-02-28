@@ -5,12 +5,7 @@ class FetchSerpService < BaseService
   end
   def call(query)
     url = "https://duckduckgo.com/?t=h_&q=#{query.gsub("'", "")}"
-    output, error, status = BrowsePageService.new(url, @options).call(js_code)
-    if status.success?
-      JSON.parse(output)
-    else
-      logger.error "Error: #{error}"
-    end
+    BrowsePageService.new(url, @options).call(js_code)
   end
 
   private

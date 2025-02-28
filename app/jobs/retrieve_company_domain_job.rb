@@ -5,16 +5,11 @@ class RetrieveCompanyDomainJob < ApplicationJob
   def perform(company)
     company_name = company.name.downcase.gsub("'", "")
     url = "https://duckduckgo.com/?t=h_&q=#{company_name}+Official+Website&ia=web"
-    output, error, status = BrowsePageService.new(url, "{}").call(js_code(company_name))
-    if status.success?
-      results = JSON.parse(output)
-      puts results["count"]
-      domain = URI.parse(results["domain"]).host rescue nil
-      company.domains.update_all(name: PublicSuffix.domain(domain))
-      logger.info "#{results["domain"]}"
-    else
-      logger.error "Error: #{error}"
-    end
+    return unless results = BrowsePageService.new(url, "{}").call(js_code(company_name))
+    puts results["count"]
+    domain = URI.parse(results["domain"]).host rescue nil
+    company.domains.update_all(name: PublicSuffix.domain(domain))
+    logger.info "#{results["domain"]}"
   end
 
   private
