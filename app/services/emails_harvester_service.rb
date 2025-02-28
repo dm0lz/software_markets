@@ -1,4 +1,4 @@
-class EmailsHarvesterService
+class EmailsHarvesterService < BaseService
   def call(domain)
     serp = FetchSerpService.new.call("inbody%3A*%40#{domain.name}")
     urls = serp["search_results"].map { |ser| ser["url"] }

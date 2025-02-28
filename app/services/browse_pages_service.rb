@@ -1,5 +1,5 @@
 # Use double quotes only in the JS code
-class BrowsePagesService
+class BrowsePagesService < BaseService
   def initialize(urls, options)
     @urls = urls
     @options = options

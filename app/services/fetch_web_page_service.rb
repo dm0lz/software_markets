@@ -1,4 +1,4 @@
-class FetchWebPageService
+class FetchWebPageService < BaseService
   def call(url)
     return unless valid_url?(url)
     output, error, status = BrowsePageService.new(url, "{}").call(js_code)

@@ -1,18 +1,20 @@
-class FetchSerpsService
-  include ActiveSupport::Rescuable
+class FetchSerpsService < BaseService
   def initialize(pages_number = 10, options = "{}")
     @pages_number = pages_number
     @options = options
   end
   def call(queries)
-    urls = queries.map do |query|
-      "https://duckduckgo.com/?t=h_&q=#{query.gsub("'", "")}"
-    end
-    output, error, status = BrowsePagesService.new(urls, @options).call(js_code)
+    output, error, status = BrowsePagesService.new(urls(queries), @options).call(js_code)
     if status.success?
       JSON.parse(output)
     else
       logger.error "Error: #{error}"
+    end
+  end
+
+  def urls(queries)
+    queries.map do |query|
+      "https://duckduckgo.com/?t=h_&q=#{query.gsub("'", "")}"
     end
   end
 

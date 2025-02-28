@@ -1,4 +1,4 @@
-class CreateCompanyMarketsService
+class CreateCompanyMarketsService < BaseService
   def call
     Company.all.each do |company|
       begin

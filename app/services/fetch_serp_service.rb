@@ -1,5 +1,4 @@
-class FetchSerpService
-  include ActiveSupport::Rescuable
+class FetchSerpService < BaseService
   def initialize(pages_number = 10, options = "{}")
     @pages_number = pages_number
     @options = options

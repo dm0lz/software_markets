@@ -1,4 +1,4 @@
-class FetchWebPagesService
+class FetchWebPagesService < BaseService
   def call(urls)
     cleaned_urls = clean_urls(urls)
     output, error, status = BrowsePagesService.new(cleaned_urls, "{}").call(js_code)
