@@ -15,7 +15,7 @@ class RetrieveCompaniesDomainJob < ApplicationJob
 
   private
   def queries
-    companies = Company.joins(:domains).where(domains: { name: nil })# .take(1000)
+    companies = Company.joins(:domains).where(domains: { name: nil }).take(3000)
     companies.map do |company|
       company_name = company.name.downcase.gsub("'", "")
       "#{company_name}+Official+Website"
