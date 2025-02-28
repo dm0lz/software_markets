@@ -1,8 +1,8 @@
 class RetrieveCompaniesDomainJob < ApplicationJob
   queue_as :default
 
-  def perform
-    queries.each_slice(5000) do |batch|
+  def perform(batch_nb)
+    queries.each_slice(batch_nb) do |batch|
       results = FetchSerpsService.new.call(batch)
       results.each do |result|
         return unless company_name = result["serp_url"].match(/q=([\w+]+)\+Official/)[1].gsub("+", " ") rescue nil
