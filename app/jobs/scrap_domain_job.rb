@@ -5,10 +5,12 @@ class ScrapDomainJob < ApplicationJob
     output, error, status = BrowsePageService.new("http://#{domain.name}", "{}").call(js_code)
     if status.success?
       results = JSON.parse(output)
-      web_page = domain.web_pages.find_or_initialize_by(url: results["url"])
-      web_page.update(content: results["content"])
-      results["links"].each do |link|
-        FetchWebPageContentJob.perform_later(domain, link)
+      landing_page = domain.web_pages.find_or_initialize_by(url: results["url"])
+      landing_page.update(content: results["content"])
+      web_pages = FetchWebPagesService.new.call(results["links"])
+      web_pages.each do |page|
+        web_page = domain.web_pages.find_or_create_by!(url: page["url"])
+        web_page.update!(content: page["content"])
       end
       logger.info "Successfully scraped domain #{domain.name}"
     else

@@ -1,12 +1,11 @@
 class FetchWebPagesService
-  include ActiveSupport::Rescuable
   def call(urls)
     cleaned_urls = clean_urls(urls)
     output, error, status = BrowsePagesService.new(cleaned_urls, "{}").call(js_code)
     if status.success?
       JSON.parse(output)
     else
-      logger.error "Error: #{error.strip}"
+      puts "Error: #{error.strip}"
     end
   end
 
@@ -21,6 +20,7 @@ class FetchWebPagesService
   def js_code
     <<-JS
       return {
+        url: document.location.href,
         content: document.body.innerText
       }
     JS
