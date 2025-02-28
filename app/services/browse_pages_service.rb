@@ -6,7 +6,18 @@ class BrowsePagesService < BaseService
   end
 
   def call(script)
-    js_code = <<-JS
+    puts js_code
+    output, error, status = Open3.capture3(%Q(node -e '#{js_code.strip}'))
+    if status.success?
+      JSON.parse(output)
+    else
+      logger.error "Error: #{error}"
+    end
+  end
+
+  private
+  def js_code
+    <<-JS
       const { firefox } = require("playwright");
       (async () => {
         const browser = await firefox.launch(#{@options});
@@ -29,12 +40,5 @@ class BrowsePagesService < BaseService
         await browser.close();
       })();
     JS
-    puts js_code
-    output, error, status = Open3.capture3(%Q(node -e '#{js_code.strip}'))
-    if status.success?
-      JSON.parse(output)
-    else
-      logger.error "Error: #{error}"
-    end
   end
 end
