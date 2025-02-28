@@ -1,3 +1,4 @@
+# Company.joins(:domains).where(domains: {name: nil}).each{|l| RetrieveCompanyDomainJob.perform_later(l)}
 class RetrieveCompanyDomainJob < ApplicationJob
   queue_as :default
 

@@ -13,12 +13,16 @@ class BrowsePagesService
         const results = [];
         await Promise.all(
           #{@urls}.map(async(url) => {
-            const page = await browser.newPage();
-            await page.goto(url);
-            const data = await page.evaluate(() => {
-              #{script}
-            });
-            results.push(data);
+            try {
+              const page = await browser.newPage();
+              await page.goto(url);
+              const data = await page.evaluate(() => {
+                #{script}
+              });
+              results.push(data);
+            } catch(error) {
+              return null;
+            }
           })
         );
         console.log(JSON.stringify(results));
