@@ -8,9 +8,7 @@ class RetrieveCompanyDomainJob < ApplicationJob
     url = "https://duckduckgo.com/?t=h_&q=#{company_name}+Official+Website&ia=web"
     return unless results = BrowsePageService.new(url, "{}").call(js_code(company_name))
     puts results["count"]
-    retrieved_domain = URI.parse(results["domain"]).host rescue nil
-    domain = company.domains.find_by(name: nil)
-    logger.info domain.update!(name: PublicSuffix.domain(retrieved_domain))
+    company.domains.update_all(name: PublicSuffix.domain(results["domain"]))
     logger.info "#{results["domain"]}"
   end
 
@@ -40,11 +38,12 @@ class RetrieveCompanyDomainJob < ApplicationJob
         return entries.reduce((max, entry) => entry[1].length > max[1].length ? entry : max, entries[0])[0];
       };
       const matchingCompanyName = () => {
-        return [...document.querySelectorAll("ol > li > article")]
+        const domain = [...document.querySelectorAll("ol > li > article")]
           .filter(item => !item.querySelector("article > div:nth-child(2) > div > div > a")?.getAttribute("href").includes("play.google.com"))
           ?.find(item => item.querySelector("article > div:nth-child(2) > div > div > p")?.textContent.toLowerCase() === "#{company_name}")
           ?.querySelector("article > div:nth-child(3) > h2 > a")
           ?.getAttribute("href");
+        return domain ? new URL(domain).hostname : null;
       };
       return Promise.all(loadMorePromises).then(() => {
         return {
