@@ -9,7 +9,8 @@ class RetrieveCompanyDomainJob < ApplicationJob
     return unless results = BrowsePageService.new(url, "{}").call(js_code(company_name))
     puts results["count"]
     domain = URI.parse(results["domain"]).host rescue nil
-    company.domains.update_all(name: PublicSuffix.domain(domain))
+    domain = company.domains.find_by(name: nil)
+    domain.update!(name: PublicSuffix.domain(domain))
     logger.info "#{results["domain"]}"
   end
 
