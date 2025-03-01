@@ -1,15 +1,17 @@
 module ApplicationCable
   class Connection < ActionCable::Connection::Base
-    identified_by :current_user
+    identified_by :session_id
 
     def connect
-      set_current_user || reject_unauthorized_connection
+      set_session_id || reject_unauthorized_connection
     end
 
     private
-      def set_current_user
+      def set_session_id
         if session = Session.find_by(id: cookies.signed[:session_id])
-          self.current_user = session.user
+          self.session_id = session.user.id
+        else
+          self.session_id = cookies.encrypted["_software_markets_session"]["session_id"] rescue nil
         end
       end
   end

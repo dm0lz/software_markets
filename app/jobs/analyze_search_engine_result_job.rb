@@ -1,4 +1,4 @@
-class SearchEngineResultAiAnalyzerJob < ApplicationJob
+class AnalyzeSearchEngineResultJob < ApplicationJob
   queue_as :default
 
   def perform(search_engine_result)

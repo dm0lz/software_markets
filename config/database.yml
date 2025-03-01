@@ -32,6 +32,10 @@ development:
     <<: *default
     database: software_market_development_queue
     migrations_paths: db/queue_migrate
+  cable:
+    <<: *default
+    database: software_markets_production_cable
+    migrations_paths: db/cable_migrate
 
   # The specified database role being used to connect to PostgreSQL.
   # To create additional roles in PostgreSQL see `$ createuser --help`.

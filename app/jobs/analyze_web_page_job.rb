@@ -1,4 +1,4 @@
-class WebPageAiAnalyzerJob < ApplicationJob
+class AnalyzeWebPageJob < ApplicationJob
   queue_as :default
 
   def perform(web_page)
