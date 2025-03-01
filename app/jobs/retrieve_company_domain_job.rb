@@ -10,7 +10,7 @@ class RetrieveCompanyDomainJob < ApplicationJob
     puts results["count"]
     retrieved_domain = URI.parse(results["domain"]).host rescue nil
     domain = company.domains.find_by(name: nil)
-    domain.update!(name: PublicSuffix.domain(retrieved_domain))
+    logger.info domain.update!(name: PublicSuffix.domain(retrieved_domain))
     logger.info "#{results["domain"]}"
   end
 
