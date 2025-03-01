@@ -1,0 +1,11 @@
+<div>
+  <%= form_with url: public_domain_emails_path, method: :post do %>
+    <div>
+      <%= label_tag :domain_name, "Domain Name" %>
+      <%= text_field_tag :domain_name %>
+    </div>
+    <div>
+      <%= submit_tag "Submit" %>
+    </div>
+  <% end %>
+</div>
