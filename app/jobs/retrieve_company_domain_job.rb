@@ -8,9 +8,9 @@ class RetrieveCompanyDomainJob < ApplicationJob
     url = "https://duckduckgo.com/?t=h_&q=#{company_name}+Official+Website&ia=web"
     return unless results = BrowsePageService.new(url, "{}").call(js_code(company_name))
     puts results["count"]
-    domain = URI.parse(results["domain"]).host rescue nil
+    retrieved_domain = URI.parse(results["domain"]).host rescue nil
     domain = company.domains.find_by(name: nil)
-    domain.update!(name: PublicSuffix.domain(domain))
+    domain.update!(name: PublicSuffix.domain(retrieved_domain))
     logger.info "#{results["domain"]}"
   end
 
