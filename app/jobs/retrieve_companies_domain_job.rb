@@ -1,8 +1,8 @@
 class RetrieveCompaniesDomainJob < ApplicationJob
   queue_as :default
 
-  def perform(batch_nb)
-    queries.each_slice(batch_nb) do |batch|
+  def perform(companies)
+    queries(companies).each_slice(100) do |batch|
       results = FetchSerpsService.new.call(batch)
       results.each do |result|
         return unless company_name = CGI.unescape(result["serp_url"]).match(/q=([\w\s]+) Official/)[1] rescue nil
@@ -14,8 +14,8 @@ class RetrieveCompaniesDomainJob < ApplicationJob
   end
 
   private
-  def queries
-    companies = Company.joins(:domains).where(domains: { name: nil }).take(3000)
+  def queries(comanies)
+    # companies = Company.joins(:domains).where(domains: { name: nil }).take(3000)
     companies.map do |company|
       company_name = company.name.downcase.gsub("'", "")
       "#{company_name}+Official+Website"
