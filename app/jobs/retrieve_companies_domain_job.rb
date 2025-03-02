@@ -5,7 +5,7 @@ class RetrieveCompaniesDomainJob < ApplicationJob
     queries(companies).each_slice(batch_nb) do |batch|
       results = FetchSerpsService.new.call(batch)
       results.each do |result|
-        return unless company_name = CGI.unescape(result["serp_url"]).match(/q=([\w\s]+) Official/)[1] rescue nil
+        return unless company_name = CGI.unescape(result["serp_url"]).match(/q=([^\&]+)\sOfficial/)[1] rescue nil
         domain = matching_domain(result["search_results"], company_name) || recurring_domain(result["search_results"])
         company = Company.find_by(name: company_name)
         company.domains.update_all(name: PublicSuffix.domain(domain))
