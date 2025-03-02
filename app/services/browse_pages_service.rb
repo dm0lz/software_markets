@@ -26,15 +26,10 @@ class BrowsePagesService < BaseService
           #{@urls}.map(async(url) => {
             try {
               const page = await browser.newPage();
-              await page.goto(url, { timeout: 10000 });
-              const data = await Promise.race([
-                page.evaluate(() => {
-                  #{script}
-                }),
-                new Promise((_, reject) =>
-                  setTimeout(() => reject(new Error("Evaluate Timeout")), 10000)
-                )
-              ]);
+              await page.goto(url);
+              const data = await page.evaluate(() => {
+                #{script}
+              });
               results.push(data);
               await page.close();
             } catch (error) {}
