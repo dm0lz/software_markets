@@ -27,15 +27,13 @@ class FetchSerpsService < BaseService
       return Promise.all(loadMorePromises).then(() => {
         return {
           serp_url: document.location.href,
-          search_results: [...document.querySelectorAll("ol > li > article")].map((article, index) => {
-            return {
-              site_name: article.querySelector("article > div:nth-child(2)").querySelector("p").textContent,
-              url: article.querySelector("article > div:nth-child(3)").querySelector("a").getAttribute("href"),
-              title: article.querySelector("article > div:nth-child(3)").querySelector("h2").textContent,
-              description: article.querySelector("article > div:nth-child(4)").querySelector("div").textContent,
-              position: index + 1
-            }
-          })
+          search_results: [...document.querySelectorAll("ol > li > article")].map((article, index) => ({
+            site_name: article.querySelector("article > div:nth-child(2) p")?.textContent?.trim() || "N/A",
+            url: article.querySelector("article > div:nth-child(3) a")?.getAttribute("href") || "N/A",
+            title: article.querySelector("article > div:nth-child(3) h2")?.textContent?.trim() || "N/A",
+            description: article.querySelector("article > div:nth-child(4) div")?.textContent?.trim() || "N/A",
+            position: index + 1
+          }))
         }
       });
     JS
