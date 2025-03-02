@@ -22,24 +22,47 @@ class BrowsePagesService < BaseService
       (async () => {
         const browser = await firefox.launch(#{@options});
         const results = [];
-        await Promise.all(
-          #{@urls}.map(async(url) => {
-            try {
-              const page = await browser.newPage();
-              await page.goto(url);
-              const data = await page.evaluate(() => {
-                #{script}
-              });
-              results.push(data);
-              await page.close();
-            } catch (error) {}
-          })
-        );
+        for (const url of #{@urls}) {
+          try {
+            const page = await browser.newPage();
+            await page.goto(url);
+            const data = await page.evaluate(() => {
+              #{script}
+            });
+            results.push(data);
+            await page.close();
+          } catch (error) {}
+        }
         console.log(JSON.stringify(results));
         await browser.close();
       })();
     JS
   end
+
+  # def js_code(script)
+  #   <<-JS
+  #     const { firefox } = require("playwright");
+  #     (async () => {
+  #       const browser = await firefox.launch(#{@options});
+  #       const results = [];
+  #       await Promise.all(
+  #         #{@urls}.map(async(url) => {
+  #           try {
+  #             const page = await browser.newPage();
+  #             await page.goto(url);
+  #             const data = await page.evaluate(() => {
+  #               #{script}
+  #             });
+  #             results.push(data);
+  #             await page.close();
+  #           } catch (error) {}
+  #         })
+  #       );
+  #       console.log(JSON.stringify(results));
+  #       await browser.close();
+  #     })();
+  #   JS
+  # end
 
   # def js_code(script)
   #   <<-JS
