@@ -9,6 +9,8 @@ class RetrieveCompaniesDomainJob < ApplicationJob
         domain = matching_domain(result["search_results"], company_name) || recurring_domain(result["search_results"])
         company = Company.find_by(name: company_name)
         company.domains.update_all(name: PublicSuffix.domain(domain))
+        logger.info company.name
+        logger.info PublicSuffix.domain(domain)
       end
     end
   end
