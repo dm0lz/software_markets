@@ -3,7 +3,7 @@ class ScrapDomainJob < ApplicationJob
 
   def perform(domain)
     results = BrowsePageService.new("http://#{domain.name}", "{}").call(js_code)
-    landing_page = domain.web_pages.find_or_initialize_by(url: results["url"])
+    return unless landing_page = domain.web_pages.find_or_initialize_by(url: results["url"]) rescue nil
     landing_page.update(content: results["content"])
     web_pages = FetchWebPagesService.new.call(results["links"])
     web_pages.each do |page|
