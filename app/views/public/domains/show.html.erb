@@ -1,3 +1,8 @@
 <div>
   <%= @domain.name %>
 </div>
+<div>
+  <% @domain.extracted_content.each do |key, value| %>
+    <p><strong><%= key %>:</strong> <%= value %></p>
+  <% end %>
+</div>

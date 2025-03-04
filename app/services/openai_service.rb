@@ -1,6 +1,6 @@
 class OpenaiService < BaseService
   def call(user_prompt, response_schema)
-    client = OpenAI::Client.new(request_timeout: 600)
+    client = OpenAI::Client.new(request_timeout: 900)
     response = client.chat(
       parameters: {
         model: "custom-deepseek-r1:latest",
@@ -13,7 +13,7 @@ class OpenaiService < BaseService
           { role: "system", content: system_prompt },
           { role: "user", content: user_prompt }
         ],
-        temperature: 0.4
+        temperature: 0.2
       }
     )
     response["choices"][0]["message"]["content"]

@@ -2,7 +2,7 @@ class AnalyzeDomainJob < ApplicationJob
   queue_as :default
 
   def perform(domain)
-    pages_content = domain.web_pages.pluck(:content).join(" ")
+    pages_content = domain.web_pages.pluck(:content).join(" ").truncate(100000)
     response = OpenaiService.new.call(user_prompt + pages_content, response_schema)
     logger.info response
     json_content = JSON.parse(response.match(/{.*}/m).to_s) rescue nil
@@ -14,6 +14,7 @@ class AnalyzeDomainJob < ApplicationJob
     <<-PROMPT
       Key task : Analyze the content of the web pages and extract the company information.
       Provide a summary of the company's activity.
+      Do not invent things. If you dont know the answer, answer that you dont know.
       Include the following information:
 
       1. General Company Information
@@ -27,7 +28,7 @@ class AnalyzeDomainJob < ApplicationJob
       -	Company Description
       - main company focus and key points.
       - main company market.
-      - features of the company's product.
+      - features of the company's products or services.
       - company's unique selling points.
 
       2. Industry & Market Position
