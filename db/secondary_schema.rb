@@ -10,9 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_02_27_145818) do
+ActiveRecord::Schema[8.0].define(version: 2025_03_06_140428) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
+  enable_extension "vector"
 
   create_table "active_admin_comments", force: :cascade do |t|
     t.string "namespace"
@@ -156,6 +157,15 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_27_145818) do
     t.index ["email_address"], name: "index_users_on_email_address", unique: true
   end
 
+  create_table "web_page_chunks", force: :cascade do |t|
+    t.bigint "web_page_id", null: false
+    t.text "content"
+    t.vector "embedding", limit: 3584
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["web_page_id"], name: "index_web_page_chunks_on_web_page_id"
+  end
+
   create_table "web_pages", force: :cascade do |t|
     t.string "url", null: false
     t.bigint "domain_id", null: false
@@ -179,5 +189,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_27_145818) do
   add_foreign_key "search_engine_results", "search_engine_results_pages"
   add_foreign_key "sessions", "users"
   add_foreign_key "software_applications", "domains"
+  add_foreign_key "web_page_chunks", "web_pages"
   add_foreign_key "web_pages", "domains"
 end

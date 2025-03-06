@@ -4,6 +4,7 @@ class Domain < ApplicationRecord
   has_many :web_pages, dependent: :destroy
   has_many :keyword_web_pages, dependent: :destroy
   has_many :keywords, through: :keyword_web_pages
+  has_many :web_page_chunks, through: :web_pages
 
   scope :unknown, -> { where(name: [ "example.com", "www.capterra.fr" ]) }
 
@@ -11,5 +12,9 @@ class Domain < ApplicationRecord
     def ransackable_attributes(auth_object = nil)
       %w[name] + _ransackers.keys
     end
+  end
+
+  def web_page_chunks_including_content(query_embedding, limit = 5)
+    web_page_chunks.order(Arel.sql("web_page_chunks.embedding <=> '#{query_embedding}'")).limit(limit)
   end
 end
