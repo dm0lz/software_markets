@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_03_06_140428) do
+ActiveRecord::Schema[8.0].define(version: 2025_03_06_205854) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "vector"
@@ -160,9 +160,9 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_06_140428) do
   create_table "web_page_chunks", force: :cascade do |t|
     t.bigint "web_page_id", null: false
     t.text "content"
-    t.vector "embedding", limit: 3584
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.vector "embedding", limit: 1024
     t.index ["web_page_id"], name: "index_web_page_chunks_on_web_page_id"
   end
 

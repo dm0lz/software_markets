@@ -2,7 +2,7 @@ class AnalyzeWebPageJob < ApplicationJob
   queue_as :default
 
   def perform(web_page)
-    response = OpenaiService.new.call(user_prompt + web_page.content, response_schema)
+    response = OpenaiChatService.new.call(user_prompt + web_page.content, response_schema)
     logger.info response
     web_page.update!(extracted_content: response)
   end

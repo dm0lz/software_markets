@@ -2,7 +2,7 @@ class AnalyzeSearchEngineResultJob < ApplicationJob
   queue_as :default
 
   def perform(search_engine_result)
-    response = OpenaiService.new.call(user_prompt(search_engine_result), response_schema(search_engine_result))
+    response = OpenaiChatService.new.call(user_prompt(search_engine_result), response_schema(search_engine_result))
     logger.info response
     json = response.match(/{.*}/m)
     is_company = JSON.parse(json.to_s)["is_company_website"] rescue nil

@@ -14,7 +14,7 @@ class WebPage < ApplicationRecord
   end
 
   def create_web_page_chunks
-    chunk_size, overlap = 512, 50
+    chunk_size, overlap = 1024, 100
     (0..content.length).step(chunk_size - overlap).map do |i|
       web_page_chunk = web_page_chunks.create(content: content[i, chunk_size])
       GenerateEmbeddingJob.perform_later(web_page_chunk)
