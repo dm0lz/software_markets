@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_03_08_100444) do
+ActiveRecord::Schema[8.0].define(version: 2025_03_08_182701) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "vector"
@@ -40,6 +40,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_08_100444) do
     t.bigint "market_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["company_id", "market_id"], name: "index_company_markets_on_company_id_and_market_id", unique: true
     t.index ["company_id"], name: "index_company_markets_on_company_id"
     t.index ["market_id"], name: "index_company_markets_on_market_id"
   end
