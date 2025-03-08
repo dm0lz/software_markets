@@ -26,7 +26,7 @@ class CompanyMarketTest < ActiveSupport::TestCase
   end
 
   test "company_id and market_id should be unique together" do
-    duplicate_company_market = CompanyMarket.new(company: @company, market: @market)
+    duplicate_company_market = @company_market.dup
     assert_not duplicate_company_market.valid?
     assert_includes duplicate_company_market.errors.full_messages, "Company has already been added to this market"
   end
