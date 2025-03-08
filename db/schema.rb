@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_03_06_205854) do
+ActiveRecord::Schema[8.0].define(version: 2025_03_08_100444) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "vector"
@@ -37,6 +37,15 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_06_205854) do
     t.datetime "updated_at", null: false
     t.jsonb "extracted_content", default: {}, null: false
     t.index ["company_id"], name: "index_domains_on_company_id"
+    t.index ["extracted_content"], name: "index_domains_on_extracted_content", using: :gin
+  end
+
+  create_table "feature_extraction_queries", force: :cascade do |t|
+    t.text "content"
+    t.vector "embedding", limit: 1024
+    t.string "search_field"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "keyword_markets", force: :cascade do |t|

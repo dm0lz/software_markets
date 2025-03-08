@@ -1,0 +1,16 @@
+<p style="color: green"><%= notice %></p>
+
+<% content_for :title, "Feature extraction queries" %>
+
+<h1>Feature extraction queries</h1>
+
+<div id="feature_extraction_queries">
+  <% @feature_extraction_queries.each do |feature_extraction_query| %>
+    <%= render feature_extraction_query %>
+    <p>
+      <%= link_to "Show this feature extraction query", admin_feature_extraction_query_path(feature_extraction_query) %>
+    </p>
+  <% end %>
+</div>
+
+<%= link_to "New feature extraction query", new_admin_feature_extraction_query_path %>

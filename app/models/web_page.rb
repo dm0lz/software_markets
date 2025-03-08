@@ -9,7 +9,7 @@ class WebPage < ApplicationRecord
     JSON.parse(extracted_content.match(/{.*}/m).to_s) rescue nil
   end
 
-  def web_page_chunks_including_content(query_embedding, limit = 5)
+  def web_page_chunks_similar_to(query_embedding, limit = 5)
     web_page_chunks.order(Arel.sql("web_page_chunks.embedding <=> '#{query_embedding}'")).limit(limit)
   end
 

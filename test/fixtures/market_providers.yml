@@ -3,7 +3,11 @@
 one:
   market: one
   provider: one
+  market_name: French Market Name
+  market_url: Capterra Market Page
 
 two:
   market: two
   provider: two
+  market_name: French Market Name
+  market_url: Capterra Market Page

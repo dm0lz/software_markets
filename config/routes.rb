@@ -25,6 +25,10 @@ Rails.application.routes.draw do
     root "markets#index"
   end
 
+  namespace :admin do
+    resources :feature_extraction_queries
+  end
+
   namespace :app, path: "/app" do
     resources :users, only: [ :show ]
     root "users#show"

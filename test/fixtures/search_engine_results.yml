@@ -1,15 +1,17 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  search_engine_results_page: one
+  site_name: MyString
   query: MyString
-  link: MyString
+  url: MyString
   title: MyString
   description: MyText
+  position: 1
 
 two:
-  search_engine_results_page: two
+  site_name: MyString
   query: MyString
-  link: MyString
+  url: MyString
   title: MyString
   description: MyText
+  position: 2

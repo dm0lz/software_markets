@@ -1,0 +1,10 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render @feature_extraction_query %>
+
+<div>
+  <%= link_to "Edit this feature extraction query", edit_admin_feature_extraction_query_path(@feature_extraction_query) %> |
+  <%= link_to "Back to feature extraction queries", admin_feature_extraction_queries_path %>
+
+  <%= button_to "Destroy this feature extraction query", [:admin, @feature_extraction_query], method: :delete %>
+</div>

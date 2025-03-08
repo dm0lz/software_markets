@@ -10,7 +10,7 @@ class AnalyzeWebPageJob < ApplicationJob
   private
   def user_prompt
     <<-PROMPT
-      Key task : Analyze the content of the page and extract the company information.
+      Task : Analyze the content of the page and extract the company information.
       Provide a summary of the company's activity.
       Include the following information:
 

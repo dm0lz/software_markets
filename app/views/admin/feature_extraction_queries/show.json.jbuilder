@@ -1,0 +1,1 @@
+json.partial! "feature_extraction_queries/feature_extraction_query", feature_extraction_query: @feature_extraction_query

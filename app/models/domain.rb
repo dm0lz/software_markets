@@ -14,7 +14,13 @@ class Domain < ApplicationRecord
     end
   end
 
-  def web_page_chunks_including_content(query_embedding, limit = 5)
+  def web_page_chunks_similar_to(query_embedding, limit = 5)
     web_page_chunks.order(Arel.sql("web_page_chunks.embedding <=> '#{query_embedding}'")).limit(limit)
+  end
+
+  def generate_extracted_content
+    FeatureExtractionQuery.all.each do |query|
+      ExtractDomainFeatureJob.perform_later(self, query)
+    end
   end
 end
