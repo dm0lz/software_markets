@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_03_08_185439) do
+ActiveRecord::Schema[8.0].define(version: 2025_03_09_094757) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "vector"
@@ -68,6 +68,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_08_185439) do
     t.bigint "market_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["keyword_id", "market_id"], name: "index_keyword_markets_on_keyword_id_and_market_id", unique: true
     t.index ["keyword_id"], name: "index_keyword_markets_on_keyword_id"
     t.index ["market_id"], name: "index_keyword_markets_on_market_id"
   end
@@ -79,6 +80,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_08_185439) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["domain_id"], name: "index_keyword_web_pages_on_domain_id"
+    t.index ["keyword_id", "web_page_id"], name: "index_keyword_web_pages_on_keyword_id_and_web_page_id", unique: true
     t.index ["keyword_id"], name: "index_keyword_web_pages_on_keyword_id"
     t.index ["web_page_id"], name: "index_keyword_web_pages_on_web_page_id"
   end
