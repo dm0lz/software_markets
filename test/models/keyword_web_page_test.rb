@@ -5,7 +5,6 @@ class KeywordWebPageTest < ActiveSupport::TestCase
     @keyword_web_page = keyword_web_pages(:one)
     @keyword = keywords(:one)
     @web_page = web_pages(:one)
-    @domain = domains(:one)
   end
 
   test "should be valid" do
@@ -26,13 +25,6 @@ class KeywordWebPageTest < ActiveSupport::TestCase
     assert_includes invalid_keyword_web_page.errors.full_messages, "Web page must exist"
   end
 
-  test "should require a domain" do
-    invalid_keyword_web_page = keyword_web_pages(:one)
-    invalid_keyword_web_page.domain = nil
-    assert_not invalid_keyword_web_page.valid?
-    assert_includes invalid_keyword_web_page.errors.full_messages, "Domain must exist"
-  end
-
   test "keyword_id and web_page_id should be unique together" do
     duplicate_keyword_web_page = keyword_web_pages(:one).dup
     assert_not duplicate_keyword_web_page.valid?
@@ -45,10 +37,6 @@ class KeywordWebPageTest < ActiveSupport::TestCase
 
   test "associated web_page should be accessible" do
     assert_equal @web_page, @keyword_web_page.web_page
-  end
-
-  test "associated domain should be accessible" do
-    assert_equal @domain, @keyword_web_page.domain
   end
 
   test "should destroy dependent records" do
@@ -66,12 +54,6 @@ class KeywordWebPageTest < ActiveSupport::TestCase
   test "should destroy associated web_page when web_page is deleted" do
     keyword_web_page = keyword_web_pages(:two)
     keyword_web_page.web_page.destroy
-    assert_not KeywordWebPage.exists?(keyword_web_page.id)
-  end
-
-  test "should destroy associated domain when domain is deleted" do
-    keyword_web_page = keyword_web_pages(:two)
-    keyword_web_page.domain.destroy
     assert_not KeywordWebPage.exists?(keyword_web_page.id)
   end
 end

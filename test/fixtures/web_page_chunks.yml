@@ -3,9 +3,9 @@
 one:
   web_page: one
   content: MyText
-  embedding: 
+  embedding:
 
 two:
   web_page: two
-  content: MyText
-  embedding: 
+  content: MyTextTwo
+  embedding:

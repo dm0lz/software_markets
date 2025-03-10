@@ -3,9 +3,7 @@
 one:
   keyword: one
   web_page: one
-  domain: one
 
 two:
   keyword: two
   web_page: two
-  domain: two

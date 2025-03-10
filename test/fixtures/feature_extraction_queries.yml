@@ -6,6 +6,6 @@ one:
   search_field: MyString
 
 two:
-  content: MyText
+  content: MyTextTwo
   embedding:
-  search_field: MyString
+  search_field: MyStringTwo

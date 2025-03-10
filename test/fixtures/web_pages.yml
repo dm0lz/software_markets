@@ -3,7 +3,9 @@
 one:
   url: MyString
   domain: one
+  content: MyText
 
 two:
   url: MyString
   domain: two
+  content: MyTextTwo
