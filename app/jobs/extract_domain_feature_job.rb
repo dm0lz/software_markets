@@ -2,10 +2,10 @@ class ExtractDomainFeatureJob < ApplicationJob
   queue_as :default
 
   def perform(domain, query)
-    relevant_chunks = domain.web_page_chunks_similar_to(query.embedding)
+    relevant_chunks = domain.web_page_chunks_similar_to(query.embedding, 15)
     response = OpenaiChatService.new.call(user_prompt(relevant_chunks, query), response_schema(query))
     json = JSON.parse(response.match(/{.*}/m).to_s) rescue nil
-    domain.update(extracted_content: domain.extracted_content.merge(
+    domain.update(extracted_content: domain.reload.extracted_content.merge(
       { "#{query.search_field}" => json["#{query.search_field}"] }
     ))
   end

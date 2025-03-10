@@ -15,9 +15,9 @@ class WebPage < ApplicationRecord
     end
   end
 
-  def chunks(chunk_size = 1024, overlap = 100)
-    content.split(/(?<=[.!?])\s+/).reduce([ "" ]) do |chunks, sentence|
-      chunks.last.length + sentence.length < chunk_size ? chunks.tap { |c| c[-1] += sentence } : chunks << (chunks.last[-overlap..] || "") + sentence
-    end
-  end
+  # def chunks(chunk_size = 1024, overlap = 100)
+  #   content.split(/(?<=[.!?])\s+/).reduce([ "" ]) do |chunks, sentence|
+  #     chunks.last.length + sentence.length < chunk_size ? chunks.tap { |c| c[-1] += sentence } : chunks << (chunks.last[-overlap..] || "") + sentence
+  #   end
+  # end
 end
