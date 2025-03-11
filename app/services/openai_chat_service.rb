@@ -11,12 +11,12 @@ class OpenaiChatService < BaseService
         },
         messages: [
           { role: "system", content: system_prompt },
-          { role: "user", content: user_prompt }
+          { role: "user", content: user_prompt.truncate(100000) }
         ],
         temperature: 0.2
       }
     )
-    response["choices"][0]["message"]["content"]
+    JSON.parse(response["choices"][0]["message"]["content"].match(/{.*}/m).to_s) rescue nil
   end
 
   private
@@ -35,8 +35,7 @@ class OpenaiChatService < BaseService
 
       You will receive:
       1. Content to analyze
-      2. Specific questions to answer
-      3. JSON schema for response format
+      2. JSON schema for response format
     PROMPT
   end
 end

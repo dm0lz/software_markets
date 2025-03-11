@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_03_09_130116) do
+ActiveRecord::Schema[8.0].define(version: 2025_03_11_133506) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "vector"
@@ -161,6 +161,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_09_130116) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.text "content"
+    t.text "summary"
+    t.vector "summary_embedding", limit: 1024
     t.index ["domain_id"], name: "index_web_pages_on_domain_id"
   end
 

@@ -2,11 +2,10 @@ class AnalyzeDomainJob < ApplicationJob
   queue_as :default
 
   def perform(domain)
-    pages_content = domain.web_pages.pluck(:content).join(" ").truncate(100000)
+    pages_content = domain.web_pages.pluck(:content).join(" ")
     response = OpenaiChatService.new.call(user_prompt + pages_content, response_schema)
     logger.info response
-    json_content = JSON.parse(response.match(/{.*}/m).to_s) rescue nil
-    domain.update!(extracted_content: json_content) if json_content
+    domain.update!(extracted_content: response) if response
   end
 
   private

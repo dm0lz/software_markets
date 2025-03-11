@@ -2,11 +2,15 @@ class ExtractDomainFeatureJob < ApplicationJob
   queue_as :default
 
   def perform(domain, query)
-    relevant_chunks = domain.web_page_chunks_similar_to(query.embedding, 15)
-    response = OpenaiChatService.new.call(user_prompt(relevant_chunks, query), response_schema(query))
-    json = JSON.parse(response.match(/{.*}/m).to_s) rescue nil
+    relevant_chunks = domain.web_page_chunks_similar_to(query.embedding, 10)
+    relevant_chunks_summary = domain.web_pages_summary_similar_to(query.embedding, 10)
+    response = OpenaiChatService.new.call(user_prompt(relevant_chunks.pluck(:content).join(" "), query), response_schema(query))
+    summary_response = OpenaiChatService.new.call(user_prompt(relevant_chunks_summary.pluck(:summary).join(" "), query), response_schema(query))
     domain.update(extracted_content: domain.reload.extracted_content.merge(
-      { "#{query.search_field}" => json["#{query.search_field}"] }
+      {
+        "#{query.search_field}" => response["#{query.search_field}"],
+        "#{query.search_field}_summary" => summary_response["#{query.search_field}"]
+      }
     ))
   end
 
@@ -15,7 +19,7 @@ class ExtractDomainFeatureJob < ApplicationJob
     <<-PROMPT
       Task : Analyze the provided content and answer the question.
       Question : #{query.content}
-      Provided content : #{relevant_chunks.pluck(:content).join(" ")}
+      Provided content : #{relevant_chunks}
     PROMPT
   end
 
