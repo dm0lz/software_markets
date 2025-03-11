@@ -1,5 +1,6 @@
 class ScrapDomainJob < ApplicationJob
   queue_as :default
+  queue_with_priority 3
 
   def perform(domain)
     results = BrowsePageService.new("http://#{domain.name}", "{}").call(js_code)

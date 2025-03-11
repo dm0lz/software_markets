@@ -1,5 +1,6 @@
 class SummarizeWebPageJob < ApplicationJob
   queue_as :default
+  queue_with_priority 2
 
   def perform(web_page)
     response = OpenaiChatService.new.call(user_prompt(web_page), response_schema)
