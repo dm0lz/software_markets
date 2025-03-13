@@ -22,6 +22,6 @@ class BrowsePageStealthService < BaseService
       })();
     JS
 
-    Open3.capture3(%Q(node -e '#{js_code.strip}'))
+    ExecuteNodeScriptService.new.call(js_code)
   end
 end

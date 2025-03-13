@@ -2,7 +2,7 @@ class ScrapCapterraMarketsJob < ApplicationJob
   queue_as :default
 
   def perform(url)
-    markets = BrowsePageService.new(url, "{}").call(js_code)
+    markets = BrowsePageService.new(url, js_code).call
     logger.info output
     provider = Provider.find_or_create_by!(name: "Capterra", domain: "capterra.fr")
     markets["capterra_markets"].map do |capterra_market|

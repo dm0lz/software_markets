@@ -5,7 +5,7 @@ class FetchSerpService < BaseService
   end
   def call(query)
     url = "https://duckduckgo.com/?t=h_&q=#{query.gsub("'", "")}"
-    BrowsePageService.new(url, @options).call(js_code.strip)
+    BrowsePageService.new(url, js_code, @options).call
   end
 
   private

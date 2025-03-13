@@ -6,7 +6,7 @@ class RetrieveCompanyDomainJob < ApplicationJob
   def perform(company)
     company_name = company.name.downcase.gsub("'", "")
     url = "https://duckduckgo.com/?t=h_&q=#{company_name}+Official+Website&ia=web"
-    return unless results = BrowsePageService.new(url, "{}").call(js_code(company_name))
+    return unless results = BrowsePageService.new(url, js_code(company_name)).call
     puts results["count"]
     company.domains.update_all(name: PublicSuffix.domain(results["domain"]))
     logger.info "#{results["domain"]}"

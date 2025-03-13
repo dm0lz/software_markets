@@ -1,22 +1,18 @@
 # Use double quotes only in the JS code
 class BrowsePagesService < BaseService
-  def initialize(urls, options)
+  def initialize(urls, script, options)
     @urls = urls
+    @script = script
     @options = options
   end
 
-  def call(script)
-    puts js_code(script)
-    output, error, status = Open3.capture3(%Q(node -e '#{js_code(script).strip}'))
-    if status.success?
-      JSON.parse(output)
-    else
-      logger.error "Error: #{error}"
-    end
+  def call
+    puts js_code
+    ExecuteNodeScriptService.new.call(js_code)
   end
 
   private
-  def js_code(script)
+  def js_code
     <<-JS
       const { firefox } = require("playwright");
       (async () => {
@@ -27,7 +23,7 @@ class BrowsePagesService < BaseService
             const page = await browser.newPage();
             await page.goto(url);
             const data = await page.evaluate(() => {
-              #{script}
+              #{@script}
             });
             results.push(data);
             await page.close();
@@ -38,31 +34,6 @@ class BrowsePagesService < BaseService
       })();
     JS
   end
-
-  # def js_code(script)
-  #   <<-JS
-  #     const { firefox } = require("playwright");
-  #     (async () => {
-  #       const browser = await firefox.launch(#{@options});
-  #       const results = [];
-  #       await Promise.all(
-  #         #{@urls}.map(async(url) => {
-  #           try {
-  #             const page = await browser.newPage();
-  #             await page.goto(url);
-  #             const data = await page.evaluate(() => {
-  #               #{script}
-  #             });
-  #             results.push(data);
-  #             await page.close();
-  #           } catch (error) {}
-  #         })
-  #       );
-  #       console.log(JSON.stringify(results));
-  #       await browser.close();
-  #     })();
-  #   JS
-  # end
 
   # def js_code(script)
   #   <<-JS
