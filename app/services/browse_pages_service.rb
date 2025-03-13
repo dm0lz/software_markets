@@ -1,18 +1,17 @@
 # Use double quotes only in the JS code
 class BrowsePagesService < BaseService
-  def initialize(urls, script, options)
+  def initialize(urls, options = "{}")
     @urls = urls
-    @script = script
     @options = options
   end
 
-  def call
-    puts js_code
-    ExecuteNodeScriptService.new.call(js_code)
+  def call(script)
+    puts js_code(script)
+    ExecuteNodeScriptService.new.call(js_code(script))
   end
 
   private
-  def js_code
+  def js_code(script)
     <<-JS
       const { firefox } = require("playwright");
       (async () => {
@@ -23,7 +22,7 @@ class BrowsePagesService < BaseService
             const page = await browser.newPage();
             await page.goto(url);
             const data = await page.evaluate(() => {
-              #{@script}
+              #{script}
             });
             results.push(data);
             await page.close();

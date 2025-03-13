@@ -1,7 +1,7 @@
 class FetchWebPagesService < BaseService
   def call(urls)
     cleaned_urls = clean_urls(urls)
-    BrowsePagesService.new(cleaned_urls, js_code).call
+    BrowsePagesService.new(cleaned_urls).call(js_code)
   end
 
   private

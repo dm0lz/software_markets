@@ -3,7 +3,7 @@ class ScrapDomainJob < ApplicationJob
   queue_with_priority 3
 
   def perform(domain)
-    results = BrowsePageService.new("http://#{domain.name}", js_code).call
+    results = BrowsePageService.new("http://#{domain.name}").call(js_code)
     landing_page = domain.web_pages.find_or_initialize_by(url: results["url"])
     landing_page.update(content: results["content"])
     web_pages = FetchWebPagesService.new.call(results["links"])

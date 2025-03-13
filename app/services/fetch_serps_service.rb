@@ -4,7 +4,7 @@ class FetchSerpsService < BaseService
     @options = options
   end
   def call(queries)
-    BrowsePagesService.new(urls(queries), js_code, @options).call
+    BrowsePagesService.new(urls(queries), @options).call(js_code)
   end
 
   def urls(queries)
