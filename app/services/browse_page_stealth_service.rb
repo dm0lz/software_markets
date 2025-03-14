@@ -1,6 +1,6 @@
 # Use double quotes only in the JS code
 class BrowsePageStealthService < BaseService
-  def initialize(url, options)
+  def initialize(url, options = "{}")
     @url = url
     @options = options
   end
