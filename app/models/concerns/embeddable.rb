@@ -6,6 +6,7 @@ module Embeddable
     class_attribute :embedding_target_column, default: :embedding
 
     after_save :generate_embedding, if: -> { saved_change_to_attribute?(embedding_source_column) }
+    validates embedding_source_column, presence: true
   end
 
   class_methods do

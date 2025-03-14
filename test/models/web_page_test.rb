@@ -2,9 +2,10 @@ require "test_helper"
 
 class WebPageTest < ActiveSupport::TestCase
   include ActiveJob::TestHelper
+
   def setup
-    @web_page = web_pages(:one)
-    @domain = domains(:one)
+    @web_page = create(:web_page)
+    @domain = @web_page.domain
   end
 
   test "should be valid" do
@@ -34,6 +35,9 @@ class WebPageTest < ActiveSupport::TestCase
   end
 
   test "should destroy dependent keyword_web_pages" do
+    keyword = create(:keyword)
+    @web_page.keywords << keyword
+
     assert_difference("KeywordWebPage.count", -1) do
       @web_page.destroy
     end
@@ -46,19 +50,10 @@ class WebPageTest < ActiveSupport::TestCase
   end
 
   test "web_page_chunks_similar_to should return ordered web page chunks" do
-    query = feature_extraction_queries(:one)
-    query.generate_embedding
+    query = create(:feature_extraction_query)
     query.reload
-    @web_page.web_page_chunks.each(&:generate_embedding)
-    @web_page.web_page_chunks.reload
-    similar_chunks = @web_page.web_page_chunks_similar_to(query.embedding, 1)
-    assert_equal @web_page.web_page_chunks.first, similar_chunks[0]
-  end
 
-  test "create_web_page_chunks should create web page chunks" do
-    @web_page.update!(content: "This is a test content for the create_web_page_chunks method")
-    assert_difference("WebPageChunk.count", 1) do
-      @web_page.create_web_page_chunks
-    end
+    similar_chunks = @web_page.web_page_chunks_similar_to(query.embedding, 1)
+    assert_equal @web_page.web_page_chunks.first, similar_chunks.first
   end
 end

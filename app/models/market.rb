@@ -1,5 +1,5 @@
 class Market < ApplicationRecord
-  validates :name, presence: true
+  validates :name, presence: true, uniqueness: true
   has_many :market_providers, dependent: :destroy
   has_many :providers, through: :market_providers
   has_many :company_markets, dependent: :destroy

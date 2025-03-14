@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :provider do
-    name { "MyString" }
-    domain { "MyString" }
+    sequence(:name) { |n| "Provider #{n}" }
+    sequence(:domain) { |n| "domain-#{n}.com" }
   end
 end

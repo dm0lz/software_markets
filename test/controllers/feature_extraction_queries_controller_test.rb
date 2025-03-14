@@ -2,9 +2,9 @@ require "test_helper"
 
 class FeatureExtractionQueriesControllerTest < ActionDispatch::IntegrationTest
   setup do
-    @feature_extraction_query = feature_extraction_queries(:one)
-    admin_session = sessions(:admin_session)
-    sign_in(admin_session.user)
+    @feature_extraction_query = create(:feature_extraction_query)
+    @admin = create(:admin)
+    sign_in(@admin)
   end
 
   def sign_in(user)
@@ -23,9 +23,8 @@ class FeatureExtractionQueriesControllerTest < ActionDispatch::IntegrationTest
 
   test "should create feature_extraction_query" do
     assert_difference("FeatureExtractionQuery.count") do
-      post admin_feature_extraction_queries_url, params: { feature_extraction_query: { content: @feature_extraction_query.content, embedding: @feature_extraction_query.embedding, search_field: @feature_extraction_query.search_field } }
+      post admin_feature_extraction_queries_url, params: { feature_extraction_query: attributes_for(:feature_extraction_query) }
     end
-
     assert_redirected_to admin_feature_extraction_query_url(FeatureExtractionQuery.last)
   end
 
@@ -40,7 +39,9 @@ class FeatureExtractionQueriesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should update feature_extraction_query" do
-    patch admin_feature_extraction_query_url(@feature_extraction_query), params: { feature_extraction_query: { content: @feature_extraction_query.content, embedding: @feature_extraction_query.embedding, search_field: @feature_extraction_query.search_field } }
+    patch admin_feature_extraction_query_url(@feature_extraction_query), params: {
+      feature_extraction_query: attributes_for(:feature_extraction_query)
+    }
     assert_redirected_to admin_feature_extraction_query_url(@feature_extraction_query)
   end
 

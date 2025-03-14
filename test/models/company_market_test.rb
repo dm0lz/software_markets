@@ -1,12 +1,10 @@
 require "test_helper"
 
 class CompanyMarketTest < ActiveSupport::TestCase
-  fixtures :companies, :markets, :company_markets
-
   def setup
-    @company = companies(:one)
-    @market = markets(:one)
-    @company_market = company_markets(:one)
+    @company_market = create(:company_market)
+    @company = @company_market.company
+    @market = @company_market.market
   end
 
   test "should be valid" do
@@ -14,15 +12,15 @@ class CompanyMarketTest < ActiveSupport::TestCase
   end
 
   test "should require a company" do
-    @company_market.company = nil
-    assert_not @company_market.valid?
-    assert_includes @company_market.errors.full_messages, "Company must exist"
+    invalid_company_market = build(:company_market, company: nil)
+    assert_not invalid_company_market.valid?
+    assert_includes invalid_company_market.errors.full_messages, "Company must exist"
   end
 
   test "should require a market" do
-    @company_market.market = nil
-    assert_not @company_market.valid?
-    assert_includes @company_market.errors.full_messages, "Market must exist"
+    invalid_company_market = build(:company_market, market: nil)
+    assert_not invalid_company_market.valid?
+    assert_includes invalid_company_market.errors.full_messages, "Market must exist"
   end
 
   test "company_id and market_id should be unique together" do
@@ -46,16 +44,12 @@ class CompanyMarketTest < ActiveSupport::TestCase
   end
 
   test "should destroy associated company when company is deleted" do
-    new_company = companies(:two)
-    company_market = company_markets(:two)
-    new_company.destroy
-    assert_not CompanyMarket.exists?(company_market.id)
+    @company.destroy
+    assert_not CompanyMarket.exists?(@company_market.id)
   end
 
   test "should destroy associated market when market is deleted" do
-    new_market = markets(:two)
-    company_market = company_markets(:two)
-    new_market.destroy
-    assert_not CompanyMarket.exists?(company_market.id)
+    @market.destroy
+    assert_not CompanyMarket.exists?(@company_market.id)
   end
 end

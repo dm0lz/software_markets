@@ -9,8 +9,7 @@ class WebPage < ApplicationRecord
   has_many :keywords, through: :keyword_web_pages
   has_many :web_page_chunks, dependent: :destroy
 
-  validates :url, :content, presence: true
-  validates :url, uniqueness: true
+  validates :url, presence: true, uniqueness: true
 
   scope :summary_similar_to, ->(query_embedding, limit = 5) {
     order(Arel.sql("web_pages.summary_embedding <=> '#{query_embedding}'")).limit(limit)

@@ -1,12 +1,10 @@
 require "test_helper"
 
 class MarketProviderTest < ActiveSupport::TestCase
-  fixtures :markets, :providers, :market_providers
-
   def setup
-    @market_provider = market_providers(:one)
-    @market = markets(:one)
-    @provider = providers(:one)
+    @market_provider = create(:market_provider)
+    @market = @market_provider.market
+    @provider = @market_provider.provider
   end
 
   test "should be valid" do
@@ -14,15 +12,13 @@ class MarketProviderTest < ActiveSupport::TestCase
   end
 
   test "should require a market" do
-    invalid_market_provider = market_providers(:one)
-    invalid_market_provider.market = nil
+    invalid_market_provider = build(:market_provider, market: nil)
     assert_not invalid_market_provider.valid?
     assert_includes invalid_market_provider.errors.full_messages, "Market must exist"
   end
 
   test "should require a provider" do
-    invalid_market_provider = market_providers(:one)
-    invalid_market_provider.provider = nil
+    invalid_market_provider = build(:market_provider, provider: nil)
     assert_not invalid_market_provider.valid?
     assert_includes invalid_market_provider.errors.full_messages, "Provider must exist"
   end
@@ -48,20 +44,17 @@ class MarketProviderTest < ActiveSupport::TestCase
   end
 
   test "should destroy associated market when market is deleted" do
-    market_provider = market_providers(:two)
-    market_provider.market.destroy
-    assert_not MarketProvider.exists?(market_provider.id)
+    @market.destroy
+    assert_not MarketProvider.exists?(@market_provider.id)
   end
 
   test "should destroy associated provider when provider is deleted" do
-    market_provider = market_providers(:two)
-    market_provider.provider.destroy
-    assert_not MarketProvider.exists?(market_provider.id)
+    @provider.destroy
+    assert_not MarketProvider.exists?(@market_provider.id)
   end
 
   test "should not be valid without market_name" do
-    invalid_market_provider = market_providers(:one)
-    invalid_market_provider.market_name = nil
+    invalid_market_provider = build(:market_provider, market_name: nil)
     assert_not invalid_market_provider.valid?
     assert_includes invalid_market_provider.errors.full_messages, "Market name can't be blank"
   end
