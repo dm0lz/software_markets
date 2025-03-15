@@ -52,7 +52,7 @@ env:
     # Match this to any external database server to configure Active Record correctly
     # Use software_markets-db for a db accessory server on same machine via local kamal docker network.
     DB_HOST: software_markets-db
-    OLLAMA_HOST: software_markets-ollama
+    OLLAMA_IP: 34.16.244.162
 
     # Log everything from Rails
     # RAILS_LOG_LEVEL: debug
