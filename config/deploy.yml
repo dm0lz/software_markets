@@ -119,7 +119,6 @@ builder:
 #     port: 6379
 #     directories:
 #       - data:/data
-network: software_markets_network
 accessories:
   db:
     image: pgvector/pgvector:pg17
