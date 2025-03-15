@@ -133,7 +133,7 @@ accessories:
   ollama:
     image: ollama/ollama:latest
     host: 34.16.244.162
-    port: "0.0.0.0:11434:11434"
+    port: "34.16.244.162:11434:11434"
     files:
       - Modelfile:/ollama-config/Modelfile
     directories:
