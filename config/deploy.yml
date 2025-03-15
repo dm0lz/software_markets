@@ -141,3 +141,4 @@ accessories:
     env:
       clear:
         OLLAMA_HOST: "0.0.0.0"
+    options: "--gpus all"
