@@ -21,9 +21,7 @@ class Domain < ApplicationRecord
     web_pages.order(Arel.sql("web_pages.summary_embedding <=> '#{query_embedding}'")).limit(limit)
   end
 
-  def generate_extracted_content
-    FeatureExtractionQuery.all.each do |query|
-      ExtractDomainFeatureJob.perform_later(self, query)
-    end
+  def generate_extracted_content(query)
+    ExtractDomainFeatureJob.perform_later(self, query)
   end
 end
