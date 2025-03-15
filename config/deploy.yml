@@ -140,4 +140,4 @@ accessories:
       - data:/root/.ollama
     env:
       clear:
-        OLLAMA_HOST: 34.16.244.162
+        OLLAMA_HOST: "0.0.0.0"
