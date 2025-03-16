@@ -19,6 +19,19 @@ RUN apt-get update -qq && \
     apt-get install --no-install-recommends -y curl libjemalloc2 libvips postgresql-client && \
     rm -rf /var/lib/apt/lists /var/cache/apt/archives
 
+# Install uv and Python 3.12.8
+RUN curl -LsSf https://astral.sh/uv/install.sh | sh
+
+ENV PATH="/root/.local/bin:$PATH"
+
+RUN uv python install 3.12.8
+
+RUN uv venv /rails/.venv
+
+COPY pyproject.toml ./
+
+RUN uv sync
+
 # Set production environment
 ENV RAILS_ENV="production" \
     BUNDLE_DEPLOYMENT="1" \
@@ -73,8 +86,9 @@ COPY --from=build /usr/local/node /usr/local/node
 
 ENV PATH="/usr/local/node/bin:$PATH"
 ENV PATH="node_modules/.bin:$PATH"
+ENV PATH="/rails/.venv/bin:$PATH"
 
-RUN npx playwright install-deps
+# RUN npx playwright install-deps
 
 # Run and own only the runtime files as a non-root user for security
 RUN groupadd --system --gid 1000 rails && \
@@ -82,7 +96,7 @@ RUN groupadd --system --gid 1000 rails && \
     chown -R rails:rails db log storage tmp
 USER 1000:1000
 
-RUN npx playwright install firefox
+# RUN npx playwright install firefox
 
 # Entrypoint prepares the database.
 ENTRYPOINT ["/rails/bin/docker-entrypoint"]
