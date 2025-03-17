@@ -4,6 +4,6 @@ class SummarizeWebPageJob < ApplicationJob
 
   def perform(web_page)
     response = SummarizeTextService.new.call(web_page.content)
-    web_page.update!(summary: response["summary"])
+    web_page.update!(summary: response["summary_text"])
   end
 end

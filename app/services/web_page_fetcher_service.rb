@@ -1,7 +1,7 @@
-class FetchWebPageService < BaseService
+class WebPageFetcherService < BaseService
   def call(url)
     return unless valid_url?(url)
-    BrowsePageService.new(url).call(js_code)
+    PageBrowserService.new(url).call(js_code)
   end
 
   private

@@ -3,7 +3,7 @@ class RetrieveCompaniesDomainJob < ApplicationJob
 
   def perform(companies, batch_nb)
     queries(companies).each_slice(batch_nb) do |batch|
-      results = FetchSerpsService.new.call(batch)
+      results = SerpsFetcherService.new.call(batch)
       results.each do |result|
         company_name = CGI.unescape(result["serp_url"]).match(/q=([^\&]+)\sOfficial/)[1] rescue next
         domain = matching_domain(result["search_results"], company_name) || recurring_domain(result["search_results"])

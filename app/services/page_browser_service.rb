@@ -1,12 +1,17 @@
 # Use double quotes only in the JS code
-class BrowsePageStealthService < BaseService
+class PageBrowserService < BaseService
   def initialize(url, options = "{}")
     @url = url
     @options = options
   end
 
   def call(script)
-    js_code = <<-JS
+    NodeScriptExecutorService.new.call(js_code(script))
+  end
+
+  private
+  def js_code(script)
+    <<-JS
       const { chromium } = require("playwright-extra");
       const stealth = require("puppeteer-extra-plugin-stealth")();
       chromium.use(stealth);
@@ -21,7 +26,5 @@ class BrowsePageStealthService < BaseService
         await browser.close();
       })();
     JS
-
-    ExecuteNodeScriptService.new.call(js_code)
   end
 end

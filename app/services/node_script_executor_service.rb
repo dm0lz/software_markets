@@ -1,7 +1,7 @@
 # Use double quotes only in the JS code
-class ExecutePythonScriptService < BaseService
+class NodeScriptExecutorService < BaseService
   def call(script)
-    output, error, status = Open3.capture3(%Q(uv run python -c '#{script.gsub(/^ {6}/, "")}'))
+    output, error, status = Open3.capture3(%Q(node -e '#{script.strip}'))
     if status.success?
       JSON.parse(output)
     else

@@ -1,16 +1,11 @@
-class FetchSerpsService < BaseService
+class SerpFetcherService < BaseService
   def initialize(pages_number = 10, options = "{}")
     @pages_number = pages_number
     @options = options
   end
-  def call(queries)
-    BrowsePagesService.new(urls(queries), @options).call(js_code)
-  end
-
-  def urls(queries)
-    queries.map do |query|
-      "https://duckduckgo.com/?t=h_&q=#{query.gsub("'", "")}"
-    end
+  def call(query)
+    url = "https://duckduckgo.com/?t=h_&q=#{query.gsub("'", "")}"
+    PageBrowserService.new(url, @options).call(js_code)
   end
 
   private
