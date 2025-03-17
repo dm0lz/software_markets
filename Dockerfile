@@ -16,13 +16,25 @@ WORKDIR /rails
 
 # Install base packages
 RUN apt-get update -qq && \
-    apt-get install --no-install-recommends -y curl libjemalloc2 libvips postgresql-client && \
+    apt-get install --no-install-recommends -y curl libjemalloc2 libvips postgresql-client\
+    libdbus-1-3\                
+    libatk1.0-0\
+    libatk-bridge2.0-0\
+    libcups2\
+    libxcomposite1\
+    libxdamage1\
+    libxfixes3\
+    libxrandr2\
+    libgbm1\
+    libxkbcommon0\
+    libasound2\
+    libatspi2.0-0 && \
     rm -rf /var/lib/apt/lists /var/cache/apt/archives
 
 # Install uv and Python 3.12.8
 RUN curl -LsSf https://astral.sh/uv/install.sh | sh
 
-ENV PATH="/root/.local/bin:$PATH"
+ENV PATH=/root/.local/bin:$PATH
 
 RUN uv python install 3.12.8
 
@@ -65,6 +77,8 @@ RUN bundle install && \
 COPY package.json yarn.lock ./
 RUN yarn install --frozen-lockfile
 
+RUN npx playwright install firefox
+
 # Copy application code
 COPY . .
 
@@ -84,21 +98,18 @@ COPY --from=build "${BUNDLE_PATH}" "${BUNDLE_PATH}"
 COPY --from=build /rails /rails
 COPY --from=build /usr/local/node /usr/local/node
 COPY --from=build /root/.local/bin/uv /usr/local/bin/uv
+COPY --from=build /root/.cache/ms-playwright /home/rails/.cache/ms-playwright
 
 ENV PATH="/usr/local/node/bin:$PATH"
 ENV PATH="node_modules/.bin:$PATH"
 ENV PATH="/rails/.venv/bin:$PATH"
 ENV PATH="/usr/local/bin:$PATH"
 
-RUN npx playwright install-deps
-
 # Run and own only the runtime files as a non-root user for security
 RUN groupadd --system --gid 1000 rails && \
     useradd rails --uid 1000 --gid 1000 --create-home --shell /bin/bash && \
-    chown -R rails:rails db log storage tmp .venv
+    chown -R rails:rails db log storage tmp .venv /home/rails/.cache/ms-playwright
 USER 1000:1000
-
-RUN npx playwright install firefox
 
 # Entrypoint prepares the database.
 ENTRYPOINT ["/rails/bin/docker-entrypoint"]
