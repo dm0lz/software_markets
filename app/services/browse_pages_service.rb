@@ -13,9 +13,11 @@ class BrowsePagesService < BaseService
   private
   def js_code(script)
     <<-JS
-      const { firefox } = require("playwright");
+      const { chromium } = require("playwright-extra");
+      const stealth = require("puppeteer-extra-plugin-stealth")();
+      chromium.use(stealth);
       (async () => {
-        const browser = await firefox.launch(#{@options});
+        const browser = await chromium.launch(#{@options});
         const results = [];
         for (const url of #{@urls}) {
           try {

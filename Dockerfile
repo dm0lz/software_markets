@@ -28,10 +28,6 @@ RUN apt-get update -qq && \
     libgbm1\
     libxkbcommon0\
     libasound2\
-    libX11-xcb.so.1\
-    libXcursor.so.1\
-    libgtk-3.so.0\
-    libgdk-3.so.0\
     libatspi2.0-0 && \
     rm -rf /var/lib/apt/lists /var/cache/apt/archives
 
@@ -81,7 +77,7 @@ RUN bundle install && \
 COPY package.json yarn.lock ./
 RUN yarn install --frozen-lockfile
 
-RUN npx playwright install firefox
+RUN npx playwright install chromium
 
 # Copy application code
 COPY . .
