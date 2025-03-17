@@ -83,10 +83,12 @@ FROM base
 COPY --from=build "${BUNDLE_PATH}" "${BUNDLE_PATH}"
 COPY --from=build /rails /rails
 COPY --from=build /usr/local/node /usr/local/node
+COPY --from=build /root/.local/bin/uv /usr/local/bin/uv
 
 ENV PATH="/usr/local/node/bin:$PATH"
 ENV PATH="node_modules/.bin:$PATH"
 ENV PATH="/rails/.venv/bin:$PATH"
+ENV PATH="/usr/local/bin:$PATH"
 
 RUN npx playwright install-deps
 
