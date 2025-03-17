@@ -108,7 +108,7 @@ ENV PATH="/usr/local/bin:$PATH"
 # Run and own only the runtime files as a non-root user for security
 RUN groupadd --system --gid 1000 rails && \
     useradd rails --uid 1000 --gid 1000 --create-home --shell /bin/bash && \
-    chown -R rails:rails db log storage tmp .venv /home/rails/.cache/ms-playwright
+    chown -R rails:rails db log storage tmp .venv /home/rails/.cache
 USER 1000:1000
 
 # Entrypoint prepares the database.

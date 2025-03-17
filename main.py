@@ -1,7 +1,11 @@
 import json
 from transformers import AutoTokenizer, AutoModelForSeq2SeqLM
 
+# model_name= "sshleifer/distilbart-cnn-12-6"
+# model_name = "facebook/bart-large-cnn"
+# model_name = "google/pegasus-xsum"
 model_name = "Falconsai/text_summarization"
+
 tokenizer = AutoTokenizer.from_pretrained(model_name)
 model = AutoModelForSeq2SeqLM.from_pretrained(model_name)
 
