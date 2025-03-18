@@ -7,7 +7,7 @@ class HuggingFaceModelsFetcherService < BaseService
     url = URI.parse("https://huggingface.co/api/models?library=Transformers&filter=#{tasks[@task]}&sort=downloads")
     response = Net::HTTP.get(url)
     models = JSON.parse(response)
-    models.first(20).map { |model| model["id"] }
+    models.first(50).map { |model| model["id"] }
   end
 
   def tasks

@@ -31,24 +31,15 @@ RUN apt-get update -qq && \
     libatspi2.0-0 && \
     rm -rf /var/lib/apt/lists /var/cache/apt/archives
 
-# Install uv and Python 3.12.8
-RUN curl -LsSf https://astral.sh/uv/install.sh | sh
-
-ENV PATH=/root/.local/bin:$PATH
-
-RUN uv python install 3.12.8
-
-RUN uv venv /rails/.venv
-
-COPY pyproject.toml ./
-
-RUN uv sync
+# Install uv and uvx
+COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /bin/
 
 # Set production environment
 ENV RAILS_ENV="production" \
     BUNDLE_DEPLOYMENT="1" \
     BUNDLE_PATH="/usr/local/bundle" \
-    BUNDLE_WITHOUT="development"
+    BUNDLE_WITHOUT="development" \
+    UV_PYTHON=3.12.8
 
 # Throw-away build stage to reduce size of final image
 FROM base AS build
@@ -88,7 +79,7 @@ RUN bundle exec bootsnap precompile app/ lib/
 # Precompiling assets for production without requiring secret RAILS_MASTER_KEY
 RUN SECRET_KEY_BASE_DUMMY=1 ./bin/rails assets:precompile
 
-# RUN rm -rf node_modules
+RUN rm -rf .venv
 
 # Final stage for app image
 FROM base
@@ -97,19 +88,18 @@ FROM base
 COPY --from=build "${BUNDLE_PATH}" "${BUNDLE_PATH}"
 COPY --from=build /rails /rails
 COPY --from=build /usr/local/node /usr/local/node
-COPY --from=build /root/.local/bin/uv /usr/local/bin/uv
 COPY --from=build /root/.cache/ms-playwright /home/rails/.cache/ms-playwright
 
 ENV PATH="/usr/local/node/bin:$PATH"
 ENV PATH="node_modules/.bin:$PATH"
-ENV PATH="/rails/.venv/bin:$PATH"
-ENV PATH="/usr/local/bin:$PATH"
 
 # Run and own only the runtime files as a non-root user for security
 RUN groupadd --system --gid 1000 rails && \
     useradd rails --uid 1000 --gid 1000 --create-home --shell /bin/bash && \
-    chown -R rails:rails db log storage tmp .venv /home/rails/.cache
+    chown -R rails:rails /rails /home/rails
 USER 1000:1000
+
+RUN uv sync
 
 # Entrypoint prepares the database.
 ENTRYPOINT ["/rails/bin/docker-entrypoint"]
