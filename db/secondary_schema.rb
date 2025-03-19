@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_03_11_133506) do
+ActiveRecord::Schema[8.0].define(version: 2025_03_19_145605) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "vector"
@@ -27,6 +27,15 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_11_133506) do
     t.index ["author_type", "author_id"], name: "index_active_admin_comments_on_author"
     t.index ["namespace"], name: "index_active_admin_comments_on_namespace"
     t.index ["resource_type", "resource_id"], name: "index_active_admin_comments_on_resource"
+  end
+
+  create_table "api_sessions", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.string "ip_address"
+    t.string "user_agent"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_api_sessions_on_user_id"
   end
 
   create_table "companies", force: :cascade do |t|
@@ -165,6 +174,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_11_133506) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "role", default: "user", null: false
+    t.string "api_token"
+    t.index ["api_token"], name: "index_users_on_api_token"
     t.index ["email_address"], name: "index_users_on_email_address", unique: true
   end
 
@@ -188,6 +199,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_11_133506) do
     t.index ["domain_id"], name: "index_web_pages_on_domain_id"
   end
 
+  add_foreign_key "api_sessions", "users"
   add_foreign_key "company_markets", "companies"
   add_foreign_key "company_markets", "markets"
   add_foreign_key "domains", "companies"
