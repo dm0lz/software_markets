@@ -1,11 +1,8 @@
-class RetrieveMarketSearchEngineResultsJob < ApplicationJob
-  queue_as :default
-
-  def perform(market)
-    query = "#{market.name} Software"
-    results = SerpFetcherService.new(pages_number: 15).call(query)
+class SearchEngineResultsCreatorService < BaseService
+  def call(query)
+    results = SerpFetcherService.new(pages_number: 10).call(query)
     results = results["search_results"]
-    results.each do |result|
+    results.map do |result|
       SearchEngineResult.create!(
         query: query,
         site_name: result["site_name"],

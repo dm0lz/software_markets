@@ -1,4 +1,4 @@
-class HuggingFaceService < BaseService
+class HuggingFacePipelineService < BaseService
   def initialize(task, model)
     @task = task
     @model = model
@@ -15,7 +15,7 @@ class HuggingFaceService < BaseService
       from transformers import pipeline
 
       pipe = pipeline("#{@task}", model="#{@model}")
-      output = pipe("#{input}")
+      output = pipe("#{input.gsub("\n", " ")}")
 
       print(json.dumps(output, indent=2))
     PYTHON
