@@ -4,7 +4,7 @@ class FindCompanyDomainJob < ApplicationJob
   queue_as :default
 
   def perform(company)
-    serp = SearchEngineResultsCreatorService.new.call(company.name)
+    serp = SerpFetcher::SearchEngineResultsCreatorService.new.call(company.name)
     domain = SerpDomainExtractorService.new.call(serp)
     logger.info "#{company.name} - #{domain}"
     company.domains.find_or_create_by!(name: domain)
