@@ -1,4 +1,9 @@
 class GoogleSerpFetcherService < BaseService
+  def initialize(pages_number: 10, options: "{}")
+    @pages_number = pages_number
+    @options = options
+  end
+
   def call(query)
     serps = NodeScriptExecutorService.new.call(js_code(query))
     serps.map { |serp| serp["search_results"] }.flatten
@@ -60,7 +65,7 @@ class GoogleSerpFetcherService < BaseService
         };
       };
       (async () => {
-        const browser = await puppeteer.launch({});
+        const browser = await puppeteer.launch(#{@options});
         const page = await browser.newPage();
         await page.goto("https://www.google.com/");
         await page.click("#L2AGLb");
@@ -76,7 +81,7 @@ class GoogleSerpFetcherService < BaseService
           const data = await page.evaluate(run_script, positionOffset);
           results.push(data);
           positionOffset += data.search_results.length;
-          if (!data.next) {
+          if (!data.next || positionOffset / 10 >= #{@pages_number}) {
             break;
           }
           await page.goto("https://www.google.com" + data.next);

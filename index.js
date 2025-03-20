@@ -70,7 +70,7 @@ const run_script = (positionOffset) => {
     const data = await page.evaluate(run_script, positionOffset);
     results.push(data);
     positionOffset += data.search_results.length;
-    if (!data.next) {
+    if (!data.next || positionOffset / 10 >= 3) {
       break;
     }
     await page.goto("https://www.google.com" + data.next);
