@@ -15,7 +15,7 @@ class HuggingFacePipelineService < BaseService
       from transformers import pipeline
 
       pipe = pipeline("#{@task}", model="#{@model}")
-      output = pipe("#{input.gsub("\n", " ")}")
+      output = pipe("#{input.gsub(/[\n"]/, " ")}")
 
       print(json.dumps(output, indent=2))
     PYTHON

@@ -1,6 +1,6 @@
 class SearchEngineResultsCreatorService < BaseService
   def call(query)
-    results = SerpFetcherService.new(pages_number: 10).call(query)
+    results = DuckduckgoSerpFetcherService.new(pages_number: 10).call(query)
     results = results["search_results"]
     results.map do |result|
       SearchEngineResult.create!(
