@@ -3,7 +3,7 @@ class AnalyzeDomainJob < ApplicationJob
 
   def perform(domain)
     pages_content = domain.web_pages.pluck(:content).join(" ")
-    response = Ai::OpenaiChatService.new.call(user_prompt + pages_content, response_schema)
+    response = Ai::Openai::ChatService.new.call(user_prompt + pages_content, response_schema)
     logger.info response
     domain.update!(extracted_content: response) if response
   end

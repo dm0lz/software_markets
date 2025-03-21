@@ -2,7 +2,7 @@ class ScrapCapterraMarketsJob < ApplicationJob
   queue_as :default
 
   def perform(url)
-    markets = Fetcher::PageEvaluatorService.new(url).call(js_code)
+    markets = Scraper::PageEvaluatorService.new(url).call(js_code)
     logger.info output
     provider = Provider.find_or_create_by!(name: "Capterra", domain: "capterra.fr")
     markets["capterra_markets"].map do |capterra_market|

@@ -1,4 +1,4 @@
-class SerpFetcher::GoogleService < BaseService
+class SearchEngine::Provider::GoogleService < BaseService
   def initialize(pages_number: 10, options: "{}")
     @pages_number = pages_number
     @options = options

@@ -1,7 +1,7 @@
-class Fetcher::WebPageService < BaseService
+class Scraper::WebPageService < BaseService
   def call(url)
     return unless valid_url?(url)
-    Fetcher::PageEvaluatorService.new(url).call(js_code)
+    Scraper::PageEvaluatorService.new(url).call(js_code)
   end
 
   private

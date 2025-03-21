@@ -1,4 +1,4 @@
-class Ai::HuggingFacePipelineService < BaseService
+class Ai::HuggingFace::PipelineService < BaseService
   def initialize(task, model)
     @task = task
     @model = model

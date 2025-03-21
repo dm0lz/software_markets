@@ -1,4 +1,4 @@
-class SerpFetcher::BingService < BaseService
+class SearchEngine::Provider::BingService < BaseService
   def initialize(pages_number: 10, options: "{}")
     @pages_number = pages_number
     @options = options

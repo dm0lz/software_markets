@@ -2,7 +2,7 @@ class Ai::TextSummarizerService < BaseService
   def call(text)
     task = "summarization"
     model = top_50[4]
-    Ai::HuggingFacePipelineService.new(task, model).call(text)[0]
+    Ai::HuggingFace::PipelineService.new(task, model).call(text)[0]
   end
 
   def top_50

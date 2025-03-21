@@ -1,4 +1,4 @@
-class Ai::OpenaiChatService < BaseService
+class Ai::Openai::ChatService < BaseService
   def call(user_prompt, response_schema)
     client = OpenAI::Client.new(request_timeout: 900)
     response = client.chat(

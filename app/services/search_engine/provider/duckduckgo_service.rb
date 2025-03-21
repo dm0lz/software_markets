@@ -1,11 +1,12 @@
-class SerpFetcher::DuckduckgoService < BaseService
+class SearchEngine::Provider::DuckduckgoService < BaseService
   def initialize(pages_number: 10, options: "{}")
     @pages_number = pages_number
     @options = options
   end
   def call(query)
     url = "https://duckduckgo.com/?t=h_&q=#{query.gsub("'", "")}"
-    Fetcher::PageEvaluatorService.new(url, @options).call(js_code)
+    serp = Scraper::PageEvaluatorService.new(url, @options).call(js_code)
+    serp["search_results"]
   end
 
   private

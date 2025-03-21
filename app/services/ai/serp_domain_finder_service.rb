@@ -1,6 +1,6 @@
-class Ai::SerpDomainExtractorService < BaseService
+class Ai::SerpDomainFinderService < BaseService
   def call(serp)
-    response = Ai::OpenaiChatService.new.call(user_prompt(serp), response_schema)
+    response = Ai::Openai::ChatService.new.call(user_prompt(serp), response_schema)
     response["company_domain"].strip
   end
 

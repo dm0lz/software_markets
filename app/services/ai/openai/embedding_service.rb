@@ -1,4 +1,4 @@
-class Ai::OpenaiEmbeddingService < BaseService
+class Ai::Openai::EmbeddingService < BaseService
   def initialize(text)
     @text = text
   end

@@ -3,7 +3,7 @@ class GenerateEmbeddingJob < ApplicationJob
   queue_with_priority 1
 
   def perform(model)
-    embedding = Ai::OpenaiEmbeddingService.new(model.public_send(model.class.embedding_source_column)).call
+    embedding = Ai::Openai::EmbeddingService.new(model.public_send(model.class.embedding_source_column)).call
     model.update!("#{model.class.embedding_target_column}": embedding)
   end
 end

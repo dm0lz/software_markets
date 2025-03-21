@@ -1,7 +1,7 @@
-class Fetcher::WebPagesService < BaseService
+class Scraper::WebPagesService < BaseService
   def call(urls)
     cleaned_urls = clean_urls(urls)
-    Fetcher::PagesEvaluatorService.new(cleaned_urls).call(js_code)
+    Scraper::PagesEvaluatorService.new(cleaned_urls).call(js_code)
   end
 
   private

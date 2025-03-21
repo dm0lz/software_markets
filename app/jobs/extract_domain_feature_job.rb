@@ -4,8 +4,8 @@ class ExtractDomainFeatureJob < ApplicationJob
   def perform(domain, query)
     relevant_chunks = domain.web_page_chunks_similar_to(query.embedding, 10)
     relevant_chunks_summary = domain.web_pages_summary_similar_to(query.embedding, 10)
-    response = Ai::OpenaiChatService.new.call(user_prompt(relevant_chunks.pluck(:content).join(" "), query), response_schema(query))
-    summary_response = Ai::OpenaiChatService.new.call(user_prompt(relevant_chunks_summary.pluck(:summary).join(" "), query), response_schema(query))
+    response = Ai::Openai::ChatService.new.call(user_prompt(relevant_chunks.pluck(:content).join(" "), query), response_schema(query))
+    summary_response = Ai::Openai::ChatService.new.call(user_prompt(relevant_chunks_summary.pluck(:summary).join(" "), query), response_schema(query))
     domain.update(extracted_content: domain.reload.extracted_content.merge(
       {
         "#{query.search_field}" => response["#{query.search_field}"],

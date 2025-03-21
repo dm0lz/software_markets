@@ -1,5 +1,5 @@
 # Use double quotes only in the JS code
-class Fetcher::PageEvaluatorService < BaseService
+class Scraper::PageEvaluatorService < BaseService
   def initialize(url, options = "{}")
     @url = url
     @options = options
