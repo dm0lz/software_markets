@@ -7,7 +7,7 @@ class Ai::SerpDomainExtractorService < BaseService
   private
   def user_prompt(serp)
     <<-TXT
-      Given the company name #{serp.first.query} and the following search results, extract the most likely official domain name.
+      Given the company name #{serp.first["query"]} and the following search results, extract the most likely official domain name.
       Search engine results : #{serp.to_json}
     TXT
   end
