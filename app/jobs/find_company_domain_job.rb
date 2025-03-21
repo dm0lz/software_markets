@@ -5,7 +5,7 @@ class FindCompanyDomainJob < ApplicationJob
 
   def perform(company)
     serp = SerpFetcher::SearchEngineResultsCreatorService.new.call(company.name)
-    domain = SerpDomainExtractorService.new.call(serp)
+    domain = Ai::SerpDomainExtractorService.new.call(serp)
     logger.info "#{company.name} - #{domain}"
     company.domains.find_or_create_by!(name: domain)
   end

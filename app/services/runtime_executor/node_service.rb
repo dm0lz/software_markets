@@ -1,5 +1,5 @@
 # Use double quotes only in the JS code
-class NodeScriptExecutorService < BaseService
+class RuntimeExecutor::NodeService < BaseService
   def call(script)
     output, error, status = Open3.capture3(%Q(node -e '#{script.gsub("'", "").strip}'))
     if status.success?

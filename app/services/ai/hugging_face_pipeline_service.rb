@@ -1,11 +1,11 @@
-class HuggingFacePipelineService < BaseService
+class Ai::HuggingFacePipelineService < BaseService
   def initialize(task, model)
     @task = task
     @model = model
   end
 
   def call(input)
-    PythonScriptExecutorService.new.call(python_script(input))
+    RuntimeExecutor::PythonService.new.call(python_script(input))
   end
 
   private

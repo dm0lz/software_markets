@@ -4,7 +4,7 @@ class SerpFetcher::YahooService < BaseService
     @options = options
   end
   def call(query)
-    serps = NodeScriptExecutorService.new.call(js_code(query))
+    serps = RuntimeExecutor::NodeService.new.call(js_code(query))
     serps.map { |serp| serp["search_results"] }.flatten
   end
 

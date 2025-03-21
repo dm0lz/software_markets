@@ -1,10 +1,10 @@
-class SerpsFetcherService < BaseService
+class SerpFetcher::Multiple::DuckduckgoService < BaseService
   def initialize(pages_number = 10, options = "{}")
     @pages_number = pages_number
     @options = options
   end
   def call(queries)
-    PagesBrowserService.new(urls(queries), @options).call(js_code)
+    Fetcher::PagesEvaluatorService.new(urls(queries), @options).call(js_code)
   end
 
   def urls(queries)

@@ -2,7 +2,7 @@ class AnalyzeSearchEngineResultJob < ApplicationJob
   queue_as :default
 
   def perform(search_engine_result)
-    response = OpenaiChatService.new.call(user_prompt(search_engine_result), response_schema(search_engine_result))
+    response = Ai::OpenaiChatService.new.call(user_prompt(search_engine_result), response_schema(search_engine_result))
     logger.info response
     is_company = response["is_company_website"] rescue nil
     search_engine_result.update!(is_company: is_company)

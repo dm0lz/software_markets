@@ -1,4 +1,4 @@
-class SerpFetcher::BaseService < BaseService
+class SerpFetcher::DispatcherService < BaseService
   def initialize(search_engine: "duckduckgo", pages_number: 10, options: "{}")
     @search_engine = search_engine
     @pages_number = pages_number

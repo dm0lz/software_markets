@@ -1,4 +1,4 @@
-class HuggingFaceModelsFetcherService < BaseService
+class Ai::HuggingFaceModelsFetcherService < BaseService
   def call(task)
     url = URI.parse("https://huggingface.co/api/models?library=Transformers&filter=#{tasks[task]}&sort=downloads")
     response = Net::HTTP.get(url)

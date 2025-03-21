@@ -5,7 +5,7 @@ class SerpFetcher::DuckduckgoService < BaseService
   end
   def call(query)
     url = "https://duckduckgo.com/?t=h_&q=#{query.gsub("'", "")}"
-    PageBrowserService.new(url, @options).call(js_code)
+    Fetcher::PageEvaluatorService.new(url, @options).call(js_code)
   end
 
   private

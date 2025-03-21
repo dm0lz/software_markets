@@ -1,5 +1,5 @@
 # Use double quotes only in the JS code
-class PythonScriptExecutorService < BaseService
+class RuntimeExecutor::PythonService < BaseService
   def call(script)
     output, error, status = Open3.capture3(%Q(uv run python -c '#{script.gsub(/^ {6}|'/, "")}'))
     if status.success?

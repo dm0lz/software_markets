@@ -5,7 +5,7 @@ class RetrieveMarketsSearchEngineResultsJob < ApplicationJob
     queries = Market.all.map do |market|
       "#{market.name} Software"
     end
-    results = SerpsFetcherService.new(pages_number: 15).call(queries)
+    results = SerpFetcher::Multiple::DuckduckgoService.new(pages_number: 15).call(queries)
     results.each do |result|
       result["search_results"].each do |ser|
         SearchEngineResult.create!(

@@ -1,5 +1,5 @@
 # Use double quotes only in the JS code
-class PagesBrowserService < BaseService
+class Fetcher::PagesEvaluatorService < BaseService
   def initialize(urls, options = "{}")
     @urls = urls
     @options = options
@@ -7,7 +7,7 @@ class PagesBrowserService < BaseService
 
   def call(script)
     puts js_code(script)
-    NodeScriptExecutorService.new.call(js_code(script))
+    RuntimeExecutor::NodeService.new.call(js_code(script))
   end
 
   private
