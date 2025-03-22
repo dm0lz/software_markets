@@ -1,5 +1,5 @@
 class SearchEngine::DomainEmailsFinderService < BaseService
-  def initialize(search_engine: "duckduckgo", pages_number: 10)
+  def initialize(search_engine: "duckduckgo", pages_number: 5)
     @search_engine = search_engine
     @pages_number = pages_number
   end
