@@ -206,6 +206,7 @@ GEM
     method_source (1.1.0)
     mini_mime (1.1.5)
     minitest (5.25.4)
+    model-to-schema (0.1.2)
     msgpack (1.8.0)
     multipart-post (2.4.1)
     neighbor (0.5.2)
@@ -241,6 +242,10 @@ GEM
       racc (~> 1.4)
     nokogiri (1.18.2-x86_64-linux-musl)
       racc (~> 1.4)
+    oas_rails (0.9.0)
+      method_source (~> 1.0)
+      model-to-schema (~> 0.1.2)
+      yard (~> 0.9)
     ostruct (0.6.1)
     pagy (9.3.3)
     parallel (1.26.3)
@@ -434,6 +439,7 @@ GEM
     websocket-extensions (0.1.5)
     xpath (3.2.0)
       nokogiri (~> 1.8)
+    yard (0.9.37)
     zeitwerk (2.7.2)
 
 PLATFORMS
@@ -462,6 +468,7 @@ DEPENDENCIES
   kamal
   letter_opener
   neighbor
+  oas_rails
   pg (~> 1.1)
   propshaft
   pry

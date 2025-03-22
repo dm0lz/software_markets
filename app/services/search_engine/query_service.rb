@@ -5,6 +5,7 @@ class SearchEngine::QueryService < BaseService
     @options = options
   end
   def call(query)
-    "SearchEngine::Provider::#{@search_engine.capitalize}Service".constantize.new(pages_number: @pages_number, options: @options).call(query)
+    serp = "SearchEngine::Provider::#{@search_engine.capitalize}Service".constantize.new(pages_number: @pages_number, options: @options).call(query)
+    serp.reject { |ser| ser.any? { |_, value| value == "N/A" } }
   end
 end

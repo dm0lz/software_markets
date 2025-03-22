@@ -1,7 +1,10 @@
 class Scraper::WebPageService < BaseService
   def call(url)
     return unless valid_url?(url)
-    Scraper::PageEvaluatorService.new(url).call(js_code)
+    # proxy = "socks5://127.0.0.1:9050"
+    proxy = "socks5://198.100.154.198:6001"
+    options = "{proxy: {server: \"#{proxy}\"}}"
+    Scraper::PageEvaluatorService.new(url, options).call(js_code)
   end
 
   private

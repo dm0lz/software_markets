@@ -22,13 +22,13 @@ class SearchEngine::Provider::YahooService < BaseService
             .slice(3).slice(0, -1)
             .map((article, index) => ({
               site_name:
-                article.querySelector("div > div > span")?.textContent?.trim() ||
+                article.querySelector(".d-ib.p-abs")?.textContent?.trim() ||
                 "N/A",
               url:
-                article.querySelector("div > h3 > a")?.getAttribute("href") ||
+                article.querySelector("h3 > a")?.getAttribute("href") ||
                 "N/A",
               title:
-                article.querySelector("div > h3 > a")?.textContent?.trim() ||
+                article.querySelector("h3 > a")?.textContent?.trim() ||
                 "N/A",
               description:
                 article.querySelector("div > div > p")?.textContent?.trim() ||

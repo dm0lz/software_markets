@@ -2,10 +2,11 @@
 class Scraper::PageEvaluatorService < BaseService
   def initialize(url, options = "{}")
     @url = url
-    @options = options
+    @options = options.gsub("\\", "")
   end
 
   def call(script)
+    puts js_code(script)
     RuntimeExecutor::NodeService.new.call(js_code(script))
   end
 

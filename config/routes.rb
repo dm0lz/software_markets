@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
   mount Avo::Engine, at: Avo.configuration.root_path
+  mount OasRails::Engine => "/docs"
   resource :session
   resources :passwords, param: :token
   resource :registrations, only: [ :new, :create ]
@@ -37,6 +38,7 @@ Rails.application.routes.draw do
   namespace :api, defaults: { format: :json } do
     namespace :v1 do
       get "home/index"
+      get "serp", to: "serp#index"
     end
   end
 
