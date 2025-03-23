@@ -1,4 +1,4 @@
-class Api::V1::WebPageController < Api::V1::BaseController
+class Api::V1::ScrapWebPageController < Api::V1::BaseController
   # @summary Scrap web page
   # @auth [bearer]
   # @parameter url(query) [!String] The url to scrap

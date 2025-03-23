@@ -1,4 +1,4 @@
-class Api::V1::WebPagesController < Api::V1::BaseController
+class Api::V1::ScrapWebPagesController < Api::V1::BaseController
   # @summary Scrap web pages
   # @auth [bearer]
   # @parameter urls(query) [!Array<String>] The urls to scrap

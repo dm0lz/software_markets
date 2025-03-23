@@ -41,8 +41,9 @@ Rails.application.routes.draw do
       get "serp", to: "serp#index"
       get "domain_emails", to: "domain_emails#index"
       get "company_domain", to: "company_domain#index"
-      post "web_page", to: "web_page#create"
-      post "web_pages", to: "web_pages#create"
+      post "scrap_web_page", to: "scrap_web_page#create"
+      post "scrap_web_pages", to: "scrap_web_pages#create"
+      post "scrap_domain", to: "scrap_domain#create"
     end
   end
 
