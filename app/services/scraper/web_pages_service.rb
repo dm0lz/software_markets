@@ -1,7 +1,11 @@
 class Scraper::WebPagesService < BaseService
-  def call(urls)
-    cleaned_urls = clean_urls(urls)
-    Scraper::PagesEvaluatorService.new(cleaned_urls).call(js_code)
+  def initialize(urls)
+    @urls = urls
+  end
+
+  def call(js_script = js_code)
+    cleaned_urls = clean_urls(@urls)
+    Scraper::PagesEvaluatorService.new(cleaned_urls).call(js_script)
   end
 
   private

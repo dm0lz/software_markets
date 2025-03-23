@@ -42,6 +42,7 @@ Rails.application.routes.draw do
       get "domain_emails", to: "domain_emails#index"
       get "company_domain", to: "company_domain#index"
       post "web_page", to: "web_page#create"
+      post "web_pages", to: "web_pages#create"
     end
   end
 
