@@ -9,6 +9,7 @@ class Avo::Resources::WebPage < Avo::BaseResource
     field :id, as: :id
     field :url, as: :text
     field :domain_id, as: :number
+    field :summary, as: :textarea
     field :content, as: :textarea
     field :extracted_content, as: :textarea
     field :domain, as: :belongs_to
