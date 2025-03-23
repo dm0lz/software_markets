@@ -39,7 +39,8 @@ Rails.application.routes.draw do
     namespace :v1 do
       get "home/index"
       get "serp", to: "serp#index"
-      get "emails", to: "emails#index"
+      get "domain_emails", to: "domain_emails#index"
+      get "company_domain", to: "company_domain#index"
     end
   end
 

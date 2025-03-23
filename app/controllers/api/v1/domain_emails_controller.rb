@@ -1,4 +1,4 @@
-class Api::V1::EmailsController < Api::V1::BaseController
+class Api::V1::DomainEmailsController < Api::V1::BaseController
   # @summary Get emails from domain
   # @auth [bearer]
   # @parameter domain(query) [!String] The domain to search

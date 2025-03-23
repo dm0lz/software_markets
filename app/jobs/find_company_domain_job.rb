@@ -5,8 +5,7 @@ class FindCompanyDomainJob < ApplicationJob
 
   def perform(company)
     results = SearchEngine::QueryService.new(search_engine: "duckduckgo", pages_number: 10).call(company.name)
-    serp = results["search_results"]
-    domain = Ai::SerpDomainFinderService.new.call(serp)
+    domain = Ai::SerpDomainFinderService.new.call(results)
     logger.info "#{company.name} - #{domain}"
     company.domains.find_or_create_by!(name: domain)
   end
