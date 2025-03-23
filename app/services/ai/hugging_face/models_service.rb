@@ -1,9 +1,9 @@
 class Ai::HuggingFace::ModelsService < BaseService
-  def call(task)
+  def call(task, limit)
     url = URI.parse("https://huggingface.co/api/models?library=Transformers&filter=#{tasks[task]}&sort=downloads")
     response = Net::HTTP.get(url)
     models = JSON.parse(response)
-    models.first(50).map { |model| model["id"] }
+    models.first(limit.to_i).map { |model| model["id"] }
   end
 
   def tasks
