@@ -7,6 +7,6 @@ class SearchEngine::CompanyDomainFinderService < BaseService
   def call(company_name)
     results = SearchEngine::QueryService.new(search_engine: @search_engine, pages_number: @pages_number).call(company_name)
     domain = Ai::SerpDomainFinderService.new.call(results)
-    URI.parse(domain).host
+    domain.downcase
   end
 end
