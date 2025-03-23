@@ -46,6 +46,7 @@ Rails.application.routes.draw do
       post "scrap_domain", to: "scrap_domain#create"
       get "hf_models", to: "hf_models#index"
       post "hf_inference", to: "hf_inference#create"
+      post "analyze_web_page", to: "analyze_web_page#create"
     end
   end
 
