@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_03_19_145605) do
+ActiveRecord::Schema[8.0].define(version: 2025_03_23_170715) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "vector"
@@ -35,6 +35,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_19_145605) do
     t.string "user_agent"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "endpoint"
     t.index ["user_id"], name: "index_api_sessions_on_user_id"
   end
 
@@ -175,6 +176,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_19_145605) do
     t.datetime "updated_at", null: false
     t.string "role", default: "user", null: false
     t.string "api_token"
+    t.integer "api_credit", default: 0
     t.index ["api_token"], name: "index_users_on_api_token"
     t.index ["email_address"], name: "index_users_on_email_address", unique: true
   end

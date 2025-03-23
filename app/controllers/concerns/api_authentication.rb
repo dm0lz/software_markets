@@ -10,7 +10,8 @@ module ApiAuthentication
   def authenticate_api_token!
     if api_token = request.headers["Authorization"]&.split(" ")&.last
       user = User.find_by(api_token: api_token)
-      Current.api_session = user.api_sessions.create!(user_agent: request.user_agent, ip_address: request.remote_ip) if user
+      render json: { error: "Insufficient API credit." }, status: :payment_required if user&.api_credit <= 0
+      Current.api_session = user.api_sessions.create!(user_agent: request.user_agent, ip_address: request.remote_ip, endpoint: params.permit(:controller)[:controller]) if user
     end
 
     render json: { error: "Invalid API token." }, status: :unauthorized unless Current.user
