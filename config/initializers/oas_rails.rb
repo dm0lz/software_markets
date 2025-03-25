@@ -5,37 +5,32 @@ OasRails.configure do |config|
   config.info.version = "1.0.0"
   config.info.summary = "OasRails: Automatic Interactive API Documentation for Rails"
   config.info.description = <<~HEREDOC
-    # Welcome to OasRails
+    # Software Markets API
 
-    OasRails automatically generates interactive documentation for your Rails APIs using the OpenAPI Specification 3.1 (OAS 3.1) and displays it with a nice UI.
+    This API provides endpoints for retrieving and analyzing data.
 
-    ## Getting Started
+    ## Authentication
 
-    You've successfully mounted the OasRails engine. This default documentation is based on your routes and automatically gathered information.
+    All API endpoints require Bearer token authentication.
 
-    ## Enhancing Your Documentation
+    ## Available Resources
 
-    To customize and enrich your API documentation:
+    - POST Analyze web page : Scrap and analyze a web page using a custom prompt
+    - GET Domain from company : Get the domain of a company
+    - GET Emails from domain : Get the emails of a domain
+    - GET Hugging Face inference : Perform Hugging Face model inference
+    - GET Hugging Face models : Get the available Hugging Face models
+    - POST Scrap domain : Scrap a domain
+    - POST Scrap web page : Scrap a web page
+    - POST Scrap web pages : Scrap multiple web pages
+    - GET Search engine results : Get the search engine results pages
 
-    1. Generate an initializer file:
+    ## Rate Limiting
 
-      ```
-      rails generate oas_rails:config
-      ```
-    2. Edit the created `config/initializers/oas_rails.rb` file to override default settings and add project-specific information.
+    API requests are limited to 5 requests per minute per API token.
 
-    3. Use Yard tags in your controller methods to provide detailed API endpoint descriptions.
+    For more information, contact support@softwaremarkets.com
 
-    ## Features
-
-    - Automatic OAS 3.1 document generation
-    - [RapiDoc](https://github.com/rapi-doc/RapiDoc) integration for interactive exploration
-    - Minimal setup required for basic documentation
-    - Extensible through configuration and Yard tags
-
-    Explore your API documentation and enjoy the power of OasRails!
-
-    For more information and advanced usage, visit the [OasRails GitHub repository](https://github.com/a-chacon/oas_rails).
   HEREDOC
   # config.info.contact.name = "a-chacon"
   # config.info.contact.email = "andres.ch@proton.me"

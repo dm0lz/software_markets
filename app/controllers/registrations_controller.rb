@@ -3,6 +3,7 @@ class RegistrationsController < ApplicationController
   before_action :resume_session, only: %i[new create]
 
   def new
+    redirect_to app_root_path if Session.find_by(id: cookies.signed[:session_id]) if cookies.signed[:session_id]
     @user = User.new
   end
 

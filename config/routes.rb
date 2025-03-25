@@ -23,7 +23,7 @@ Rails.application.routes.draw do
     resources :companies, only: [ :index, :show ]
     resources :domains, only: [ :index, :show ]
     resources :domain_emails, only: [ :index, :create ]
-    root "markets#index"
+    root "landing_page#index"
   end
 
   namespace :admin do
