@@ -1,0 +1,40 @@
+<article class="bg-white py-24 sm:py-32">
+  <div class="mx-auto max-w-7xl px-6 lg:px-8">
+    <div class="mx-auto max-w-2xl">
+      <%# Back button %>
+      <%= link_to public_posts_path, class: "inline-flex items-center text-sm font-medium text-gray-700 hover:text-gray-900" do %>
+        <svg class="mr-2 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
+        </svg>
+        Back to posts
+      <% end %>
+
+      <%# Article header %>
+      <div class="mt-8 border-b border-gray-200 pb-8">
+        <h1 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl"><%= @post.title %></h1>
+        
+        <div class="mt-6 flex items-center text-sm text-gray-500">
+          <time datetime="<%= @post.created_at.strftime("%Y-%m-%d") %>">
+            <%= @post.created_at.strftime("%B %-d, %Y") %>
+          </time>
+          <span class="mx-2">·</span>
+          <span><%= pluralize(@post.body.split.count, "word") %></span>
+        </div>
+      </div>
+
+      <%# Article content %>
+      <div class="prose prose-lg prose-indigo mt-8 max-w-none">
+        <%= @post.body %>
+      </div>
+
+      <%# Article footer %>
+      <div class="mt-16 border-t border-gray-200 pt-8">
+        <div class="flex justify-between items-center">
+          <div class="text-sm text-gray-500">
+            Last updated: <%= time_ago_in_words(@post.created_at) %> ago
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</article>

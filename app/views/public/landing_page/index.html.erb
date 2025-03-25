@@ -95,20 +95,49 @@
         </div>
       </section>
 
+
+      <!-- Pricing Section -->
+      <section id="pricing" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+        <h2 class="text-3xl md:text-4xl font-bold text-center text-gray-900 mb-12">Simple Credit-Based Pricing</h2>
+        <div class="bg-white rounded-xl shadow-md p-8 max-w-2xl mx-auto">
+          <div class="text-center">
+            <p class="text-4xl font-extrabold text-gray-900">$0.01 <span class="text-xl font-normal text-gray-600">/ credit</span></p>
+            <p class="mt-4 text-lg text-gray-600">Pay as you go with credits that never expire. Get started with 500 free credits.</p>
+          </div>
+          <div class="mt-8">
+            <h3 class="text-xl font-semibold text-gray-900 mb-4">Endpoint Costs</h3>
+            <ul class="space-y-3 text-gray-600">
+              <li class="flex justify-between"><span>Scrape Web Page</span><span>5 credits</span></li>
+              <li class="flex justify-between"><span>Scrape Multiple Pages</span><span>20 credits</span></li>
+              <li class="flex justify-between"><span>Scrape Domain</span><span>50 credits</span></li>
+              <li class="flex justify-between"><span>Company to Domain</span><span>5 credits</span></li>
+              <li class="flex justify-between"><span>Domain Emails</span><span>10 credits</span></li>
+              <li class="flex justify-between"><span>Analyze Web Page</span><span>25 credits</span></li>
+              <li class="flex justify-between"><span>Hugging Face Inference</span><span>25 credits</span></li>
+              <li class="flex justify-between"><span>SERP Results</span><span>30 credits</span></li>
+              <li class="flex justify-between"><span>Hugging models list</span><span>1 credit</span></li>
+            </ul>
+          </div>
+          <div class="mt-8 text-center">
+            <%= link_to "Get Started", app_root_path, class: "inline-flex items-center px-6 py-3 text-base font-medium text-white bg-indigo-600 rounded-md hover:bg-indigo-700 transition-colors" %>
+          </div>
+        </div>
+      </section>
+
       <!-- API Demo Section -->
       <section class="bg-gray-900 py-20 mt-20">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div class="text-center">
             <h2 class="text-3xl font-bold text-white mb-8">Simple to Integrate</h2>
             <div class="bg-gray-800 rounded-lg p-6 text-left overflow-x-auto">
-              <pre class="text-green-400"><code>curl -X GET "https://api.yourservice.com/v1/scrape" \
-  -H "Authorization: Bearer your_api_key" \
+              <pre class="text-green-400"><code>curl -X GET "http://127.0.0.1:3000/api/v1/scrap_web_page" \
+  -H "Authorization: Bearer api_token" \
   -H "Content-Type: application/json" \
   -d '{
     "url": "https://example.com",
-    "stealth_mode": true,
-    "bypass_captcha": true
-  }'</code></pre>
+    "js_script": "return { content: document.body.innerText }"
+  }'</code>   
+              </pre>
             </div>
           </div>
         </div>
@@ -121,16 +150,16 @@
             <div>
               <h3 class="text-sm font-semibold text-gray-400 tracking-wider uppercase">Product</h3>
               <ul class="mt-4 space-y-4">
-                <li><a href="#" class="text-base text-gray-500 hover:text-gray-900">Features</a></li>
-                <li><a href="#" class="text-base text-gray-500 hover:text-gray-900">Pricing</a></li>
-                <li><a href="#" class="text-base text-gray-500 hover:text-gray-900">Documentation</a></li>
+                <li><a href="#features" class="text-base text-gray-500 hover:text-gray-900">Features</a></li>
+                <li><a href="#pricing" class="text-base text-gray-500 hover:text-gray-900">Pricing</a></li>
+                <li><a href="docs" class="text-base text-gray-500 hover:text-gray-900">Documentation</a></li>
               </ul>
             </div>
             <div>
               <h3 class="text-sm font-semibold text-gray-400 tracking-wider uppercase">Company</h3>
               <ul class="mt-4 space-y-4">
                 <li><a href="#" class="text-base text-gray-500 hover:text-gray-900">About</a></li>
-                <li><a href="#" class="text-base text-gray-500 hover:text-gray-900">Blog</a></li>
+                <li><a href="/blog" class="text-base text-gray-500 hover:text-gray-900">Blog</a></li>
                 <li><a href="#" class="text-base text-gray-500 hover:text-gray-900">Contact</a></li>
               </ul>
             </div>

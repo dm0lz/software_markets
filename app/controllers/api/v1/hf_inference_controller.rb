@@ -9,6 +9,7 @@ class Api::V1::HfInferenceController < Api::V1::BaseController
   # @response Validation errors(422) [Hash{error: String}]
   # @request_body The payload to send [!Hash{input: String, task: String, model: String}]
   # @request_body_example An example payload [Hash] { "task": "summarization", "model": "sshleifer/distilbart-cnn-12-6", input: "The quick brown fox jumps over the lazy dog" }
+
   def create
     unless @input = hf_inference_params[:input]
       return render json: { error: "analysis input is required" }, status: :unprocessable_entity

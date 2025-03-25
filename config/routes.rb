@@ -19,6 +19,8 @@ Rails.application.routes.draw do
 
   namespace :public, path: "/" do
     get "home", to: "home#index"
+    get "blog", to: "posts#index", as: :posts
+    get "blog/:id", to: "posts#show", as: :post
     resources :markets, only: [ :index, :show ]
     resources :companies, only: [ :index, :show ]
     resources :domains, only: [ :index, :show ]
