@@ -30,6 +30,7 @@ Rails.application.routes.draw do
 
   namespace :admin do
     resources :feature_extraction_queries
+    root "feature_extraction_queries#index"
   end
 
   namespace :app, path: "/app" do
