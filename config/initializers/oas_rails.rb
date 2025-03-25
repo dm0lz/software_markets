@@ -16,6 +16,7 @@ OasRails.configure do |config|
     ## Available Resources
 
     - POST Analyze web page : Scrap and analyze a web page using a custom prompt
+    - POST Analyze search engine results : Analyze search engine results using a custom prompt
     - GET Domain from company : Get the domain of a company
     - GET Emails from domain : Get the emails of a domain
     - GET Hugging Face inference : Perform Hugging Face model inference

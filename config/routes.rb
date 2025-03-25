@@ -50,6 +50,7 @@ Rails.application.routes.draw do
       get "hf_models", to: "hf_models#index"
       post "hf_inference", to: "hf_inference#create"
       post "analyze_web_page", to: "analyze_web_page#create"
+      post "analyze_serp", to: "analyze_serp#create"
     end
   end
 

@@ -16,6 +16,7 @@ class ApiSession < ApplicationRecord
       "api/v1/company_domain" => 5,
       "api/v1/domain_emails" => 10,
       "api/v1/analyze_web_page" => 25,
+      "api/v1/analyze_serp" => 25,
       "api/v1/hf_inference" => 25,
       "api/v1/hf_models" => 1,
       "api/v1/serp" => 30
