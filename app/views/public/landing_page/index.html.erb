@@ -1,4 +1,3 @@
-<script src="https://unpkg.com/lucide@latest"></script>
 <div class="min-h-screen bg-gradient-to-b from-gray-50 to-gray-100">
   <!-- Header -->
   <header class="bg-white shadow-sm">
@@ -54,7 +53,7 @@
           <i data-lucide="brain" class="h-6 w-6 text-indigo-600"></i>
         </div>
         <h3 class="text-xl font-semibold mb-2">AI Integration</h3>
-        <p class="text-gray-600">Seamless integration with HuggingFace models and DeepSeek R1 for content analysis.</p>
+        <p class="text-gray-600">Seamless integration with most HuggingFace models.</p>
       </div>
 
       <!-- Feature Card 3 -->
@@ -89,8 +88,8 @@
         <div class="h-12 w-12 bg-indigo-100 rounded-lg flex items-center justify-center mb-4">
           <i data-lucide="activity" class="h-6 w-6 text-indigo-600"></i>
         </div>
-        <h3 class="text-xl font-semibold mb-2">Usage Tracking</h3>
-        <p class="text-gray-600">Detailed API usage tracking and session management.</p>
+        <h3 class="text-xl font-semibold mb-2">Web Page analysis</h3>
+        <p class="text-gray-600">Analyze any web page with a custom prompt and get actionable data.</p>
       </div>
     </div>
   </section>
@@ -101,8 +100,8 @@
     <h2 class="text-3xl md:text-4xl font-bold text-center text-gray-900 mb-12">Simple Credit-Based Pricing</h2>
     <div class="bg-white rounded-xl shadow-md p-8 max-w-2xl mx-auto">
       <div class="text-center">
-        <p class="text-4xl font-extrabold text-gray-900">$0.01 <span class="text-xl font-normal text-gray-600">/ credit</span></p>
-        <p class="mt-4 text-lg text-gray-600">Pay as you go with credits that never expire. Get started with 500 free credits.</p>
+        <p class="text-4xl font-extrabold text-gray-900">$0.001 <span class="text-xl font-normal text-gray-600">/ credit</span></p>
+        <p class="mt-4 text-lg text-gray-600">Pay as you go with credits that never expire. Get started with 5000 free credits.</p>
       </div>
       <div class="mt-8">
         <h3 class="text-xl font-semibold text-gray-900 mb-4">Endpoint Costs</h3>
@@ -131,12 +130,12 @@
         <h2 class="text-3xl font-bold text-white mb-8">Simple to Integrate</h2>
         <div class="bg-gray-800 rounded-lg p-6 text-left overflow-x-auto">
           <pre class="text-green-400"><code>curl -X GET "http://127.0.0.1:3000/api/v1/scrap_web_page" \
--H "Authorization: Bearer api_token" \
--H "Content-Type: application/json" \
--d '{
-"url": "https://example.com",
-"js_script": "return { content: document.body.innerText }"
-}'</code>   
+  -H "Authorization: Bearer api_token" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "url": "https://example.com",
+    "js_script": "return { content: document.body.innerText }"
+  }'</code>
           </pre>
         </div>
       </div>
@@ -185,6 +184,3 @@
     </div>
   </footer>
 </div>
-<script>
-  lucide.createIcons();
-</script>

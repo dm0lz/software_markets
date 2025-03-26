@@ -35,7 +35,8 @@ Rails.application.routes.draw do
 
   namespace :app, path: "/app" do
     resources :users, only: [ :show ]
-    root "users#show"
+    get "dashboard", to: "dashboard#index"
+    root "dashboard#index"
   end
 
   namespace :api, defaults: { format: :json } do
