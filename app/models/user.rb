@@ -17,6 +17,6 @@ class User < ApplicationRecord
 
   private
   def add_api_credit
-    self.api_credit = 5000
+    self.api_credit = 2500
   end
 end

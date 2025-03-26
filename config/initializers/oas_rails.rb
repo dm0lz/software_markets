@@ -15,16 +15,16 @@ OasRails.configure do |config|
 
     ## Available Resources
 
-    - POST Analyze web page : Scrap and analyze a web page using a custom prompt
-    - POST Analyze search engine results : Analyze search engine results using a custom prompt
-    - GET Domain from company : Get the domain of a company
-    - GET Emails from domain : Get the emails of a domain
+    - GET Search engine results : Get search engine results
     - GET Hugging Face inference : Perform Hugging Face model inference
-    - GET Hugging Face models : Get the available Hugging Face models
     - POST Scrap domain : Scrap a domain
     - POST Scrap web page : Scrap a web page
     - POST Scrap web pages : Scrap multiple web pages
-    - GET Search engine results : Get the search engine results pages
+    - POST Analyze search engine results : Analyze search engine results using a custom prompt
+    - POST Analyze web page : Scrap and analyze a web page using a custom prompt
+    - GET Domain from company : Get the domain of a company
+    - GET Emails from domain : Get the emails of a domain
+    - GET Hugging Face models : Get the available Hugging Face models
 
     ## Rate Limiting
 
