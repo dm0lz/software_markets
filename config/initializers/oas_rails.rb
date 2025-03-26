@@ -39,8 +39,8 @@ OasRails.configure do |config|
 
   # Servers Information. For more details follow: https://spec.openapis.org/oas/latest.html#server-object
   config.servers = [
-    { url: "http://localhost:3000", description: "Local" },
-    { url: "http://138.199.170.126", description: "Production" }
+    { url: "http://138.199.170.126", description: "Production" },
+    { url: "http://localhost:3000", description: "Local" }
   ]
 
   # Tag Information. For more details follow: https://spec.openapis.org/oas/latest.html#tag-object
