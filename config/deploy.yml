@@ -8,10 +8,10 @@ image: olivier86/software_markets
 servers:
   web:
     hosts:
-      - www.fetchserp.com
+      - fetchserp.com
   job:
     hosts:
-      - www.fetchserp.com
+      - fetchserp.com
     cmd: bin/jobs
 
 # Enable SSL auto certification via Let's Encrypt and allow for multiple apps on a single web server.
@@ -20,7 +20,9 @@ servers:
 # Note: If using Cloudflare, set encryption mode in SSL/TLS setting to "Full" to enable CF-to-app encryption.
 proxy:
   ssl: true
-  host: www.fetchserp.com
+  hosts:
+    - fetchserp.com
+    - www.fetchserp.com
 
 # Credentials for your image host.
 registry:
@@ -119,7 +121,7 @@ builder:
 accessories:
   db:
     image: pgvector/pgvector:pg17
-    host: www.fetchserp.com
+    host: fetchserp.com
     port: "127.0.0.1:5432:5432"
     env:
       clear:
@@ -133,7 +135,7 @@ accessories:
       - data:/var/lib/postgresql/data
   ollama:
     image: ollama/ollama:latest
-    host: www.fetchserp.com
+    host: fetchserp.com
     port: "127.0.0.1:11434:11434"
     files:
       - Modelfile:/ollama-config/Modelfile
@@ -146,7 +148,7 @@ accessories:
     #   gpus: all
   google-serp:
     image: olivier86/google-serp:latest
-    host: www.fetchserp.com
+    host: fetchserp.com
     port: "127.0.0.1:3001:3001"
     env:
       secret:
