@@ -5,7 +5,7 @@ OasRails.configure do |config|
   config.info.version = "1.0.0"
   config.info.summary = "OasRails: Automatic Interactive API Documentation for Rails"
   config.info.description = <<~HEREDOC
-    # Software Markets API
+    # Fetchserp API
 
     This API provides endpoints for retrieving and analyzing data.
 
