@@ -53,6 +53,7 @@ env:
     # Use software_markets-db for a db accessory server on same machine via local kamal docker network.
     DB_HOST: software_markets-db
     OLLAMA_IP: software_markets-ollama
+    GOOGLE_SERP_HOST: software_markets-google-serp
 
     # Log everything from Rails
     # RAILS_LOG_LEVEL: debug
@@ -143,3 +144,10 @@ accessories:
         OLLAMA_HOST: "0.0.0.0"
     # options:
     #   gpus: all
+  google-serp:
+    image: olivier86/google-serp:latest
+    host: 138.199.170.126
+    port: "127.0.0.1:3001:3001"
+    env:
+      secret:
+        - TWO_CAPTCHA_API_KEY
