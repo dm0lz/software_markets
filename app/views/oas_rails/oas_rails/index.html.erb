@@ -1,7 +1,7 @@
-<script type="module" src="https://unpkg.com/rapidoc@9.3.8/dist/rapidoc-min.js"></script>
+<%= javascript_include_tag "rapidoc", type: "module" %>
 <rapi-doc
   spec-url = "<%= OasRails::Engine.routes.find_script_name({}) %>.json"
-  show-header = 'false'
+  show-header = "false"
   font-size="largest"
   show-method-in-nav-bar="as-colored-text"
   nav-item-spacing="relaxed"
