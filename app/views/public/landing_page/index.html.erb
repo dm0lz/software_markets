@@ -4,7 +4,9 @@
     <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
       <div class="flex items-center space-x-2">
         <i data-lucide="shield" class="h-8 w-8 text-indigo-600"></i>
-        <span class="text-xl font-bold text-gray-900">FetchSerp API</span>
+        <%= link_to public_root_path do %>
+          <span class="text-xl font-bold text-gray-900">FetchSerp API</span>
+        <% end %>
       </div>
       <div class="flex items-center space-x-4">
         <a href="#features" class="text-gray-600 hover:text-gray-900">Features</a>
@@ -370,14 +372,14 @@ print(response.json())</code></pre>
       <div class="text-center">
         <h2 class="text-3xl font-bold text-white mb-8">Simple to Integrate</h2>
         <div class="bg-gray-800 rounded-lg p-6 text-left overflow-x-auto">
-          <pre class="text-green-400"><code>curl -X POST "https://www.fetchserp.com/api/v1/scrap_web_page" \
-  -H "Authorization: Bearer api_token" \
+          <pre><code class="language-bash">curl -X GET "https://api.yourservice.com/v1/scrape" \
+  -H "Authorization: Bearer your_api_key" \
   -H "Content-Type: application/json" \
   -d '{
     "url": "https://example.com",
-    "js_script": "return { content: document.body.innerText }"
-  }'</code>
-          </pre>
+    "stealth_mode": true,
+    "bypass_captcha": true
+  }'</code></pre>
         </div>
       </div>
     </div>
