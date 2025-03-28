@@ -6,7 +6,7 @@ class OasRails::OasRailsController < ApplicationController
 
   def index
     respond_to do |format|
-      format.html { render "index", layout: OasRails.config.layout }
+      format.html { render "index" }
       format.json do
         render json: OasRails.build.to_json, status: :ok
       end
