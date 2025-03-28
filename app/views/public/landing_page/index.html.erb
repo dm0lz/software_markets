@@ -1,4 +1,4 @@
-<div class="min-h-screen bg-gradient-to-b from-gray-50 to-gray-100">
+<div class="pointer-events-auto min-h-screen bg-gradient-to-b from-gray-50 to-gray-100">
   <!-- Header -->
   <header class="bg-white shadow-sm">
     <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
@@ -38,7 +38,7 @@
 
   <!-- Features Grid -->
   <section id="features" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
-    <h2 class="text-3xl font-bold text-center mb-12">Powerful Features for Modern Web Scraping</h2>
+    <h2 class="text-3xl font-bold text-center mb-12">Smart Features for Web Scraping & Analysis</h2>
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
       <!-- Feature Card 1 -->
       <div class="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow">
@@ -159,7 +159,7 @@
             <div id="curl" class="curl code-block">
               <pre><code class="language-bash">curl -X GET "https://www.fetchserp.com/api/v1/serp?search_engine=duckduckgo&pages_number=2&query=tesla" \
  -H 'accept: application/json'\
- -H 'authorization: Bearer api_token'</code></pre>
+ -H 'authorization: Bearer YOUR_API_TOKEN'</code></pre>
             </div>
 
             <div id="javascript" class="javascript code-block hidden">
@@ -167,7 +167,7 @@
   method: 'GET',
   headers: {
     'accept': 'application/json',
-    'authorization': 'Bearer api_token'
+    'authorization': 'Bearer YOUR_API_TOKEN'
   }
 });
 
@@ -182,7 +182,7 @@ require 'json'
 
 uri = URI("https://www.fetchserp.com/api/v1/serp?search_engine=duckduckgo&pages_number=2&query=tesla")
 request = Net::HTTP::Get.new(uri)
-request['Authorization'] = 'Bearer api_token'  # Replace with your actual API token
+request['Authorization'] = 'Bearer YOUR_API_TOKEN'  # Replace with your actual API token
 request['Accept'] = 'application/json'
 
 response = Net::HTTP.start(uri.hostname, uri.port, use_ssl: true) { |http| http.request(request) }
@@ -195,7 +195,7 @@ puts JSON.pretty_generate(JSON.parse(response.body))</code></pre>
 
 url = "https://www.fetchserp.com/api/v1/serp?search_engine=duckduckgo&pages_number=2&query=tesla"
 headers = {
-    "Authorization": "Bearer api_token",  # Replace with your actual API token
+    "Authorization": "Bearer YOUR_API_TOKEN",  # Replace with your actual API token
     "Accept": "application/json"
 }
 
@@ -260,7 +260,7 @@ print(response.json())</code></pre>
             <div class="curl code-block">
               <pre><code class="language-bash">curl -X POST "https://www.fetchserp.com/api/v1/hf_inference" \
  -H 'accept: application/json'\
- -H 'authorization: Bearer'\
+ -H 'authorization: Bearer YOUR_API_TOKEN'\
  -H 'content-type: application/json' \
  -d '{ 
     "task":"summarization",
@@ -363,6 +363,971 @@ print(response.json())</code></pre>
           </div>
         </div>
       </div>
+      
+      <div class="bg-white rounded-lg shadow-md">
+        <button class="toggle-accordion w-full px-6 py-4 text-left focus:outline-none hover:cursor-pointer" data-endpoint="scrap_web_page">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center space-x-2">
+              <i data-lucide="bot" class="h-5 w-5 text-indigo-600"></i>
+              <span class="text-lg font-semibold">Scrap Web Page</span>
+            </div>
+            <i data-lucide="chevron-down" class="h-5 w-5 transform transition-transform"></i>
+          </div>
+        </button>
+        <div id="scrap_web_page" class="hidden px-6 pb-4">
+          <div class="prose max-w-none">
+            <p class="text-gray-600 mb-4">Run custom javascript code on any web page to extract content.</p>
+            
+            <!-- Language Tabs -->
+            <div class="mb-4">
+              <div class="flex space-x-4 border-b">
+                <button class="switch-tab px-4 py-2 text-sm font-medium text-indigo-600 hover:text-indigo-600 border-b-2 border-indigo-500 hover:border-indigo-500 hover:cursor-pointer tab-button active" data-tab="curl">cURL</button>
+                <button class="switch-tab px-4 py-2 text-sm font-medium text-gray-600 hover:text-indigo-600 border-b-2 border-transparent hover:border-indigo-500 hover:cursor-pointer tab-button" data-tab="javascript">JavaScript</button>
+                <button class="switch-tab px-4 py-2 text-sm font-medium text-gray-600 hover:text-indigo-600 border-b-2 border-transparent hover:border-indigo-500 hover:cursor-pointer tab-button" data-tab="python">Python</button>
+                <button class="switch-tab px-4 py-2 text-sm font-medium text-gray-600 hover:text-indigo-600 border-b-2 border-transparent hover:border-indigo-500 hover:cursor-pointer tab-button" data-tab="ruby">Ruby</button>
+              </div>
+            </div>
+
+            <!-- Code Examples -->
+            <div class="curl code-block">
+              <pre><code class="language-bash">curl -X POST "https://www.fetchserp.com/api/v1/scrap_web_page" \
+ -H 'accept: application/json'\
+ -H 'authorization: Bearer YOUR_API_TOKEN'\
+ -H 'content-type: application/json' \
+ -d '{
+    "url":"https://taboola.com",
+    "js_script":"return { content: document.body.innerText }"
+  }'</code></pre>
+            </div>
+
+            <div class="javascript code-block hidden">
+              <pre><code class="language-javascript">const url = "https://www.fetchserp.com/api/v1/scrap_web_page";
+const headers = {
+  "Accept": "application/json",
+  "Authorization": "Bearer YOUR_API_TOKEN", // Replace with your actual API token
+  "Content-Type": "application/json"
+};
+
+const data = {
+  url: "https://taboola.com",
+  js_script: "return { content: document.body.innerText }"
+};
+
+fetch(url, {
+  method: "POST",
+  headers: headers,
+  body: JSON.stringify(data)
+})
+  .then(response => response.json())
+  .then(data => console.log(data))
+  .catch(error => console.error("Error:", error));</code></pre>
+            </div>
+
+            <div id="ruby" class="ruby code-block hidden">
+              <pre><code class="language-ruby">require 'net/http'
+require 'uri'
+require 'json'
+
+url = URI.parse("https://www.fetchserp.com/api/v1/scrap_web_page")
+http = Net::HTTP.new(url.host, url.port)
+http.use_ssl = true  # Enable HTTPS
+
+# Create the request
+request = Net::HTTP::Post.new(url, {
+  "Accept" => "application/json",
+  "Authorization" => "Bearer YOUR_API_TOKEN",  # Replace with your actual API token
+  "Content-Type" => "application/json"
+})
+
+# Set the request body
+request.body = {
+  url: "https://taboola.com",
+  js_script: "return { content: document.body.innerText }"
+}.to_json
+
+# Send the request
+response = http.request(request)
+
+# Print the JSON response
+puts JSON.parse(response.body)</code></pre>
+            </div>
+
+            <div class="python code-block hidden">
+              <pre><code class="language-python">import requests
+import json
+
+url = "https://www.fetchserp.com/api/v1/scrap_web_page"
+headers = {
+    "Accept": "application/json",
+    "Authorization": "Bearer YOUR_API_TOKEN",  # Replace with your actual API token
+    "Content-Type": "application/json"
+}
+
+data = {
+    "url": "https://taboola.com",
+    "js_script": "return { content: document.body.innerText }"
+}
+
+response = requests.post(url, headers=headers, json=data)
+
+# Print the JSON response
+print(response.json())</code></pre>
+            </div>
+
+            <h4 class="text-lg font-semibold mt-6 mb-2">Response</h4>
+            <pre><code class="language-json">{
+  "response": {
+    "data": {
+      "web_page": {
+        "content": "Advertisers Publishers Taboola News Company Resources\nLogin Get Started EN \nPerformance Beyond Search and Social\n\nGrow your business through performance advertising technology that delivers measurable outcomes.\n\nGet Started\nOutcomes at Scale Beyond Search and Social\n Watch Video\n\nDiverse inventory, all placement types, scale that moves the needle\n\nSpecialized Performance AI Driving Conversions and Actions\n\nUnique 1st Party data from powering publisher editorial and ad units\n\nUse any creative to meet your objectives, far beyond native\n\nAdvertisers winning with Realize\neCommerce\nEnterprise brands\nAgencies\n\n679% Average ROAS\n\n100K Leads/mo\n\n+50% CTR\n\n+50% ROAS\n\n+130% CVR\n\n+25% Leads Generated\n\n+26% Brand Affinity\n\n+291% Retargeting CVR\n\n2X Avg. Session Duration\n\n+30% Purchase Intent\n\n-42% Cost per Sale\n\n +42% Video Completion Rate\n\nSpecialized Performance\nNot Full Funnel Promises\n\nSuccessful Performance Advertisers Focus on Conversion and Action Stages\n\nCONSIDERATION\nIntent Prospecting\n\nDiscover & qualify high intent audiences based on their interactions with your ads or site\n\nACTION\nConversion Targeting\n\nClose the deal with qualified audiences\n\nYour Ads on Trusted Media Properties\nAdvertise Smarter with Tools that Drive Success\nContact Us\nAd Experiences that Drive Performance\n\nUtilize tailored creative solutions, seamless asset creation, and brand suitability tools to optimize campaigns and drive impactful results at every stage of the performance funnel.\n\nPowerful Performance AI\n\nHarness Taboola’s AI, powered by 17 years of unique publisher data, delivering highly-targeted, scalable ads that maximize ROI and drive growth.\n\n1st Party Audience Targeting Solutions\n\nLeverage scale, first-party data, AI, and privacy-focused tech to connect with the right audiences and drive performance.\n\nIntuitive and Effective Campaign Management\n\nTap into powerful, user-friendly tools with high transparency and control for seamless campaign management and optimization.\n\nMaster Your Digital Marketing\nEngagement\nIncrease website engagement by attracting users who are most likely to connect with your brand or product.\nLeads\nPurchases\nMeasurable Outcomes\nGet Started\nAdvertiser Success Stories\neToro Boosts Global Acquisition with Taboola: 30% Conversion Success\n\neToro sought a new media channel to enhance their global acquisition and branding efforts. By partnering with Taboola, they achieved a 30% conversion rate from registrations to paying users and reduced CPM costs by 40%.\n\nRead more\nBosch Home Appliances Sees Significant Traffic Increase With Taboola\n\nSegmenta and Bosch Home Germany achieved convincing results in all relevant metrics such as CPC and CTR as well as Cost per Visit and Cost per Product View. The results were also very competitive compared to the accompanying social campaign.\n\nRead More\nHyundai Achieves 30% Lower Cost per Session with Taboola\n\nHyundai partnered with Taboola to boost their campaign performance, resulting in a 30% lower Cost per Session. They also achieved a 26% lower Cost per Lead and a 10% lower Bounce Rate compared to other channels like Display and Social.\n\nRead More\n10,000 Customers in 6 Months: Lifeboost's Success with Taboola\n\nWith Taboola, Lifeboost was able to convert 10,000 customers in 6 months, while achieving a CPA 75% lower than their goal with retargeting, and 87% lower than their goal with Attentive Audiences.\n\nRead More\nAustria Tourism Sees 33% Boost with Taboola\n\nAustria Tourism experienced a 33% performance increase across all campaigns by replacing banner display advertising with Taboola.\n\nRead More\nReach your best audience at the lowest cost!\nGet Started\nContact Us\nFor Advertisers\nAdvertise\nAbby: AI Ad Assistant\nGenAI Ad Maker\nCreative Shop\nConnexity\nTaboola Trends\nAdvertising Trends\nTrending Topics\nTrending Images\nHeadline Analyzer\nFor Digital Properties\nPublishers\nNewsroom\nTaboola News\nSkimlinks\nCompany\nThe Taboola Story\nSocial Responsibility\nCareers\nOur Offices\nPress Center\nManagement\nBoard\nResources\nMarketing Hub\nEngineering Blog\nAll Resources\nBrand Guidelines\nDev Center\nContent Policies\nTrust Center\nAdvertisers Help Center\nPublishers Help Center\nGuides and Knowledge\nGoogle Ads Alternatives\nMeta Ads Alternatives\nLanding Page\nPerformance Marketing\nAffiliate Marketing\nAd Spend Optimization\nBuying Website Traffic\neCommerce Marketing Strategy\neComm Conversion Optimization\nDropshipping\nCookie Policy\nTerms of Use\nOpt Out\n3rd Party Online Advertising\nDo Not Sell or Share My Personal Info\nOSS Attribution\nPrivacy Policy"
+      }
+    }
+  }
+}</code></pre>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="bg-white rounded-lg shadow-md">
+        <button class="toggle-accordion w-full px-6 py-4 text-left focus:outline-none hover:cursor-pointer" data-endpoint="scrap_web_pages">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center space-x-2">
+              <i data-lucide="bot" class="h-5 w-5 text-indigo-600"></i>
+              <span class="text-lg font-semibold">Scrap Multiple Web Pages</span>
+            </div>
+            <i data-lucide="chevron-down" class="h-5 w-5 transform transition-transform"></i>
+          </div>
+        </button>
+        <div id="scrap_web_pages" class="hidden px-6 pb-4">
+          <div class="prose max-w-none">
+            <p class="text-gray-600 mb-4">Run custom javascript code to extract content.</p>
+            
+            <!-- Language Tabs -->
+            <div class="mb-4">
+              <div class="flex space-x-4 border-b">
+                <button class="switch-tab px-4 py-2 text-sm font-medium text-indigo-600 hover:text-indigo-600 border-b-2 border-indigo-500 hover:border-indigo-500 hover:cursor-pointer tab-button active" data-tab="curl">cURL</button>
+                <button class="switch-tab px-4 py-2 text-sm font-medium text-gray-600 hover:text-indigo-600 border-b-2 border-transparent hover:border-indigo-500 hover:cursor-pointer tab-button" data-tab="javascript">JavaScript</button>
+                <button class="switch-tab px-4 py-2 text-sm font-medium text-gray-600 hover:text-indigo-600 border-b-2 border-transparent hover:border-indigo-500 hover:cursor-pointer tab-button" data-tab="python">Python</button>
+                <button class="switch-tab px-4 py-2 text-sm font-medium text-gray-600 hover:text-indigo-600 border-b-2 border-transparent hover:border-indigo-500 hover:cursor-pointer tab-button" data-tab="ruby">Ruby</button>
+              </div>
+            </div>
+
+            <!-- Code Examples -->
+            <div class="curl code-block">
+              <pre><code class="language-bash">curl -X POST "https://www.fetchserp.com/api/v1/scrap_web_pages" \
+ -H 'accept: application/json'\
+ -H 'authorization: Bearer YOUR_API_TOKEN'\
+ -H 'content-type: application/json' \
+ -d '{
+    "urls": ["https://taboola.com","https://google.com"],
+    "js_script": "return { url: document.location.href, content: document.body.innerText }"
+  }'
+ </code></pre>
+            </div>
+
+            <div class="javascript code-block hidden">
+              <pre><code class="language-javascript">const url = "https://www.fetchserp.com/api/v1/scrap_web_pages";
+
+const headers = {
+  "Accept": "application/json",
+  "Authorization": "Bearer YOUR_API_TOKEN", // Replace with your actual API key
+  "Content-Type": "application/json"
+};
+
+const data = {
+  urls: ["https://taboola.com", "https://google.com"],
+  js_script: "return { url: document.location.href, content: document.body.innerText }"
+};
+
+fetch(url, {
+  method: "POST",
+  headers: headers,
+  body: JSON.stringify(data)
+})
+  .then(response => response.json())
+  .then(data => console.log(data))
+  .catch(error => console.error("Error:", error));</code></pre>
+            </div>
+
+            <div id="ruby" class="ruby code-block hidden">
+              <pre><code class="language-ruby">require 'net/http'
+require 'uri'
+require 'json'
+
+url = URI.parse("https://www.fetchserp.com/api/v1/scrap_web_pages")
+http = Net::HTTP.new(url.host, url.port)
+http.use_ssl = true  # Enable HTTPS
+
+# Create the request
+request = Net::HTTP::Post.new(url, {
+  "Accept" => "application/json",
+  "Authorization" => "Bearer YOUR_API_TOKEN",  # Replace with your actual API key
+  "Content-Type" => "application/json"
+})
+
+# Set the request body
+request.body = {
+  urls: ["https://taboola.com", "https://google.com"],
+  js_script: "return { url: document.location.href, content: document.body.innerText }"
+}.to_json
+
+# Send the request
+response = http.request(request)
+
+# Print the JSON response
+puts JSON.parse(response.body)</code></pre>
+            </div>
+
+            <div class="python code-block hidden">
+              <pre><code class="language-python">import requests
+
+url = "https://www.fetchserp.com/api/v1/scrap_web_pages"
+headers = {
+    "Accept": "application/json",
+    "Authorization": "Bearer YOUR_API_TOKEN",  # Replace with your actual API key
+    "Content-Type": "application/json"
+}
+
+data = {
+    "urls": ["https://taboola.com", "https://google.com"],
+    "js_script": "return { url: document.location.href, content: document.body.innerText }"
+}
+
+response = requests.post(url, headers=headers, json=data)
+
+# Print the JSON response
+print(response.json())</code></pre>
+            </div>
+
+            <h4 class="text-lg font-semibold mt-6 mb-2">Response</h4>
+            <pre><code class="language-json">{
+  "response": {
+    "data": {
+      "web_pages": [
+        {
+          "url": "https://www.google.com/",
+          "content": "À propos\nGoogle Store\nGmailImages\nConnexion\n \nFrance\nPublicité\nEntreprise\nComment fonctionne la recherche Google ?\nNotre troisième décennie d'action pour le climat\nSignaler un contenu inapproprié\nInfo consommateurs\nConfidentialité\nConditions\nParamètres\nFR\nSe connecter\nAvant d'accéder à Google\nNous utilisons des cookies et d'autres données pour :\nProposer les services Google et s'assurer qu'ils fonctionnent correctement\nSuivre les interruptions de service et protéger contre le spam, les fraudes et les abus\nMesurer l'engagement de l'audience et les statistiques des sites pour comprendre la façon dont nos services sont utilisés et pour améliorer leur qualité\nSi vous cliquez sur \"Tout accepter\", nous utiliserons également des cookies et d'autres données pour :\nDévelopper de nouveaux services et les améliorer\nDiffuser des annonces et évaluer leur efficacité\nProposer des contenus personnalisés en fonction de vos paramètres\nAfficher des annonces personnalisées en fonction de vos paramètres\nSi vous cliquez sur \"Tout refuser\", nous n'utiliserons pas de cookies pour ces fins supplémentaires.\nLes contenus non personnalisés dépendent, par exemple, du contenu du site que vous consultez, de l'activité de votre session de recherche en cours et de votre position. Les annonces non personnalisées dépendent du contenu du site que vous consultez et de votre position approximative. Les annonces et les contenus personnalisés peuvent aussi inclure des résultats plus pertinents, des recommandations et des annonces adaptées en fonction de votre activité passée sur ce navigateur, comme vos précédentes recherches sur Google. Le cas échéant, nous adaptons également l’expérience en fonction de l’âge de l’utilisateur à l'aide de cookies et de données.\nCliquez sur \"Plus d'options\" pour afficher plus d'informations, y compris sur la manière de gérer vos paramètres de confidentialité. Vous pouvez aussi consulter la page g.co/privacytools à tout moment.\nTout refuser\nTout accepter\nPlus d'options\nConfidentialité\n·\nConditions d'utilisation"
+        },
+        {
+          "url": "https://www.taboola.com/",
+          "content": "Press enter for Accessibility for blind people\nwho use screen readers\nPress enter for Keyboard Navigation\nPress enter for Accessibility menu\nSkip to Main Content\nSkip to Footer\nAdvertisers Publishers Taboola News Company Resources\nLogin Get Started EN \nPerformance Beyond Search and Social\n\nGrow your business through performance advertising technology that delivers measurable outcomes.\n\nGet Started\nOutcomes at Scale Beyond Search and Social\n Watch Video\n\nDiverse inventory, all placement types, scale that moves the needle\n\nSpecialized Performance AI Driving Conversions and Actions\n\nUnique 1st Party data from powering publisher editorial and ad units\n\nUse any creative to meet your objectives, far beyond native\n\nAdvertisers winning with Realize\neCommerce\nEnterprise brands\nAgencies\n\n679% Average ROAS\n\n100K Leads/mo\n\n+50% CTR\n\n+50% ROAS\n\n+130% CVR\n\n+25% Leads Generated\n\n+26% Brand Affinity\n\n+291% Retargeting CVR\n\n2X Avg. Session Duration\n\n+30% Purchase Intent\n\n-42% Cost per Sale\n\n +42% Video Completion Rate\n\nSpecialized Performance\nNot Full Funnel Promises\n\nSuccessful Performance Advertisers Focus on Conversion and Action Stages\n\nCONSIDERATION\nIntent Prospecting\n\nDiscover & qualify high intent audiences based on their interactions with your ads or site\n\nACTION\nConversion Targeting\n\nClose the deal with qualified audiences\n\nYour Ads on Trusted Media Properties\nAdvertise Smarter with Tools that Drive Success\nContact Us\nAd Experiences that Drive Performance\n\nUtilize tailored creative solutions, seamless asset creation, and brand suitability tools to optimize campaigns and drive impactful results at every stage of the performance funnel.\n\nPowerful Performance AI\n\nHarness Taboola’s AI, powered by 17 years of unique publisher data, delivering highly-targeted, scalable ads that maximize ROI and drive growth.\n\n1st Party Audience Targeting Solutions\n\nLeverage scale, first-party data, AI, and privacy-focused tech to connect with the right audiences and drive performance.\n\nIntuitive and Effective Campaign Management\n\nTap into powerful, user-friendly tools with high transparency and control for seamless campaign management and optimization.\n\nMaster Your Digital Marketing\nEngagement\nIncrease website engagement by attracting users who are most likely to connect with your brand or product.\nLeads\nPurchases\nMeasurable Outcomes\nGet Started\nAdvertiser Success Stories\neToro Boosts Global Acquisition with Taboola: 30% Conversion Success\n\neToro sought a new media channel to enhance their global acquisition and branding efforts. By partnering with Taboola, they achieved a 30% conversion rate from registrations to paying users and reduced CPM costs by 40%.\n\nRead more\nBosch Home Appliances Sees Significant Traffic Increase With Taboola\n\nSegmenta and Bosch Home Germany achieved convincing results in all relevant metrics such as CPC and CTR as well as Cost per Visit and Cost per Product View. The results were also very competitive compared to the accompanying social campaign.\n\nRead More\nHyundai Achieves 30% Lower Cost per Session with Taboola\n\nHyundai partnered with Taboola to boost their campaign performance, resulting in a 30% lower Cost per Session. They also achieved a 26% lower Cost per Lead and a 10% lower Bounce Rate compared to other channels like Display and Social.\n\nRead More\n10,000 Customers in 6 Months: Lifeboost's Success with Taboola\n\nWith Taboola, Lifeboost was able to convert 10,000 customers in 6 months, while achieving a CPA 75% lower than their goal with retargeting, and 87% lower than their goal with Attentive Audiences.\n\nRead More\nAustria Tourism Sees 33% Boost with Taboola\n\nAustria Tourism experienced a 33% performance increase across all campaigns by replacing banner display advertising with Taboola.\n\nRead More\nReach your best audience at the lowest cost!\nGet Started\nContact Us\nFor Advertisers\nAdvertise\nAbby: AI Ad Assistant\nGenAI Ad Maker\nCreative Shop\nConnexity\nTaboola Trends\nAdvertising Trends\nTrending Topics\nTrending Images\nHeadline Analyzer\nFor Digital Properties\nPublishers\nNewsroom\nTaboola News\nSkimlinks\nCompany\nThe Taboola Story\nSocial Responsibility\nCareers\nOur Offices\nPress Center\nManagement\nBoard\nResources\nMarketing Hub\nEngineering Blog\nAll Resources\nBrand Guidelines\nDev Center\nContent Policies\nTrust Center\nAdvertisers Help Center\nPublishers Help Center\nGuides and Knowledge\nGoogle Ads Alternatives\nMeta Ads Alternatives\nLanding Page\nPerformance Marketing\nAffiliate Marketing\nAd Spend Optimization\nBuying Website Traffic\neCommerce Marketing Strategy\neComm Conversion Optimization\nDropshipping\nCookie Policy\nTerms of Use\nOpt Out\n3rd Party Online Advertising\nDo Not Sell or Share My Personal Info\nOSS Attribution\nPrivacy Policy"
+        }
+      ]
+    }
+  }
+}</code></pre>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="bg-white rounded-lg shadow-md">
+        <button class="toggle-accordion w-full px-6 py-4 text-left focus:outline-none hover:cursor-pointer" data-endpoint="scrap_domain">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center space-x-2">
+              <i data-lucide="bot" class="h-5 w-5 text-indigo-600"></i>
+              <span class="text-lg font-semibold">Scrap Domain</span>
+            </div>
+            <i data-lucide="chevron-down" class="h-5 w-5 transform transition-transform"></i>
+          </div>
+        </button>
+        <div id="scrap_domain" class="hidden px-6 pb-4">
+          <div class="prose max-w-none">
+            <p class="text-gray-600 mb-4">Scrap domain web pages.</p>
+            
+            <!-- Language Tabs -->
+            <div class="mb-4">
+              <div class="flex space-x-4 border-b">
+                <button class="switch-tab px-4 py-2 text-sm font-medium text-indigo-600 hover:text-indigo-600 border-b-2 border-indigo-500 hover:border-indigo-500 hover:cursor-pointer tab-button active" data-tab="curl">cURL</button>
+                <button class="switch-tab px-4 py-2 text-sm font-medium text-gray-600 hover:text-indigo-600 border-b-2 border-transparent hover:border-indigo-500 hover:cursor-pointer tab-button" data-tab="javascript">JavaScript</button>
+                <button class="switch-tab px-4 py-2 text-sm font-medium text-gray-600 hover:text-indigo-600 border-b-2 border-transparent hover:border-indigo-500 hover:cursor-pointer tab-button" data-tab="python">Python</button>
+                <button class="switch-tab px-4 py-2 text-sm font-medium text-gray-600 hover:text-indigo-600 border-b-2 border-transparent hover:border-indigo-500 hover:cursor-pointer tab-button" data-tab="ruby">Ruby</button>
+              </div>
+            </div>
+
+            <!-- Code Examples -->
+            <div class="curl code-block">
+              <pre><code class="language-bash">curl -X POST "https://www.fetchserp.com/api/v1/scrap_domain" \
+  -H 'accept: application/json'\
+  -H 'authorization: Bearer YOUR_API_TOKEN'\
+  -H 'content-type: application/json' \
+  -d '{
+    "domain": "skuuudle.com",
+    "js_script": "return { url:  document.location.href, content: document.body.innerText }"
+  }'
+ </code></pre>
+            </div>
+
+            <div class="javascript code-block hidden">
+              <pre><code class="language-javascript">const url = "https://www.fetchserp.com/api/v1/scrap_domain";
+
+const headers = {
+  "Accept": "application/json",
+  "Authorization": "Bearer YOUR_API_TOKEN",
+  "Content-Type": "application/json"
+};
+
+const data = {
+  domain: "skuuudle.com",
+  js_script: "return { url: document.location.href, content: document.body.innerText }"
+};
+
+fetch(url, {
+  method: "POST",
+  headers: headers,
+  body: JSON.stringify(data)
+})
+  .then(response => response.json())
+  .then(data => console.log(data))
+  .catch(error => console.error("Error:", error));</code></pre>
+            </div>
+
+            <div id="ruby" class="ruby code-block hidden">
+              <pre><code class="language-ruby">require 'net/http'
+require 'uri'
+require 'json'
+
+url = URI.parse("https://www.fetchserp.com/api/v1/scrap_domain")
+http = Net::HTTP.new(url.host, url.port)
+http.use_ssl = true  # Enable HTTPS
+
+# Create the request
+request = Net::HTTP::Post.new(url, {
+  "Accept" => "application/json",
+  "Authorization" => "Bearer YOUR_API_TOKEN",  # Replace with your actual API key
+  "Content-Type" => "application/json"
+})
+
+# Set the request body
+request.body = {
+  domain: "skuuudle.com",
+  js_script: "return { url: document.location.href, content: document.body.innerText }"
+}.to_json
+
+# Send the request
+response = http.request(request)
+
+# Print the JSON response
+puts JSON.pretty_generate(JSON.parse(response.body))</code></pre>
+            </div>
+
+            <div class="python code-block hidden">
+              <pre><code class="language-python">import requests
+import json
+
+url = "https://www.fetchserp.com/api/v1/scrap_domain"
+headers = {
+    "Accept": "application/json",
+    "Authorization": "Bearer YOUR_API_TOKEN",  # Replace with your actual API key
+    "Content-Type": "application/json"
+}
+
+data = {
+    "domain": "skuuudle.com",
+    "js_script": "return { url: document.location.href, content: document.body.innerText }"
+}
+
+response = requests.post(url, headers=headers, json=data)
+
+# Print the JSON response
+print(json.dumps(response.json(), indent=2))</code></pre>
+            </div>
+
+            <h4 class="text-lg font-semibold mt-6 mb-2">Response</h4>
+            <pre><code class="language-json">{
+  "response": {
+    "data": {
+      "web_pages": [
+        {
+          "url": "http://skuuudle.com/#",
+          "content": "Product\nPricing\nCompany\nResources\nLogin\nBook demo\nCompetitive Pricing Intelligence\nSet your prices\nwith confidence.\n\nPricing, Buying, and Merchandising Leaders\n\nTrack competitor pricing, promotions, and availability with Skuuudle’s high accuracy, high coverage service.\n\nBook demo\n\nTrusted by hundreds of major retailers, brands and manufacturers\n\nPricing leaders, does this sound familiar?\nYou're missing hundreds of matches, and the matches you’ve got are full of mistakes.\nYour competitor data is patchy, often turns up late, and sometimes doesn’t turn up at all.\nYou can’t just act on your pricing intelligence, because you have to check everything yourself.\nIncrease pricing productivity with trustworthy data.\n\nWe know that your ability to do your work, and your credibility with your colleagues, is tied up with the quality of the competitive data you receive.\n\nSkuuudle delivers price index reporting you can rely on for price setting, weekly trading meetings, and executive updates.\n\nSpeak to sales >\nProduct Matching\n\nCompetitor products matched, even own-label.\n\nPrice Scraping\n\nAccess competitor pricing, promotions, stock & more.\n\nQuality Control\n\nData you can trust. No bad matches, no faulty prices.\n\nPricing Dashboard\n\nCompetitive pricing KPIs for pricing & buying teams.\n\nMeet our customers.\n\n“Skuuudle has played an essential role in enabling us to stay ahead of the game when it comes to competitive pricing.”\n\nJim Brown,\nCEO @ Paperstone.\n\nRead more case studies >\nFAQs\n\nNot finding the answers you're looking for? Feel free to contact us.\n\nWhat ROI should I expect from high quality pricing intelligence?\n+\nWhat data points can Skuuudle collect?\n+\nWhich competitors and marketplaces does Skuuudle monitor?\n+\nHow does Skuuudle guarantee accurate pricing intelligence?\n+\nHow often does Skuuudle collect pricing and product data?\n+\nWhat if my competitors have region-based pricing?\n+\nDo I have to make my own product matches with Skuuudle?\n+\nHow long does it take to get set up with Skuuudle?\n+\nDo I have to provide you with competitor URLs?\n+\nWe currently collect data by hand, why should I use Skuuudle?\n+\nIs price scraping legal?\n+\nWhich companies does Skuuudle work with?\n+\nHow much does Skuuudle cost?\n+\nWhy is it worth paying more for Skuuudle than for other providers?\n+\nHow long has Skuuudle been in business?\n+\n\nJoin the most advanced pricing teams at the world’s largest retailers, brands, and distributors. Get your Skuuudle demo today.\n\nBook demo\nSkuuudle\n+44 (0)8448 582 582\n1st Floor, Cotton House\n12-18 Queen St\nManchester\nUnited Kingdom\nM2 5HS\nPricing\n\n\nAbout\n\n\nContact\n\n\nPrivacy Policy\n\n\nPress\n\n\nPricing Intelligence\n\n\nProduct Matching\n\n\nEcommerce Scraping\n\n\nMap Monitoring\n\n\nCompetitive Pricing\n\n\nCompetitor Price Monitoring\n\n\nPricing Strategies\n\n\nPrice Scraping\n\n\nPrice Monitoring\n\n\nPrice Skimming\n\n\nMarketplace Selling\n\n\nMAP & RRP\n\n\nPrice Elasticity\n\n\n\nCompany number: 08354086 | Registered address: 1st Floor, Cotton House, 12-18 Queen St, Manchester M2 5HS\n\n© 2025 TCM Technology Ltd. All Rights Reserved"
+        },
+        {
+          "url": "http://skuuudle.com/contact",
+          "content": "Product\nPricing\nCompany\nResources\nLogin\nBook demo\nContact Us\nDetails\nAddress\n1st Floor\nCotton House\n12-18 Queen St\nManchester\nUnited Kingdom\nM2 5HS\nTelephone\n+44 (0)8448 582 582\nEmail\nenquiries@skuuudle.com\nLinkedin\nlinkedin.com/company/skuuudle\nContact form\nSkuuudle\n+44 (0)8448 582 582\n1st Floor, Cotton House\n12-18 Queen St\nManchester\nUnited Kingdom\nM2 5HS\nPricing\n\n\nAbout\n\n\nContact\n\n\nPrivacy Policy\n\n\nPress\n\n\nPricing Intelligence\n\n\nProduct Matching\n\n\nEcommerce Scraping\n\n\nMap Monitoring\n\n\nCompetitive Pricing\n\n\nCompetitor Price Monitoring\n\n\nPricing Strategies\n\n\nPrice Scraping\n\n\nPrice Monitoring\n\n\nPrice Skimming\n\n\nMarketplace Selling\n\n\nMAP & RRP\n\n\nPrice Elasticity\n\n\n\nCompany number: 08354086 | Registered address: 1st Floor, Cotton House, 12-18 Queen St, Manchester M2 5HS\n\n© 2025 TCM Technology Ltd. All Rights Reserved"
+        },
+        {
+          "url": "http://skuuudle.com/resources",
+          "content": "Product\nPricing\nCompany\nResources\nLogin\nBook demo\nWelcome to our Resource Center.\nThe home of eCommerce insights and pricing strategies.\n4 Reasons for Combining Stock Forecasting Software and Pricing Intelligence tools\n\nSave money and stay competitive when you combine stock forecasting and pricing intelligence.\n\nRead\nPricing Disasters\n\nThe tip of the price-berg: Pricing errors you want to avoid\n\nRead\n<\nThe impact of Covid-19 on brand\nSkuuudle insights report\n4 minute read\nRead\n<\nThe impact of Covid-19 on brand\nSkuuudle insights report\n3 minute read\nRead\nThe impact of Covid-19 on retail\nSkuuudle insights report\n3 minute read\nRead\nCompetitor Price Tracking\nBenefits and risks of price trackers?\n3 minute read\nRead\nCompetitor Pricing Online\nModern techniques and tools\n3 minute read\nRead\nMAP & RRP\nUnderstanding pricing rules\n2 minute read\nRead\nShopify Pricing\nShopify pricing and plans\n4 minute read\nRead\nMarketplace selling\nSuccessful selling guide\n2 minute read\nRead\nPrice Skimming\nPrice skimming explained\n4 minute read\nRead\nPsychological Pricing\nConsumer psychology\n3 minute read\nRead\nPrice Monitoring\nAn introduction to price monitoring\n3 minute read\nRead\nView all articles\nSkuuudle\n+44 (0)8448 582 582\n1st Floor, Cotton House\n12-18 Queen St\nManchester\nUnited Kingdom\nM2 5HS\nPricing\n\n\nAbout\n\n\nContact\n\n\nPrivacy Policy\n\n\nPress\n\n\nPricing Intelligence\n\n\nProduct Matching\n\n\nEcommerce Scraping\n\n\nMap Monitoring\n\n\nCompetitive Pricing\n\n\nCompetitor Price Monitoring\n\n\nPricing Strategies\n\n\nPrice Scraping\n\n\nPrice Monitoring\n\n\nPrice Skimming\n\n\nMarketplace Selling\n\n\nMAP & RRP\n\n\nPrice Elasticity\n\n\n\nCompany number: 08354086 | Registered address: 1st Floor, Cotton House, 12-18 Queen St, Manchester M2 5HS\n\n© 2025 TCM Technology Ltd. All Rights Reserved"
+        }
+      ]
+    }
+  }
+}</code></pre>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="bg-white rounded-lg shadow-md">
+        <button class="toggle-accordion w-full px-6 py-4 text-left focus:outline-none hover:cursor-pointer" data-endpoint="get_domain">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center space-x-2">
+              <i data-lucide="bot" class="h-5 w-5 text-indigo-600"></i>
+              <span class="text-lg font-semibold">Get domain from company name</span>
+            </div>
+            <i data-lucide="chevron-down" class="h-5 w-5 transform transition-transform"></i>
+          </div>
+        </button>
+        <div id="get_domain" class="hidden px-6 pb-4">
+          <div class="prose max-w-none">
+            <p class="text-gray-600 mb-4">Retrieve company domain.</p>
+            
+            <!-- Language Tabs -->
+            <div class="mb-4">
+              <div class="flex space-x-4 border-b">
+                <button class="switch-tab px-4 py-2 text-sm font-medium text-indigo-600 hover:text-indigo-600 border-b-2 border-indigo-500 hover:border-indigo-500 hover:cursor-pointer tab-button active" data-tab="curl">cURL</button>
+                <button class="switch-tab px-4 py-2 text-sm font-medium text-gray-600 hover:text-indigo-600 border-b-2 border-transparent hover:border-indigo-500 hover:cursor-pointer tab-button" data-tab="javascript">JavaScript</button>
+                <button class="switch-tab px-4 py-2 text-sm font-medium text-gray-600 hover:text-indigo-600 border-b-2 border-transparent hover:border-indigo-500 hover:cursor-pointer tab-button" data-tab="python">Python</button>
+                <button class="switch-tab px-4 py-2 text-sm font-medium text-gray-600 hover:text-indigo-600 border-b-2 border-transparent hover:border-indigo-500 hover:cursor-pointer tab-button" data-tab="ruby">Ruby</button>
+              </div>
+            </div>
+
+            <!-- Code Examples -->
+            <div class="curl code-block">
+              <pre><code class="language-bash">curl -X GET "https://www.fetchserp.com/api/v1/company_domain?company=taboola" \
+ -H 'accept: application/json'\
+ -H 'authorization: Bearer YOUR_API_TOKEN'
+ </code></pre>
+            </div>
+
+            <div class="javascript code-block hidden">
+              <pre><code class="language-javascript">const url = "https://www.fetchserp.com/api/v1/company_domain?company=taboola";
+
+const headers = {
+  "Accept": "application/json",
+  "Authorization": "Bearer YOUR_API_TOKEN" // Replace with your actual API token
+};
+
+fetch(url, {
+  method: "GET",
+  headers: headers
+})
+  .then(response => response.json())
+  .then(data => console.log(data))
+  .catch(error => console.error("Error:", error));</code></pre>
+            </div>
+
+            <div id="ruby" class="ruby code-block hidden">
+              <pre><code class="language-ruby">require 'net/http'
+require 'uri'
+require 'json'
+
+url = URI.parse("https://www.fetchserp.com/api/v1/company_domain?company=taboola")
+http = Net::HTTP.new(url.host, url.port)
+http.use_ssl = true  # Enable HTTPS
+
+# Create the GET request
+request = Net::HTTP::Get.new(url, {
+  "Accept" => "application/json",
+  "Authorization" => "Bearer YOUR_API_TOKEN"  # Replace with your actual API token
+})
+
+# Send the request
+response = http.request(request)
+
+# Print the JSON response
+puts JSON.pretty_generate(JSON.parse(response.body))</code></pre>
+            </div>
+
+            <div class="python code-block hidden">
+              <pre><code class="language-python">import requests
+import json
+
+url = "https://www.fetchserp.com/api/v1/company_domain?company=taboola"
+headers = {
+    "Accept": "application/json",
+    "Authorization": "Bearer YOUR_API_TOKEN"  # Replace with your actual API token
+}
+
+response = requests.get(url, headers=headers)
+
+# Print the JSON response
+print(json.dumps(response.json(), indent=2))</code></pre>
+            </div>
+
+            <h4 class="text-lg font-semibold mt-6 mb-2">Response</h4>
+            <pre><code class="language-json">{
+  "response": {
+    "data": {
+      "domain": "https://www.taboola.com/"
+    }
+  }
+}</code></pre>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="bg-white rounded-lg shadow-md">
+        <button class="toggle-accordion w-full px-6 py-4 text-left focus:outline-none hover:cursor-pointer" data-endpoint="get_emails">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center space-x-2">
+              <i data-lucide="bot" class="h-5 w-5 text-indigo-600"></i>
+              <span class="text-lg font-semibold">Get emails from domain</span>
+            </div>
+            <i data-lucide="chevron-down" class="h-5 w-5 transform transition-transform"></i>
+          </div>
+        </button>
+        <div id="get_emails" class="hidden px-6 pb-4">
+          <div class="prose max-w-none">
+            <p class="text-gray-600 mb-4">Retrieve emails from domain name.</p>
+            
+            <!-- Language Tabs -->
+            <div class="mb-4">
+              <div class="flex space-x-4 border-b">
+                <button class="switch-tab px-4 py-2 text-sm font-medium text-indigo-600 hover:text-indigo-600 border-b-2 border-indigo-500 hover:border-indigo-500 hover:cursor-pointer tab-button active" data-tab="curl">cURL</button>
+                <button class="switch-tab px-4 py-2 text-sm font-medium text-gray-600 hover:text-indigo-600 border-b-2 border-transparent hover:border-indigo-500 hover:cursor-pointer tab-button" data-tab="javascript">JavaScript</button>
+                <button class="switch-tab px-4 py-2 text-sm font-medium text-gray-600 hover:text-indigo-600 border-b-2 border-transparent hover:border-indigo-500 hover:cursor-pointer tab-button" data-tab="python">Python</button>
+                <button class="switch-tab px-4 py-2 text-sm font-medium text-gray-600 hover:text-indigo-600 border-b-2 border-transparent hover:border-indigo-500 hover:cursor-pointer tab-button" data-tab="ruby">Ruby</button>
+              </div>
+            </div>
+
+            <!-- Code Examples -->
+            <div class="curl code-block">
+              <pre><code class="language-bash">curl -X GET "https://www.fetchserp.com/api/v1/domain_emails?domain=taboola.com" \
+ -H 'accept: application/json'\
+ -H 'authorization: Bearer YOUR_API_TOKEN' 
+ </code></pre>
+            </div>
+
+            <div class="javascript code-block hidden">
+              <pre><code class="language-javascript">const url = "https://www.fetchserp.com/api/v1/domain_emails?domain=taboola.com";
+
+const headers = {
+  "Accept": "application/json",
+  "Authorization": "Bearer YOUR_API_TOKEN" // Replace with your actual API token
+};
+
+fetch(url, {
+  method: "GET",
+  headers: headers
+})
+  .then(response => response.json())
+  .then(data => console.log(data))
+  .catch(error => console.error("Error:", error));</code></pre>
+            </div>
+
+            <div id="ruby" class="ruby code-block hidden">
+              <pre><code class="language-ruby">require 'net/http'
+require 'uri'
+require 'json'
+
+url = URI.parse("https://www.fetchserp.com/api/v1/domain_emails?domain=taboola.com")
+http = Net::HTTP.new(url.host, url.port)
+http.use_ssl = true  # Enable HTTPS
+
+# Create the GET request
+request = Net::HTTP::Get.new(url, {
+  "Accept" => "application/json",
+  "Authorization" => "Bearer YOUR_API_TOKEN"  # Replace with your actual API token
+})
+
+# Send the request
+response = http.request(request)
+
+# Print the JSON response
+puts JSON.parse(response.body)</code></pre>
+            </div>
+
+            <div class="python code-block hidden">
+              <pre><code class="language-python">import requests
+import json
+
+url = "https://www.fetchserp.com/api/v1/domain_emails?domain=taboola.com"
+headers = {
+    "Accept": "application/json",
+    "Authorization": "Bearer YOUR_API_TOKEN"  # Replace with your actual API token
+}
+
+response = requests.get(url, headers=headers)
+
+# Print the JSON response
+print(json.dumps(response.json(), indent=2))</code></pre>
+            </div>
+
+            <h4 class="text-lg font-semibold mt-6 mb-2">Response</h4>
+            <pre><code class="language-json">{
+  "response": {
+    "data": {
+      "emails": [
+        "support@taboola.com",
+        "dpo@taboola.com",
+        "privacy@taboola.com",
+        "copyright@taboola.com",
+        "press@taboola.com",
+        "Dave.s@taboola.com"
+      ]
+    }
+  }
+}</code></pre>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="bg-white rounded-lg shadow-md">
+        <button class="toggle-accordion w-full px-6 py-4 text-left focus:outline-none hover:cursor-pointer" data-endpoint="analyze_web_page">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center space-x-2">
+              <i data-lucide="bot" class="h-5 w-5 text-indigo-600"></i>
+              <span class="text-lg font-semibold">Analyze Web Page</span>
+            </div>
+            <i data-lucide="chevron-down" class="h-5 w-5 transform transition-transform"></i>
+          </div>
+        </button>
+        <div id="analyze_web_page" class="hidden px-6 pb-4">
+          <div class="prose max-w-none">
+            <p class="text-gray-600 mb-4">Analyze web content using custom prompt.</p>
+            
+            <!-- Language Tabs -->
+            <div class="mb-4">
+              <div class="flex space-x-4 border-b">
+                <button class="switch-tab px-4 py-2 text-sm font-medium text-indigo-600 hover:text-indigo-600 border-b-2 border-indigo-500 hover:border-indigo-500 hover:cursor-pointer tab-button active" data-tab="curl">cURL</button>
+                <button class="switch-tab px-4 py-2 text-sm font-medium text-gray-600 hover:text-indigo-600 border-b-2 border-transparent hover:border-indigo-500 hover:cursor-pointer tab-button" data-tab="javascript">JavaScript</button>
+                <button class="switch-tab px-4 py-2 text-sm font-medium text-gray-600 hover:text-indigo-600 border-b-2 border-transparent hover:border-indigo-500 hover:cursor-pointer tab-button" data-tab="python">Python</button>
+                <button class="switch-tab px-4 py-2 text-sm font-medium text-gray-600 hover:text-indigo-600 border-b-2 border-transparent hover:border-indigo-500 hover:cursor-pointer tab-button" data-tab="ruby">Ruby</button>
+              </div>
+            </div>
+
+            <!-- Code Examples -->
+            <div class="curl code-block">
+              <pre><code class="language-bash">curl -X POST "https://www.fetchserp.com/api/v1/analyze_web_page" \
+ -H 'accept: application/json'\
+ -H 'authorization: Bearer YOUR_API_TOKEN'\
+ -H 'content-type: application/json' \
+ -d '{
+   "url": "https://taboola.com",
+   "prompt": "What are the products or services offered by Taboola?"
+  }'</code></pre>
+            </div>
+
+            <div class="javascript code-block hidden">
+              <pre><code class="language-javascript">const url = "https://www.fetchserp.com/api/v1/analyze_web_page";
+
+const headers = {
+  "Accept": "application/json",
+  "Authorization": "Bearer YOUR_API_TOKEN",  // Replace with your actual API token
+  "Content-Type": "application/json"
+};
+
+const data = {
+  url: "https://taboola.com",
+  prompt: "What are the products or services offered by Taboola?"
+};
+
+fetch(url, {
+  method: "POST",
+  headers: headers,
+  body: JSON.stringify(data)
+})
+  .then(response => response.json())
+  .then(data => console.log(data))
+  .catch(error => console.error("Error:", error));</code></pre>
+            </div>
+
+            <div id="ruby" class="ruby code-block hidden">
+              <pre><code class="language-ruby">require 'net/http'
+require 'uri'
+require 'json'
+
+url = URI.parse("https://www.fetchserp.com/api/v1/analyze_web_page")
+http = Net::HTTP.new(url.host, url.port)
+http.use_ssl = true  # Enable HTTPS
+
+# Create the POST request
+request = Net::HTTP::Post.new(url, {
+  "Accept" => "application/json",
+  "Authorization" => "Bearer YOUR_API_TOKEN",  # Replace with your actual API token
+  "Content-Type" => "application/json"
+})
+
+# Set the request body
+request.body = {
+  url: "https://taboola.com",
+  prompt: "What are the products or services offered by Taboola?"
+}.to_json
+
+# Send the request
+response = http.request(request)
+
+# Print the JSON response
+puts JSON.pretty_generate(JSON.parse(response.body))</code></pre>
+            </div>
+
+            <div class="python code-block hidden">
+              <pre><code class="language-python">import requests
+import json
+
+url = "https://www.fetchserp.com/api/v1/analyze_web_page"
+headers = {
+    "Accept": "application/json",
+    "Authorization": "Bearer YOUR_API_TOKEN",  # Replace with your actual API token
+    "Content-Type": "application/json"
+}
+
+data = {
+    "url": "https://taboola.com",
+    "prompt": "What are the products or services offered by Taboola?"
+}
+
+response = requests.post(url, headers=headers, json=data)
+
+# Print the JSON response
+print(json.dumps(response.json(), indent=2))</code></pre>
+            </div>
+
+            <h4 class="text-lg font-semibold mt-6 mb-2">Response</h4>
+            <pre><code class="language-json">{
+  "response": {
+    "data": {
+      "analysis_output": "The content provided does not contain any specific company information. It focuses on various marketing strategies, campaigns, and performance ad units but lacks detailed company data, structure, products, or market position information."
+    }
+  }
+}</code></pre>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="bg-white rounded-lg shadow-md">
+        <button class="toggle-accordion w-full px-6 py-4 text-left focus:outline-none hover:cursor-pointer" data-endpoint="analyze_serp">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center space-x-2">
+              <i data-lucide="bot" class="h-5 w-5 text-indigo-600"></i>
+              <span class="text-lg font-semibold">Analyze Search Engine Results</span>
+            </div>
+            <i data-lucide="chevron-down" class="h-5 w-5 transform transition-transform"></i>
+          </div>
+        </button>
+        <div id="analyze_serp" class="hidden px-6 pb-4">
+          <div class="prose max-w-none">
+            <p class="text-gray-600 mb-4">Analyze search engine results using a custom prompt.</p>
+            
+            <!-- Language Tabs -->
+            <div class="mb-4">
+              <div class="flex space-x-4 border-b">
+                <button class="switch-tab px-4 py-2 text-sm font-medium text-indigo-600 hover:text-indigo-600 border-b-2 border-indigo-500 hover:border-indigo-500 hover:cursor-pointer tab-button active" data-tab="curl">cURL</button>
+                <button class="switch-tab px-4 py-2 text-sm font-medium text-gray-600 hover:text-indigo-600 border-b-2 border-transparent hover:border-indigo-500 hover:cursor-pointer tab-button" data-tab="javascript">JavaScript</button>
+                <button class="switch-tab px-4 py-2 text-sm font-medium text-gray-600 hover:text-indigo-600 border-b-2 border-transparent hover:border-indigo-500 hover:cursor-pointer tab-button" data-tab="python">Python</button>
+                <button class="switch-tab px-4 py-2 text-sm font-medium text-gray-600 hover:text-indigo-600 border-b-2 border-transparent hover:border-indigo-500 hover:cursor-pointer tab-button" data-tab="ruby">Ruby</button>
+              </div>
+            </div>
+
+            <!-- Code Examples -->
+            <div class="curl code-block">
+              <pre><code class="language-bash">curl -X POST "https://www.fetchserp.com/api/v1/analyze_serp" \
+ -H 'accept: application/json'\
+ -H 'authorization: Bearer YOUR_API_TOKEN'\
+ -H 'content-type: application/json' \
+ -d '{
+    "query": "Capital of France",
+    "prompt": "What is the capital of France?",
+    "search_engine": "duckduckgo",
+    "pages_number": 3
+  }'</code></pre>
+            </div>
+
+            <div class="javascript code-block hidden">
+              <pre><code class="language-javascript">const url = "https://www.fetchserp.com/api/v1/analyze_serp";
+
+const headers = {
+  "Accept": "application/json",
+  "Authorization": "Bearer YOUR_API_TOKEN",  // Replace with your actual API token
+  "Content-Type": "application/json"
+};
+
+const data = {
+  query: "Capital of France",
+  prompt: "What is the capital of France?",
+  search_engine: "duckduckgo",
+  pages_number: 3
+};
+
+fetch(url, {
+  method: "POST",
+  headers: headers,
+  body: JSON.stringify(data)
+})
+  .then(response => response.json())
+  .then(data => console.log(data))
+  .catch(error => console.error("Error:", error));</code></pre>
+            </div>
+
+            <div id="ruby" class="ruby code-block hidden">
+              <pre><code class="language-ruby">require 'net/http'
+require 'uri'
+require 'json'
+
+url = URI.parse("https://www.fetchserp.com/api/v1/analyze_serp")
+http = Net::HTTP.new(url.host, url.port)
+http.use_ssl = true  # Enable HTTPS
+
+# Create the POST request
+request = Net::HTTP::Post.new(url, {
+  "Accept" => "application/json",
+  "Authorization" => "Bearer YOUR_API_TOKEN",  # Replace with your actual API token
+  "Content-Type" => "application/json"
+})
+
+# Set the request body
+request.body = {
+  query: "Capital of France",
+  prompt: "What is the capital of France?",
+  search_engine: "duckduckgo",
+  pages_number: 3
+}.to_json
+
+# Send the request
+response = http.request(request)
+
+# Print the JSON response
+puts JSON.parse(response.body)</code></pre>
+            </div>
+
+            <div class="python code-block hidden">
+              <pre><code class="language-python">import requests
+import json
+
+url = "https://www.fetchserp.com/api/v1/analyze_serp"
+headers = {
+    "Accept": "application/json",
+    "Authorization": "Bearer YOUR_API_TOKEN",  # Replace with your actual API token
+    "Content-Type": "application/json"
+}
+
+data = {
+    "query": "Capital of France",
+    "prompt": "What is the capital of France?",
+    "search_engine": "duckduckgo",
+    "pages_number": 3
+}
+
+response = requests.post(url, headers=headers, json=data)
+
+# Print the JSON response
+print(json.dumps(response.json(), indent=2))</code></pre>
+            </div>
+
+            <h4 class="text-lg font-semibold mt-6 mb-2">Response</h4>
+            <pre><code class="language-json">{
+  "response": {
+    "data": {
+      "analysis_output": "The task is to extract and analyze company information from web content provided. The guidelines specify that factual information should be extracted without assumptions or inferences, and precise data should be returned in JSON format. The response must include the following elements: (1) A JSON object with keys"
+    }
+  }
+}</code></pre>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="bg-white rounded-lg shadow-md">
+        <button class="toggle-accordion w-full px-6 py-4 text-left focus:outline-none hover:cursor-pointer" data-endpoint="list_hf_models">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center space-x-2">
+              <i data-lucide="bot" class="h-5 w-5 text-indigo-600"></i>
+              <span class="text-lg font-semibold">List Hugging Face models</span>
+            </div>
+            <i data-lucide="chevron-down" class="h-5 w-5 transform transition-transform"></i>
+          </div>
+        </button>
+        <div id="list_hf_models" class="hidden px-6 pb-4">
+          <div class="prose max-w-none">
+            <p class="text-gray-600 mb-4">List Hugging Face Models by task.</p>
+            
+            <!-- Language Tabs -->
+            <div class="mb-4">
+              <div class="flex space-x-4 border-b">
+                <button class="switch-tab px-4 py-2 text-sm font-medium text-indigo-600 hover:text-indigo-600 border-b-2 border-indigo-500 hover:border-indigo-500 hover:cursor-pointer tab-button active" data-tab="curl">cURL</button>
+                <button class="switch-tab px-4 py-2 text-sm font-medium text-gray-600 hover:text-indigo-600 border-b-2 border-transparent hover:border-indigo-500 hover:cursor-pointer tab-button" data-tab="javascript">JavaScript</button>
+                <button class="switch-tab px-4 py-2 text-sm font-medium text-gray-600 hover:text-indigo-600 border-b-2 border-transparent hover:border-indigo-500 hover:cursor-pointer tab-button" data-tab="python">Python</button>
+                <button class="switch-tab px-4 py-2 text-sm font-medium text-gray-600 hover:text-indigo-600 border-b-2 border-transparent hover:border-indigo-500 hover:cursor-pointer tab-button" data-tab="ruby">Ruby</button>
+              </div>
+            </div>
+
+            <!-- Code Examples -->
+            <div class="curl code-block">
+              <pre><code class="language-bash">curl -X GET "https://www.fetchserp.com/api/v1/hf_models?task=summarization" \
+ -H 'accept: application/json'\
+ -H 'authorization: Bearer YOUR_API_TOKEN'</code></pre>
+            </div>
+
+            <div class="javascript code-block hidden">
+              <pre><code class="language-javascript">const url = "https://www.fetchserp.com/api/v1/hf_models?task=summarization";
+
+const headers = {
+  "Accept": "application/json",
+  "Authorization": "Bearer YOUR_API_TOKEN"  // Replace with your actual API token
+};
+
+fetch(url, {
+  method: "GET",
+  headers: headers
+})
+  .then(response => response.json())
+  .then(data => console.log(data))
+  .catch(error => console.error("Error:", error));</code></pre>
+            </div>
+
+            <div id="ruby" class="ruby code-block hidden">
+              <pre><code class="language-ruby">require 'net/http'
+require 'uri'
+require 'json'
+
+url = URI.parse("https://www.fetchserp.com/api/v1/hf_models?task=summarization")
+http = Net::HTTP.new(url.host, url.port)
+http.use_ssl = true  # Enable HTTPS
+
+# Create the GET request
+request = Net::HTTP::Get.new(url, {
+  "Accept" => "application/json",
+  "Authorization" => "Bearer YOUR_API_TOKEN"  # Replace with your actual API token
+})
+
+# Send the request
+response = http.request(request)
+
+# Print the JSON response
+puts JSON.parse(response.body)</code></pre>
+            </div>
+
+            <div class="python code-block hidden">
+              <pre><code class="language-python">import requests
+import json
+
+url = "https://www.fetchserp.com/api/v1/hf_models?task=summarization"
+headers = {
+    "Accept": "application/json",
+    "Authorization": "Bearer YOUR_API_TOKEN"  # Replace with your actual API token
+}
+
+response = requests.get(url, headers=headers)
+
+# Print the JSON response
+print(json.dumps(response.json(), indent=2))</code></pre>
+            </div>
+
+            <h4 class="text-lg font-semibold mt-6 mb-2">Response</h4>
+            <pre><code class="language-json">{
+  "response": {
+    "data": {
+      "models": [
+        "facebook/bart-large-cnn",
+        "google-t5/t5-small",
+        "google-t5/t5-base",
+        "google-t5/t5-11b",
+        "sshleifer/distilbart-cnn-12-6",
+      ]
+    }
+  }
+}</code></pre>
+          </div>
+        </div>
+      </div>
+
+
     </div>
   </section>
 
@@ -372,13 +1337,13 @@ print(response.json())</code></pre>
       <div class="text-center">
         <h2 class="text-3xl font-bold text-white mb-8">Simple to Integrate</h2>
         <div class="bg-gray-800 rounded-lg p-6 text-left overflow-x-auto">
-          <pre><code class="language-bash">curl -X GET "https://api.yourservice.com/v1/scrape" \
-  -H "Authorization: Bearer your_api_key" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "url": "https://example.com",
-    "stealth_mode": true,
-    "bypass_captcha": true
+          <pre><code class="language-bash">curl -X POST "https://www.fetchserp.com/api/v1/scrap_web_page" \
+ -H 'accept: application/json'\
+ -H 'authorization: Bearer YOUR_API_TOKEN'\
+ -H 'content-type: application/json' \
+ -d '{
+    "url":"https://taboola.com",
+    "js_script":"return { content: document.body.innerText }"
   }'</code></pre>
         </div>
       </div>
