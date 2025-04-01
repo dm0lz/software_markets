@@ -47,6 +47,8 @@ gem "neighbor"
 gem "bugsnag", "~> 6.27"
 gem "oas_rails"
 gem "rack-cors"
+gem "x"
+gem "selenium-webdriver"
 
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
 # gem "image_processing", "~> 1.2"
@@ -75,5 +77,4 @@ end
 group :test do
   # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
   gem "capybara"
-  gem "selenium-webdriver"
 end

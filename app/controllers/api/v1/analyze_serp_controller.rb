@@ -29,7 +29,7 @@ class Api::V1::AnalyzeSerpController < Api::V1::BaseController
       return render json: { error: "Invalid search_engine. Allowed values: #{allowed_search_engines.join(', ')}" }, status: :unprocessable_entity
     end
 
-    @analysis_output = AnalyzeSerpService.new(
+    @analysis_output = SerpAnalyzerService.new(
       search_engine: analyze_serp_params[:search_engine] || "duckduckgo",
       pages_number: analyze_serp_params[:pages_number] || 3,
       query: analyze_serp_params[:query]

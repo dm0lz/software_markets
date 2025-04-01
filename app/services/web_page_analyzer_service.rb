@@ -1,4 +1,4 @@
-class AnalyzeWebPageService < BaseService
+class WebPageAnalyzerService < BaseService
   def initialize(url)
     @url = url
   end

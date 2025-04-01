@@ -17,7 +17,7 @@ class Api::V1::AnalyzeWebPageController < Api::V1::BaseController
       return render json: { error: "valid url is required" }, status: :unprocessable_entity
     end
 
-    @analysis_output = AnalyzeWebPageService.new(analyze_web_page_params[:url]).call(@prompt)
+    @analysis_output = WebPageAnalyzerService.new(analyze_web_page_params[:url]).call(@prompt)
   end
 
   private
