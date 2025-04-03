@@ -1,4 +1,4 @@
-class X::PublisherService < BaseService
+class Social::X::PublisherService < BaseService
   def initialize
     @x_credentials = {
       api_key: Rails.application.credentials[:x_api_key],

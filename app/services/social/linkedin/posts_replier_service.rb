@@ -1,4 +1,4 @@
-class Linkedin::PostsReplierService < BaseService
+class Social::Linkedin::PostsReplierService < BaseService
   def initialize(query, payload, options = "{headless: false}")
     @query = query
     @payload = payload

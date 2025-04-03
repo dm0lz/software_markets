@@ -1,4 +1,4 @@
-class X::TweetGeneratorService < BaseService
+class Social::X::TweetGeneratorService < BaseService
   def initialize(topic)
     @topic = topic
   end

@@ -1,4 +1,4 @@
-class X::BotSeleniumService < BaseService
+class Social::X::BotSeleniumService < BaseService
   def initialize(search)
     @twitter_username = Rails.application.credentials[:x_username]
     @twitter_password = Rails.application.credentials[:x_password]

@@ -1,4 +1,4 @@
-class X::TweetsReplierService < BaseService
+class Social::X::TweetsReplierService < BaseService
   def initialize(search, payload, options = "{headless: true}")
     @search = search
     @payload = payload
