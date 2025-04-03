@@ -141,51 +141,50 @@ chromium.use(stealth);
 (async () => {
   const browser = await chromium.launch({ headless: false });
   const page = await browser.newPage();
-  await page.goto("https://twitter.com/i/flow/login");
-  await page.fill("input[name='text']", "");
-  await page.keyboard.press("Enter");
-  await page.waitForSelector("input[name='password']");
-  await page.fill("input[name='password']", "");
-  await page.keyboard.press("Enter");
+  await page.goto(
+    "https://www.linkedin.com/uas/login?session_redirect=https%3A%2F%2Fwww.linkedin.com%2Ffeed%2F"
+  );
+  await page.fill("input#username", "");
+  await page.fill("input#password", "");
+  const sign_in_button = await page.waitForSelector(
+    '[data-litms-control-urn="login-submit"]'
+  );
+  await sign_in_button.click();
+  // await page.fill('[role="combobox"]', "ruby on rails");
+  query = "ruby on rails";
+  await page.goto(
+    "https://www.linkedin.com/search/results/content/?keywords=" + query
+  );
   await page.waitForSelector('[role="combobox"]');
-  await page.fill('[role="combobox"]', "ruby");
-  await page.keyboard.press("Enter");
-  await page.waitForTimeout(2000);
+  // await page.keyboard.press("Enter");
   let i = 0;
   do {
     await page.mouse.wheel(0, 1000);
     await page.waitForTimeout(250);
     i += 1;
-  } while (i < 5);
-  const links = await page.evaluate(() => {
-    return [
-      ...new Set(
-        Array.from(
-          document.querySelectorAll('article a[href*="/status/"]')
-        ).map(
-          (a) =>
-            "https://twitter.com" +
-            a.getAttribute("href").split("/status/")[0] +
-            "/status/" +
-            a.getAttribute("href").split("/status/")[1].split("/")[0]
-        )
-      ),
-    ];
-  });
-  for (const link of links) {
+  } while (i < 3);
+  const list_items = await page.$$('ul[role="list"] > li');
+  for (const [index, list_item] of list_items.entries()) {
     try {
-      await page.goto(link);
-      const textArea = await page.waitForSelector('[data-contents="true"]');
-      await textArea.click();
-      await textArea.fill("try fetchserp.com with 2500 free credits");
-      const tweetButton = await page.waitForSelector(
-        '[data-testid="tweetButtonInline"]'
+      const comment_button = await list_item.$(
+        ".social-actions-button.comment-button"
       );
-      await tweetButton.click();
+      await comment_button.scrollIntoViewIfNeeded();
+      await comment_button.click();
+      const text_editor = await list_item.$(".ql-editor");
+      await text_editor.click();
+      await text_editor.fill(`Test comment #${index + 1}`);
+      const button = await page.waitForSelector(
+        "form > div > div > div > div > button"
+      );
+      const submit_button = await list_item.$(
+        "form > div > div > div > div > button"
+      );
+      await submit_button.click();
+      await page.waitForTimeout(2000);
     } catch (error) {
       console.log(error);
     }
   }
-  console.log(links);
   await browser.close();
 })();
